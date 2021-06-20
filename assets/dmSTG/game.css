@@ -1,0 +1,41 @@
+.gBody {
+    margin: 0px;
+    background-color: #efefef;
+    font-size: 1.50em;
+    color: #000000;
+    width: 800px;
+    background-image: url("back.png");
+}
+.green{
+    color: #30ff90;
+}
+.blue{
+    color: #a0d0ff;
+}
+.linkBut{
+    cursor: pointer;
+    border-color: #2050e0;
+    border-radius: 20px;
+    outline: none;
+    background-color: #2070f0;
+    color: #ffffff;
+    font-size: 30px;
+}
+#main{
+    z-index:1;
+    user-select: none;
+}
+#title{
+    z-index:1;
+    margin: 0px;
+    width: 100vw;
+    height: 30px;
+    color:#f00;
+    background-color: #555;
+}
+#back{
+    z-index:0;
+    position:absolute;
+    top:0px;
+    left:0px;
+}
