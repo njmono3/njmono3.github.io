@@ -2,6 +2,12 @@ table{
     color: #000000;
     background-color: #fafafa;
 }
+a {
+    color: #ff0000;
+}
+a:visited {
+    color: #ff0000;
+}
 .main-container{
     color: #aa6622;
     background-color: #fafa96; 
