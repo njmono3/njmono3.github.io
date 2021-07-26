@@ -1,1 +1,10 @@
-table{color:#000000;}
+table{
+    color: #000000;
+    background-color: #fafafa;
+}
+.main-container{
+    color: #aa6622;
+    background-color: #eeccaa; 
+    width: 600px; 
+    margin: 0 auto;
+}
