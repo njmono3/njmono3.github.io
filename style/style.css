@@ -5,24 +5,20 @@ a:visited {
     color: #ff0000;
 }
 body {
-    margin: 0px;
+    margin: 0 auto;
     width: 810px;
 }
 .main-container{
-    display: inline-block;
-    vertical-align: top;
     color: #aa6622;
     background-color: #fafa96; 
-    width: 512px; 
-    margin: 0 auto;
+    width: 512px;
+    margin: 0;
     box-shadow: 0px 0px 0px #252525, 60px 0px 20px -40px #fafaca inset, -60px 0px 20px -40px #d5d571 inset;
 }
 .sub-container{
-    display: inline-block;
-    vertical-align: top;
     color: #aa6622;
     background-color: #fafa96; 
     width: 256px; 
-    margin: 0 auto;
+    margin: 0;
     box-shadow: 0px 0px 0px #252525, 60px 0px 20px -40px #fafaca inset, -60px 0px 20px -40px #d5d571 inset;
 }
