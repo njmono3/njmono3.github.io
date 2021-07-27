@@ -13,5 +13,5 @@ a:visited {
     background-color: #fafa96; 
     width: 600px; 
     margin: 0 auto;
-    box-shadow: 0px 0px 20px #252525, 60px 0px 20px -40px #fafaca inset, -60px 0px 20px -40px #d5d571 inset;
+    box-shadow: 0px 0px 0px #252525, 60px 0px 20px -40px #fafaca inset, -60px 0px 20px -40px #d5d571 inset;
 }
