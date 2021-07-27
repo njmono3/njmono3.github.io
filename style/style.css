@@ -10,6 +10,7 @@ a:visited {
 }
 .main-container{
     display: inline-block;
+    vertical-align: top;
     color: #aa6622;
     background-color: #fafa96; 
     width: 600px; 
@@ -18,6 +19,7 @@ a:visited {
 }
 .sub-container{
     display: inline-block;
+    vertical-align: top;
     color: #aa6622;
     background-color: #fafa96; 
     width: 210px; 
