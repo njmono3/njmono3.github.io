@@ -9,6 +9,7 @@ a:visited {
     color: #ff0000;
 }
 .main-container{
+    display: inline-block;
     color: #aa6622;
     background-color: #fafa96; 
     width: 600px; 
@@ -16,6 +17,7 @@ a:visited {
     box-shadow: 0px 0px 0px #252525, 60px 0px 20px -40px #fafaca inset, -60px 0px 20px -40px #d5d571 inset;
 }
 .sub-container{
+    display: inline-block;
     color: #aa6622;
     background-color: #fafa96; 
     width: 210px; 
