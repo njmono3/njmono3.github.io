@@ -429,7 +429,7 @@ addEventListener('click', function (e) {
         /*タイトル画面*/
         if (75 <= mouse.x & mouse.x <= 275 & 255 <= mouse.y & mouse.y <= 305) { selector = 0; mode = 1; }
         if (125 <= mouse.x & mouse.x <= 325 & 305 <= mouse.y & mouse.y <= 355) { selector = 1; mode = 4; }
-        if (100 <= mouse.x & mouse.x <= 300 & 280 <= mouse.y & mouse.y <= 330) { selector = 2; mode = 3; }
+        if (100 <= mouse.x & mouse.x <= 300 & 355 <= mouse.y & mouse.y <= 405) { selector = 2; mode = 3; }
     }
     if (mode == 1) {
         /*プレイ画面*/
