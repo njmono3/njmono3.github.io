@@ -48,7 +48,7 @@ class enemyTemp {
     constructor(hp, ballPattern, moveFunctionX, moveFunctionY, ballColor, name) {
         this.x = 0;
         this.y = 0;
-        this.size = player.size;
+        this.size = 16;
         this.hp = hp;
         this.fullHp = hp;
         this.gage = "#ff0000";
@@ -106,7 +106,7 @@ let score = 0;
 let selector = 0;
 let sel_wait = 0;
 let nowEnemysId = 0;
-let key = [false, false, false, false, false, false, false];
+let key = [false, false, false, false, false, false, false, false, false];
 let mouse = {
     x: 0,
     y: 0,
@@ -114,19 +114,23 @@ let mouse = {
 }
 let enemy = [];
 let ball = [];
+let pl_char = "n";
 let pattern = [];
 /*player定義*/
-let player = {
+player = {
     x: 400,
     y: 500,
-    speed: 2,
+    speed: 0,
+    normal_speed: 2,
+    down_speed: 1,
     size: 16,
-    life: 0,
-    ball: []
+    life: 5,
+    ball: [],
+    char: "n"
 }
 
 /*タイトル文字*/
-let title = "空中楼閣";
+let title = "だんまく";
 
 /*出る敵*/
 let spawnEnemy = [
@@ -211,10 +215,12 @@ function start() {
     player = {
         x: 400,
         y: 500,
-        speed: 2,
+        speed: 0,
+        normal_speed: 2,
+        down_speed: 1,
         size: 16,
         life: 5,
-        ball: []
+        ball: [],
     }
     for (let i = 0; i < enemy.length; i++) {
         enemy[i].hp = enemy[i].fullHp;
@@ -258,24 +264,48 @@ function drawLoop() {
         can2d.font = "20px 'Meiryo'";
         can2d.fillText("矢印：選択　/　Z：決定", 10, 590);
         can2d.font = "50px 'Meiryo'";
-        if (selector % 2 == 0) {
+        if (selector % 3 == 0) {
             can2d.fillStyle = "#ff0000";
             can2d.fillText("Start", 75, 300);
             can2d.fillStyle = "#ff9090";
-            can2d.fillText("Info", 125, 350);
+            can2d.fillText("Char", 125, 350);
+            can2d.fillStyle = "#ff9090";
+            can2d.fillText("Info", 100, 400);
             drawRect(75, 300, 200, 5, 0, "#ff0000", "#000000");
+        } else if (selector % 3 == 1) {
+            can2d.fillStyle = "#ff9090";
+            can2d.fillText("Start", 75, 300);
+            can2d.fillStyle = "#ff0000";
+            can2d.fillText("Char", 125, 350);
+            can2d.fillStyle = "#ff9090";
+            can2d.fillText("Info", 100, 400);
+            drawRect(125, 350, 150, 5, 0, "#ff0000", "#000000");
         } else {
             can2d.fillStyle = "#ff9090";
             can2d.fillText("Start", 75, 300);
+            can2d.fillStyle = "#ff9090";
+            can2d.fillText("Char", 125, 350);
             can2d.fillStyle = "#ff0000";
-            can2d.fillText("Info", 125, 350);
-            drawRect(125, 350, 150, 5, 0, "#ff0000", "#000000");
+            can2d.fillText("Info", 100, 400);
+            drawRect(100, 400, 150, 5, 0, "#ff0000", "#000000");
         }
     }
     if (mode == 1) {
         drawBack(0, "#070707");
         playerBall();
-        drawRect(player.x - player.size / 2, player.y - player.size / 2, player.size - 2, player.size - 2, 6, "#0000ff", "#00ffff");
+        if (pl_char == "n") {
+            drawRect(player.x - player.size / 2, player.y - player.size / 2, player.size - 2, player.size - 2, 6, "#0000ff", "#00ffff");
+        } else if (pl_char == "m") {
+            drawRect(player.x - player.size / 2, player.y - player.size / 2, player.size, player.size, 6, "#ffaaaa", "#ffaaaa");
+            drawRect(player.x - player.size / 2, player.y - player.size / 2, player.size, player.size / 4, 10, "#aaaaaa", "#aaaaaa");
+            drawPolygon([
+                [player.x - player.size / 2 - 3, player.y - player.size / 2 - 12],
+                [player.x, player.y - 3],
+                [player.x + player.size / 2 + 3, player.y - player.size / 2 - 12],
+                [player.x + player.size / 2 + 3, player.y],
+                [player.x - player.size / 2 - 3, player.y]
+            ], 0, "#aaaaaa", "#000");
+        }
         enemysProcess();
         for (let i = 0; i < player.life; i++) drawCircle(8 + 16 * i, 8, 8, 0, "#ffefef", "#000000");
         can2d.fillStyle = "ff9090";
@@ -319,6 +349,39 @@ function drawLoop() {
         can2d.font = "20px Meiryo";
         can2d.fillText("<<X:戻る", 10, 590);
     }
+    if (mode == 4) {
+        drawBack(0, "#000");
+        can2d.fillStyle = "#f00";
+        can2d.font = "30px Meiryo";
+        can2d.fillText("キャラ選択", 50, 50);
+        can2d.fillStyle = "#fff";
+
+        if (pl_char == "n") {
+            can2d.fillStyle = "#faa";
+        }
+        can2d.fillText("　Nキー：ノーマル", 50, 110);
+        drawRect(380 - 8, 100 - 8, 14, 14, 6, "#0000ff", "#00ffff");
+        can2d.fillStyle = "#fff";
+
+        if (pl_char == "m") {
+            can2d.fillStyle = "#faa";
+        }
+        can2d.fillText("　Mキー：ミコト", 50, 230);
+        drawRect(380 - 8, 220 - 8, 16, 16, 6, "#ffaaaa", "#ffaaaa");
+        drawRect(380 - 8, 220 - 8, 16, 4, 10, "#aaaaaa", "#aaaaaa");
+        drawPolygon([
+            [380 - 8 - 3, 220 - 8 - 12],
+            [380, 220 - 3],
+            [380 + 8 + 3, 220 - 8 - 12],
+            [380 + 8 + 3, 220],
+            [380 - 8 - 3, 220]
+        ], 0, "#aaaaaa", "#000");
+        can2d.fillStyle = "#fff";
+
+        drawRect(10, 570, 100, 25, 0, "#555", "#000")
+        can2d.font = "20px Meiryo";
+        can2d.fillText("<<X:戻る", 10, 590);
+    }
     if (mode !== 1) {
         drawCircle(mouse.x, mouse.y, 6, 2, "None", "#f00");
         for (let i = 0; i < mouse.rem.length; i++) {
@@ -341,6 +404,8 @@ addEventListener('keydown', function (e) {
     if (e.keyCode == 16) key[5] = true;
     if (e.keyCode == 88) key[6] = true;
     if (e.keyCode == 48) key[7] = true;
+    if (e.keyCode == 78) key[8] = true;
+    if (e.keyCode == 77) key[9] = true;
 }, false);
 addEventListener('keyup', function (e) {
     for (let i = 0; i < 4; i++) {
@@ -350,6 +415,8 @@ addEventListener('keyup', function (e) {
     if (e.keyCode == 16) key[5] = false;
     if (e.keyCode == 88) key[6] = false;
     if (e.keyCode == 48) key[7] = false;
+    if (e.keyCode == 78) key[8] = false;
+    if (e.keyCode == 77) key[9] = false;
 }, false);
 addEventListener('mousemove', function (e) {
     mouse.x = e.x;
@@ -361,7 +428,8 @@ addEventListener('click', function (e) {
     if (mode == 0) {
         /*タイトル画面*/
         if (75 <= mouse.x & mouse.x <= 275 & 255 <= mouse.y & mouse.y <= 305) { selector = 0; mode = 1; }
-        if (125 <= mouse.x & mouse.x <= 325 & 305 <= mouse.y & mouse.y <= 355) { selector = 1; mode = 3; }
+        if (125 <= mouse.x & mouse.x <= 325 & 305 <= mouse.y & mouse.y <= 355) { selector = 1; mode = 4; }
+        if (100 <= mouse.x & mouse.x <= 300 & 280 <= mouse.y & mouse.y <= 330) { selector = 2; mode = 3; }
     }
     if (mode == 1) {
         /*プレイ画面*/
@@ -373,6 +441,10 @@ addEventListener('click', function (e) {
         /*説明画面*/
         if (10 <= mouse.x & mouse.x <= 110 & 570 <= mouse.y & mouse.y <= 595) { mode = 0; }
     }
+    if (mode == 4) {
+        /*キャラ選択*/
+        if (10 <= mouse.x & mouse.x <= 110 & 570 <= mouse.y & mouse.y <= 595) { mode = 0; }
+    }
 }, false);
 function keyPush() {
     if (mode == 0) {
@@ -380,7 +452,7 @@ function keyPush() {
             if (selector > 0) {
                 selector -= 1;
             } else {
-                selector = 1;
+                selector = 2;
             }
             sel_wait = 20;
         }
@@ -388,7 +460,7 @@ function keyPush() {
             if (selector > 0) {
                 selector -= 1;
             } else {
-                selector = 1;
+                selector = 2;
             }
             sel_wait = 20;
         }
@@ -401,8 +473,9 @@ function keyPush() {
             sel_wait = 20;
         }
         if (key[4] & sel_wait == 0) {
-            if (selector % 2 == 0) mode = 1;
-            if (selector % 2 == 1) mode = 3;
+            if (selector % 3 == 0) mode = 1;
+            if (selector % 3 == 1) mode = 4;
+            if (selector % 3 == 2) mode = 3;
         }
         if (sel_wait > 0) sel_wait -= 1;
     }
@@ -413,9 +486,9 @@ function keyPush() {
         }
         if (key[4] & time % 5 == 0) player.ball.push({ x: player.x, y: player.y });
         if (key[5]) {
-            player.speed = 1;
+            player.speed = player.down_speed * 1;
         } else {
-            player.speed = 2;
+            player.speed = player.normal_speed * 1;
         }
     }
     if (mode == 2) {
@@ -425,6 +498,11 @@ function keyPush() {
         }
     }
     if (mode == 3) {
+        if (key[6]) mode = 0;
+    }
+    if (mode == 4) {
+        if (key[8]) pl_char = "n";
+        if (key[9]) pl_char = "m";
         if (key[6]) mode = 0;
     }
 }
@@ -534,4 +612,27 @@ function drawEllipse(sx, sy, radx, rady, border, inColor, outColor) {
         can2d.stroke();
     }
     can2d.fillStyle = old_color;
+}
+/*多角形のアレ*/
+function drawPolygon(points, border, inColor, outColor) {
+    var old_color = can2d.fillStyle;
+    can2d.fillStyle = inColor;
+    can2d.beginPath();
+    var p = points.shift();
+    can2d.moveTo(p[0], p[1]);
+    for (var i = 0; i < points.length; i++) {
+        can2d.lineTo(points[i][0], points[i][1]);
+    }
+    can2d.closePath();
+    if (inColor !== "None") {
+        can2d.fillStyle = inColor;
+        can2d.fill();
+    }
+    if (border !== 0) {
+        can2d.lineWidth = border;
+        can2d.strokeStyle = outColor;
+        can2d.stroke();
+    }
+    can2d.fillStyle = old_color;
+
 }
