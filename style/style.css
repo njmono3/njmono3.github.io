@@ -8,6 +8,10 @@ body {
     margin: 0 auto;
     width: 810px;
 }
+img {
+    margin: 0;
+    padding: 0;
+}
 .main-container{
     color: #aa6622;
     background-color: #fafa96; 
