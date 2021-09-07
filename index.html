@@ -19,6 +19,7 @@
                 </tr>
                 <tr>
                     <td>
+                        <b>最新動画</b><br />
                         <iframe width="320" height="160" src="https://ext.nicovideo.jp/thumb_user/84396179" scrolling="no" style="border:solid 1px #CCC;" frameborder="0">にものさん</iframe>
                     </td>
                 </tr>
@@ -32,7 +33,7 @@
         </div><!--
         --></td><td><!--
             --><div align="left" class="sub-container">
-                <h1>リンク</h1>
+                <h2>リンク</h2>
                 <script src="https://apis.google.com/js/platform.js"></script>
                 <div class="g-ytsubscribe" data-channelid="UCIrT2s7NYs2Gkcnp-i0V_Cg" data-layout="full" data-count="default"></div>
                 <a href="https://twitter.com/2mon00?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @2mon00</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
@@ -41,6 +42,11 @@
         </td>
     </table>
     <script>
-        setInterval(()=>{document.getElementsByClassName("sub-container")[0].style.height = document.getElementsByClassName("main-container")[0].clientHeight + "px"}, 1000);
+        setInterval(()=>{
+            if(document.getElementsByClassName("sub-container")[0] < document.getElementsByClassName("main-container")[0]) {
+                document.getElementsByClassName("sub-container")[0].style.height = document.getElementsByClassName("main-container")[0].clientHeight + "px";
+            } else {
+                document.getElementsByClassName("main-container")[0].style.height = document.getElementsByClassName("sub-container")[0].clientHeight + "px";
+            }}, 1000);
     </script>
 </body>
