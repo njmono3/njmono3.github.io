@@ -52,6 +52,6 @@
         </td>
     </table>
     <script>
-        window.onload = () => document.getElementsByClassName("sub-container")[0].style.height = document.getElementsByClassName("main-container")[0].clientHeight + "px";
+        setInterval(()=>{document.getElementsByClassName("sub-container")[0].style.height = document.getElementsByClassName("main-container")[0].clientHeight + "px"}, 1000);
     </script>
 </body>
