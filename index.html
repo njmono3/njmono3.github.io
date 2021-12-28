@@ -1,72 +1,15 @@
 <!DOCTYPE html>
+<html>
 <head>
-    <script>switch(new URLSearchParams(window.location.search).get("l")){case"YouTube":case"y":window.location="https://www.youtube.com/channel/UCIrT2s7NYs2Gkcnp-i0V_Cg";break;case"niconico":case"n":window.location="https://www.nicovideo.jp/user/84396179";break;case"Twitter":case"t":window.location="https://twitter.com/2mon00";break;case"bilibili":case"b":window.location="https://space.bilibili.com/661179426/";break;case"Qiita":case"q":window.location="https://qiita.com/NimonoQiita";break;case"pixiv":case"p":window.location="https://www.pixiv.net/users/34258177";break;case"Github":case"g":window.location="https://github.com/nimono3";break;default:break;}</script>
+    <script>switch (new URLSearchParams(window.location.search).get("l")) { case "YouTube": case "y": window.location = "https://www.youtube.com/channel/UCIrT2s7NYs2Gkcnp-i0V_Cg"; break; case "niconico": case "n": window.location = "https://www.nicovideo.jp/user/84396179"; break; case "Twitter": case "t": window.location = "https://twitter.com/2mon00"; break; case "bilibili": case "b": window.location = "https://space.bilibili.com/661179426/"; break; case "Qiita": case "q": window.location = "https://qiita.com/NimonoQiita"; break; case "pixiv": case "p": window.location = "https://www.pixiv.net/users/34258177"; break; case "GitHub": case "g": window.location = "https://github.com/nimono3"; break; default: break; }</script>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="./assets/images/nimono-logo-64.png"/>
     <title>にものさんの部屋</title>
-    <link rel="stylesheet" href="./style/style.css">
-    <link rel="icon" type="image/jpeg" href="./style/icon.jpg">
+    <link type="text/css" rel="stylesheet" href="./assets/styles/classes.css" />
+    <link type="text/css" rel="stylesheet" href="./assets/styles/tags.css" />
+    <link type="text/css" rel="stylesheet" href="./assets/styles/ids.css" />
 </head>
-<body background="style/back.png" align="center">
-    <table style="margin: 0 auto;">
-        <td>
-        <div align="center" class="main-container">
-            <h1>ようこそ</h1><br />
-            <a href="./index.html"><img src="style/logo.png" alt="NMN3の部屋" border="0"></a><br /><br />
-            <table border="1" frame="box">
-                <tr>
-                    <td>
-                        <a href="./game.html">＜ゲーム＞</a><br/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <b>ニコニコ</b><br />
-                        <iframe width="320" height="160" src="https://ext.nicovideo.jp/thumb_user/84396179" scrolling="no" style="border:solid 1px #CCC;" frameborder="0">にものさん</iframe>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <b>最新動画</b><br />
-                        <iframe width="312" height="176" src="https://ext.nicovideo.jp/thumb/sm39686395" scrolling="no" style="border:solid 1px #ccc;" frameborder="0"><a href="https://www.nicovideo.jp/watch/sm39686395">歌詞に難読コードを渡されたミク</a></iframe>
-                    </td>
-                </tr>
-            </table>
-            <div class="spacer"></div>
-        </div><!--
-        --></td><td><!--
-            --><div align="left" class="sub-container">
-                <h2>関連リンク</h2>
-                <table>
-                    <tr>
-                        <td>
-                            <img src="./style/spacer.gif" width="230" height="1"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <script src="https://apis.google.com/js/platform.js"></script>
-                            <div class="g-ytsubscribe" data-channelid="UCIrT2s7NYs2Gkcnp-i0V_Cg" data-layout="full" data-count="default"></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="https://twitter.com/2mon00?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @2mon00</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                           <a class="twitter-timeline" data-width="400" data-height="1200" data-theme="light" href="https://twitter.com/2mon00?ref_src=twsrc%5Etfw">Tweets by 2mon00</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                        <td>
-                    </tr>
-                </table>
-        </div>
-        </td>
-    </table>
-    <script>
-        setInterval(()=>{
-            if(document.getElementsByClassName("sub-container")[0] < document.getElementsByClassName("main-container")[0]) {
-                document.getElementsByClassName("sub-container")[0].style.height = document.getElementsByClassName("main-container")[0].clientHeight + "px";
-            } else {
-                document.getElementsByClassName("main-container")[0].style.height = document.getElementsByClassName("sub-container")[0].clientHeight + "px";
-            }}, 100);
-    </script>
+<body>
+    <script id="create-page" type="text/javascript" src="./assets/scripts/create_page.js" charset="utf-8"></script>
 </body>
+</html>
