@@ -1,0 +1,151 @@
+.main-body {
+    margin: 0;
+    color: #fafafa;
+    background-color: #4362bf;
+    font-family: 'Source Han Code JP', Meiryo;
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+}
+.main-body-container {
+    width: 100%;
+    margin: auto;
+    display: flex;
+}
+.main-header {
+    width: 100%;
+    background-color: #252525;
+    position: fixed;
+    z-index: 4;
+}
+.text {
+    color: #fafafa;
+}
+.link {
+    transition: 0.25s;
+    color: #007cff;
+    text-decoration: none;
+}
+.link:hover {
+    transition: 0.25s;
+    color: #cb4774;
+    text-decoration: solid underline;
+}
+.main-containiers {
+}
+.main-right-container {
+    margin-right: auto;
+    background-color: #252525;
+    box-shadow: 0 0 10px #606060;
+}
+.main-main-container {
+    margin-left: auto;
+    background-color: #252525;
+    box-shadow: 0 0 10px #606060;
+    min-height: 86vh;
+}
+.main-left-container {
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #252525;
+    box-shadow: 0 0 10px #606060;
+}
+.header-text {
+    z-index: 5;
+}
+/*=========================================================*/
+.main-title {
+    /**/color: #007cff;/*/
+    color: #fafafa;/**/
+}
+.main-title-line {
+    width: 90%;
+    border: 1px solid #cb4774;
+}
+.main-contents {
+    color: #fafafa;
+    background-color: #191919;
+    margin: 2vw;
+    margin-top: 1vw;
+    padding: 1vw;
+}
+.contents-link {
+    transition: 0.25s;
+    color: #007cff;
+    text-decoration: none;
+}
+.contents-link:hover {
+    transition: 0.25s;
+    color: #cb4774;
+    text-decoration: solid underline;
+}
+.end-line {
+    width: 90%;
+    border: 1px solid #191919;
+}
+/*=========================================================*/
+.site-navigation {
+    background-color: #191919;
+    margin: 0.5vw;
+    padding: 0.25vw;
+}
+.site-page-list {
+    list-style-type: none;
+}
+.navi-links {
+    transition: 0.25s;
+    color: #fafafa;
+}
+    .navi-links:hover {
+        transition: 0.25s;
+        color: #606060;
+    }
+/*=========================================================*/
+.profile-box {
+    background-color: #191919;
+    padding: 5px;
+}
+.profile-name {
+    color: #007cff;
+}
+.profile-text {
+    color: #fafafa;
+}
+.profile-icon {
+    border-radius: 50%;
+}
+.nimono-links {
+    /*text-align: left;*/
+}
+/*=======================*/
+.nimono-link-link {
+    text-decoration: none;
+    display: inline-block;
+}
+.nimono-link-icon {
+    transition: 0.25s;
+    background-size: cover;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+    display: inline-block;
+}
+.nimono-link-icon:hover {
+    transition: 0.25s;
+}
+.nimono-link-text {
+    transition: 0.25s;
+    color: #fafafa;
+    vertical-align: middle;
+}
+.nimono-link-text:hover {
+    transition: 0.25s;
+}
+/*=========================================================*/
+.main-footer {
+    width: 100%;
+    margin: 0;
+    background-color: #252525;
+    position: absolute;
+    bottom: 0;
+    z-index: 4;
+}
