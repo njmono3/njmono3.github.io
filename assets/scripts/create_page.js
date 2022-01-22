@@ -33,6 +33,40 @@ let breaker = document.createElement("br");
 let spacer = document.createElement("img");
 let liner = document.createElement("hr");
 let embed_nico = document.createElement("script");
+/*関数===================================================================*/
+let createEnumElement = (cee_link_name, cee_link_url, cee_link_comment, cee_img_objs) => {
+    let temp_all_div_el = document.createElement("div");
+    let temp_roll_el = document.createElement("span");
+    let temp_text_link_el = document.createElement("a");
+    let temp_comment_el = document.createElement("p");
+    let temp_img_link_el = document.createElement("a");
+    let temp_img_img_el = document.createElement("img");
+    temp_roll_el.className = "roll-text";
+    temp_roll_el.innerText = "|";
+    temp_text_link_el.appendChild(temp_roll_el);
+    temp_text_link_el.className = "enum-link";
+    temp_text_link_el.style.fontSize = sizes.big;
+    temp_text_link_el.innerHTML += cee_link_name;
+    temp_text_link_el.href = cee_link_url;
+    temp_all_div_el.appendChild(temp_text_link_el);
+
+    temp_comment_el.className = "text";
+    temp_comment_el.style.fontSize = sizes.medium;
+    temp_comment_el.innerHTML += cee_link_comment;
+    temp_all_div_el.appendChild(temp_comment_el);
+
+    cee_img_objs.map(l => {
+        temp_img_img_el.src = l.image;
+        temp_img_img_el.style.height = view_mode ? "40vw" : "15vw";
+        temp_img_link_el.href = l.link;
+        temp_img_link_el.setAttribute("target", "_blank");
+        temp_img_link_el.setAttribute("rel", "noopener");
+        temp_img_link_el.appendChild(temp_img_img_el);
+        temp_all_div_el.appendChild(temp_img_link_el.cloneNode(1));
+    });
+    temp_all_div_el.appendChild(document.createElement("br"));
+    return temp_all_div_el;
+}
 /*======================================================================*/
 let links = {
     "nimono": "./assets/images/nimono.png",
@@ -129,31 +163,13 @@ sizes.video.width = Math.floor(view_mode ? main_contents.clientWidth * (5 / 6) :
 sizes.video.height = sizes.video.width / 16 * 9;
 switch (contents_mode) {
     default:
-        link_element[0].className = "contents-link";
-        link_element[0].style.fontSize = sizes.big;
-        text_element.className = "text";
-        text_element.style.fontSize = sizes.medium;
-        image_element.className = "contents-image-image";
-        image_element.style.height = view_mode ? "40vw" : "15vw";
-        link_element[1].className = "contents-image-link";
         [
             //{ "text": "GAME", "link": "?c=g", "comment": "これまでに作ったゲームを公開しています" },
             { "text": "TOOL", "link": "?c=t", "comment": "これまでに作ったツール・ブラウザ拡張を公開しています", "images": [{ "image": images.nicoExp[0], "link": links.nicoExp }] },
             { "text": "VIDEO", "link": "?c=v", "comment": "制作した動画を載せています", "images": [] },
-            { "text": "ひとりごと", "link": "?c=s", "comment": "最近熱中してることやアニメ, " + (view_mode ? "" : "<br>") + "動画・ゲームの制作裏話を語っています", "images": [] }
+            { "text": "ひとりごと", "link": "?c=s", "comment": "最近してることやアニメ, " + (view_mode ? "" : "<br>") + "動画・ゲームの制作裏話を語っています", "images": [] }
         ].map(l => {
-            link_element[0].href = l.link;
-            link_element[0].innerHTML = "|" + l.text;
-            main_contents.appendChild(link_element[0].cloneNode(1));
-            text_element.innerHTML = l.comment;
-            main_contents.appendChild(text_element.cloneNode(1));
-            l.images.map(i => {
-                image_element.src = i.image;
-                link_element[1].href = i.link;
-                link_element[1].appendChild(image_element.cloneNode(1));
-                main_contents.appendChild(link_element[1].cloneNode(1));
-            });
-            main_contents.appendChild(breaker.cloneNode(1));
+            main_contents.appendChild( createEnumElement(...Object.values(l)) );
         });
         break;
     case "g":
@@ -169,23 +185,7 @@ switch (contents_mode) {
         main_contents.appendChild(text_element.cloneNode(1));
         break;
     case "t":
-        link_element[0].className = "link";
-        link_element[0].href = links.nicoExp;
-        link_element[0].style.fontSize = sizes.big;
-        link_element[0].innerHTML = "ニコニコ拡張";
-        main_contents.appendChild(link_element[0].cloneNode(1));
-
-        text_element.className = "text";
-        text_element.style.fontSize = sizes.medium;
-        text_element.innerHTML = "ニコニコ動画がより快適に使えることを目指した、Chrome拡張機能です。";
-        main_contents.appendChild(text_element.cloneNode(1));
-
-        image_element.className = "contents-image-image";
-        image_element.style.height = view_mode ? "40vw" : "15vw";
-        image_element.src = images.nicoExp[0];
-        link_element[1].href = links.nicoExp;
-        link_element[1].appendChild(image_element.cloneNode(1));
-        main_contents.appendChild(link_element[1].cloneNode(1));
+        main_contents.appendChild(createEnumElement("ニコニコ拡張", links.nicoExp, "ニコニコ動画がより快適に使えることを目指した、Chrome拡張機能です。", [{ image: images.nicoExp[0], link: links.nicoExp }]));
         break;
     case "v":
         main_contents.setAttribute("align", "center");
@@ -312,19 +312,18 @@ label_element.className = "footer-text";
 label_element.innerHTML = "<br><br>";
 page_footer.appendChild(label_element.cloneNode(1));
 /*動的処理================================================================*/
-let i = 0;
-let rolled = Array.from(document.getElementsByClassName("contents-link")).map(e => ({ "element": e, "over": false }));
+let genRoll = (function* () { while (1) { for (let i = 0; i < 4; i++) { yield ["/", "-", "&#92;", "|"][i]; } } })();
+let rolled = [...document.getElementsByClassName("roll-text")].map(e => ({ "element": e, "over": false }));
+rolled.map(l => {
+    l.element.parentNode.addEventListener("mouseover", e => {
+        l.over = true;
+    }, false);
+    l.element.parentNode.addEventListener("mouseleave", e => {
+        l.over = false;
+    }, false);
+});
 setInterval(loop, 100);
 function loop() {
-    for (let j = 0; j < rolled.length; j++) if (rolled[j].over) rolled[j].element.innerHTML = ["/", "-", "\\", "|"][i % 4] + rolled[j].element.innerHTML.slice(1); else rolled[j].element.innerHTML = "|" + rolled[j].element.innerHTML.slice(1);
+    rolled.map(i => i.element.innerHTML = i.over ? genRoll.next().value : "|");
     main_body_container.style.paddingBottom = page_footer.clientHeight + "px";
-    i++;
-}
-for (let j = 0; j < rolled.length; j++) {
-    rolled[j].element.addEventListener("mouseover", e => {
-        rolled[j].over = true;
-    }, false);
-    rolled[j].element.addEventListener("mouseleave", e => {
-        rolled[j].over = false;
-    }, false);
 }
