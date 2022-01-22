@@ -69,12 +69,12 @@
     margin-top: 1vw;
     padding: 1vw;
 }
-.contents-link {
+.enum-link {
     transition: 0.25s;
     color: #007cff;
     text-decoration: none;
 }
-.contents-link:hover {
+.enum-link:hover {
     transition: 0.25s;
     color: #cb4774;
     text-decoration: solid underline;
