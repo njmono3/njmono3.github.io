@@ -1,3 +1,31 @@
 p {
     margin: 0;
 }
+h1, h2 {
+    margin: 0;
+}
+h1 {
+    font-size: 2.5vw;
+}
+h2 {
+    font-size: 1.5vw;
+}
+p {
+    font-size: 1vw;
+}
+a {
+    color: #007cff;
+    font-weight: bolder;
+    text-decoration: none;
+}
+    a:visited {
+        color: #484888;
+    }
+    a:hover {
+        transition: 0.25s;
+        color: #cb4774;
+        text-decoration: solid underline;
+    }
+b {
+    color: #fa6060;
+}

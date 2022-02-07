@@ -7,6 +7,12 @@
     flex-wrap: wrap;
     position: relative;
 }
+.note-body {
+    margin: 0;
+    color: #fafafa;
+    font-family: 'Source Han Code JP', Meiryo;
+    position: relative;
+}
 .main-body-container {
     width: 100%;
     margin: auto;
@@ -42,7 +48,7 @@
     margin-left: auto;
     background-color: #252525;
     box-shadow: 0 0 10px #606060;
-    min-height: 86vh;
+    min-height: 93vh;
 }
 .main-left-container {
     margin-left: auto;
@@ -73,6 +79,10 @@
     transition: 0.25s;
     color: #007cff;
     text-decoration: none;
+    cursor: pointer;
+}
+.enum-link:visited {
+    color: #007cff;
 }
 .enum-link:hover {
     transition: 0.25s;
