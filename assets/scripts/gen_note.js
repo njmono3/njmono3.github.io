@@ -1,9 +1,9 @@
 const parser = function (string) {//簡易マークダウンもどき
     return string
-        .replace(/####(.+)/g, "</p><h4>$1</h4><p>")
-        .replace(/###(.+)/g, "</p><h3>$1</h3><p>")
-        .replace(/##(.+)/g, "</p><h2>$1</h2><p>")
-        .replace(/#(.+)/g, "</p><h1>$1</h1><p>")
+        .replace(/####(.+)/g, `</p><h4 class="note">$1</h4><p>`)
+        .replace(/###(.+)/g, `</p><h3 class="note">$1</h3><p>`)
+        .replace(/##(.+)/g, `</p><h2 class="note">$1</h2><p>`)
+        .replace(/#(.+)/g, `</p><h1 class="note">$1</h1><p>`)
         .replace(/([^]+)/g, "<p>$1</p>")
         .replace(/!\[(.+), ?(\d+)\]\((.+) "(.+)"\)/g, `</p><div class="image-div" style="height: $2px;"><img alt="$1" src="$3" title="$4"/></div><p>`)
         .replace(/\[(.+)\]\((.+) "(.+)" "(.+)"\)/g, `<a href="$2" title="$3" target="$4">$1</a>`)
@@ -38,6 +38,6 @@ const gen_notes = function (n = "nil", p = "0") {
         }
     }
     req.open("GET", `./note/${n}.txt`);
-    req.send()
+    req.send();
 }
 gen_notes(new URLSearchParams(window.location.search).get("n") || "nil", new URLSearchParams(window.location.search).get("page") || "0");
