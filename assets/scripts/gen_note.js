@@ -35,8 +35,8 @@ const gen_notes = function (n = "nil", p = "0") {
             }
         }
     }
-    //req.open("GET", `./note/${n}.txt`);
-    //req.send()
+    req.open("GET", `./note/${n}.txt`);
+    req.send()
     El.appendChildren(main_contents, parser(``));
 }
 gen_notes(new URLSearchParams(window.location.search).get("n") || "nil", new URLSearchParams(window.location.search).get("page") || "0");
