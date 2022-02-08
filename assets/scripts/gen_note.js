@@ -24,7 +24,7 @@ const gen_notes = function (n = "nil", p = "0") {
     const main_container = document.getElementById("main-container");
     const footer = document.getElementById("footer");
     let main_contents;
-    main_container.appendChild(main_contents = new El("div", "", {}, { class: "main-contents", align: "left" }).gen());
+    main_container.appendChild(main_contents = new El("div", "", {}, { class: "main-contents note-contents", align: "left" }).gen());
 
     let req = new XMLHttpRequest();
     req.onreadystatechange = () => {
