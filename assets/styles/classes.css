@@ -159,3 +159,20 @@
     bottom: 0;
     z-index: 4;
 }
+/*notes=================================================================*/
+.strong-line {
+    width: 95%;
+    border-color: #cb4774;
+    margin-left: 0;
+}
+.weak-line {
+    width: 85%;
+    border-color: #fafafa;
+    margin-left: 0;
+}
+.image-div {
+    margin-bottom: 10px;
+}
+.image-div img {
+    height: 100%;
+}
