@@ -184,7 +184,7 @@ h1.note {
     background: linear-gradient(to right, #252525 75%, #191919);
 }
 
-    h1::before.note {
+    h1.note::before {
         content: "";
         position: absolute;
         left: 0px;
@@ -201,7 +201,7 @@ h2.note {
     background: linear-gradient(to right, #252525, #191919 25%);
 }
 
-    h2::before.note {
+    h2.note::before {
         content: "";
         position: absolute;
         left: 0;
