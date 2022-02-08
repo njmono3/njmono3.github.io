@@ -15,6 +15,7 @@ const parser = function (string) {//簡易マークダウンもどき
         .replace(/(?<!<p>)\n/g, "<br/>");
 }
 layout();
+const setPageTitle = title => document.title = title + " - にものさんの部屋";
 const gen_notes = function (n = "nil", p = "0") {
     setPageTitle(n);
     const body_container = document.getElementById("body-container");
