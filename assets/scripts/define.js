@@ -99,3 +99,4 @@ const layout = () => {
     }, { class: "main-main-container", id: "main-container", align: "center" }).gen(), main_body_container.firstChild);
     //if (!view_mode) page_body.appendChild(new El("div", "", {}, { align: "center", class: "main-footer", id: "footer" }).gen());
 }
+const setPageTitle = title => document.title = title + " - ‚É‚à‚Ì‚³‚ñ‚Ì•”‰®";
