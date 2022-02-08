@@ -5,8 +5,10 @@ let parser = function (string) {//簡易マークダウンもどき
         .replace(/##(.+)/g, "</p><h2>$1</h2><p>")
         .replace(/#(.+)/g, "</p><h1>$1</h1><p>")
         .replace(/([^]+)/g, "<p>$1</p>")
-        .replace(/!\[(.+)\]\((.+) "(.+)"\)/g, `</p><img alt="$1" src="$2" title="$3"/><p>`)
+        .replace(/!\[(.+), ?(\d+)\]\((.+) "(.+)"\)/g, `</p><div class="image-div" style="height: $2px;"><img alt="$1" src="$3" title="$4"/></div><p>`)
         .replace(/\[(.+)\]\((.+) "(.+)" "(.+)"\)/g, `<a href="$2" title="$3" target="$4">$1</a>`)
+        .replace(/\n\*\*\*\n/g, `</p><hr class="strong-line"/><p>`)
+        .replace(/\n---\n/g, `</p><hr class="weak-line"/><p>`)
         .replace(/\*([^*]+)\*/g, "<b>$1</b>")
         .replace(/<p>[\s\n]*/g, "<p>")
         .replace(/<p><\/p>/g, "")
@@ -33,7 +35,8 @@ const gen_notes = function (n = "nil", p = "0") {
             }
         }
     }
-    req.open("GET", `./note/${n}.txt`);
-    req.send()
+    //req.open("GET", `./note/${n}.txt`);
+    //req.send()
+    El.appendChildren(main_contents, parser(``));
 }
 gen_notes(new URLSearchParams(window.location.search).get("n") || "nil", new URLSearchParams(window.location.search).get("page") || "0");
