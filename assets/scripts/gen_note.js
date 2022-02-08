@@ -1,4 +1,4 @@
-let parser = function (string) {//簡易マークダウンもどき
+const parser = function (string) {//簡易マークダウンもどき
     return string
         .replace(/####(.+)/g, "</p><h4>$1</h4><p>")
         .replace(/###(.+)/g, "</p><h3>$1</h3><p>")
@@ -16,6 +16,7 @@ let parser = function (string) {//簡易マークダウンもどき
 }
 layout();
 const gen_notes = function (n = "nil", p = "0") {
+    setPageTitle(n);
     const body_container = document.getElementById("body-container");
     const header = document.getElementById("header");
     const right_container = document.getElementById("right-container");
@@ -37,6 +38,5 @@ const gen_notes = function (n = "nil", p = "0") {
     }
     req.open("GET", `./note/${n}.txt`);
     req.send()
-    El.appendChildren(main_contents, parser(``));
 }
 gen_notes(new URLSearchParams(window.location.search).get("n") || "nil", new URLSearchParams(window.location.search).get("page") || "0");
