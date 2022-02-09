@@ -16,8 +16,8 @@ const parser = function (string) {//簡易マークダウンもどき
 }
 layout();
 const setPageTitle = title => document.title = title + " - にものさんの部屋";
-const gen_notes = function (n = "nil", p = "0") {
-    setPageTitle(n);
+const split_char = String.fromCharCode(0xe01A);
+const gen_notes = function (note = "0", p = "0") {
     const body_container = document.getElementById("body-container");
     const header = document.getElementById("header");
     const right_container = document.getElementById("right-container");
@@ -26,18 +26,22 @@ const gen_notes = function (n = "nil", p = "0") {
     let main_contents;
     main_container.appendChild(main_contents = new El("div", "", {}, { class: "main-contents note-contents", align: "left" }).gen());
 
-    let req = new XMLHttpRequest();
-    req.onreadystatechange = () => {
-        if (req.readyState == 4) {
-            if (req.status) {
-                if (200 <= req.status && req.status < 300 || req.status == 304) {
-                    let restext = req.responseText;
-                    El.appendChildren(main_contents, parser(restext));
-                }
+    if (1) {
+        const gen_page = (name) => xhr.get(`./note/${name}.txt`, stat => {
+            if (stat === "ok") {
+                setPageTitle(name);
+                let restext = req.responseText;
+                El.appendChildren(main_contents, parser(restext));
             }
-        }
+        });
+
+        xhr.get(`./assets/datas/readable_note.txt`, stat => {
+            if (stat === "ok") {
+                let restext = req.responseText;
+                let note_data = restext.split("\n").map(line => (d => d[0] === note && d)(line.split(split_char))).filter(_ => _)[0];
+                gen_page(note_data[1]);
+            }
+        });
     }
-    req.open("GET", `./note/${n}.txt`);
-    req.send();
 }
-gen_notes(new URLSearchParams(window.location.search).get("n") || "nil", new URLSearchParams(window.location.search).get("page") || "0");
+gen_notes((o => Object.keys(o).filter(k => !o[k]).shift())(getQueryObject()) || "0", getQueryObject().p || "0");

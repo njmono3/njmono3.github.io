@@ -6,64 +6,22 @@ h1, h2 {
     margin: 0;
 }
 
-    h1.note {
-        position: relative;
-        font-size: 36px;
-        padding-left: 12px;
-        background: linear-gradient(to right, #252525 75%, #191919);
-    }
-
-        h1.note::before {
-            content: "";
-            position: absolute;
-            left: 0px;
-            top: 0;
-            width: 10px;
-            height: 100%;
-            background-color: #007cff;
-        }
-
-    h2.note {
-        position: relative;
-        font-size: 27px;
-        padding-left: 6px;
-        background: linear-gradient(to right, #252525, #191919 25%);
-    }
-
-        h2.note::before {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 5px;
-            height: 50%;
-            background-color: #007cff;
-        }
-
-h3.note {
-    font-size: 18px
-}
-
-.note-contents p {
-    font-size: 18px;
-}
-
 a {
-    color: #007cff;
+    color: var(--main-accent);
     font-weight: bolder;
     text-decoration: none;
 }
 
     a:visited {
-        color: #484888;
+        color: var(--feeble-text);
     }
 
     a:hover {
         transition: 0.25s;
-        color: #cb4774;
+        color: var(--sub-accent);
         text-decoration: solid underline;
     }
 
 b {
-    color: #fa6060;
+    color: var(--strong-text);
 }

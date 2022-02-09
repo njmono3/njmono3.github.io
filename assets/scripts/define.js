@@ -55,7 +55,7 @@ let view_size = {
     width: document.documentElement.clientWidth,
     height: document.documentElement.clientHeight
 };
-let view_mode = (view_size.width < view_size.height);//c‰æ–Ê1, ‰¡‰æ–Ê0‚ÅƒXƒ^ƒCƒ‹‚ð•ÏX
+let view_mode = (view_size.width < view_size.height);//ç¸¦ç”»é¢1, æ¨ªç”»é¢0ã§ã‚¹ã‚¿ã‚¤ãƒ«ã‚’å¤‰æ›´
 let links = {
     "nimono": "./assets/images/nimono.png",
     "nicoExp": "https://github.com/nimono3/nicoExpansion"
@@ -78,7 +78,7 @@ let sizes = {
         "height": 0
     }
 };
-/*‘å˜g===================================================================*/
+/*å¤§æž ===================================================================*/
 const layout = () => {
     let page_body = document.body;
     page_body.className = "main-body";
@@ -99,3 +99,21 @@ const layout = () => {
     }, { class: "main-main-container", id: "main-container", align: "center" }).gen(), main_body_container.firstChild);
     //if (!view_mode) page_body.appendChild(new El("div", "", {}, { align: "center", class: "main-footer", id: "footer" }).gen());
 }
+/*======================================================================*/
+const getQueryObject = () => window.location.search.split('?').pop().split('&').reduce((acc, val) => ({ ...acc, ...(v => ({ [v[0]]: v[1] }))((val + "=").split('=')) }), {});
+const xhr = {
+    get: (url, f) => {
+        let req = new XMLHttpRequest();
+        req.onreadystatechange = () => {
+            if (req.readyState == 4) {
+                if (req.status) {
+                    if (200 <= req.status && req.status < 300 || req.status == 304) {
+                        f("ok");
+                    }
+                }
+            }
+        }
+        req.open("GET", url);
+        req.send();
+    }
+};

@@ -1,7 +1,7 @@
 .main-body {
     margin: 0;
-    color: #fafafa;
-    background-color: #4362bf;
+    color: var(--n-white);
+    background-color: var(--bg-color);
     font-family: 'Source Han Code JP', Meiryo;
     display: flex;
     flex-wrap: wrap;
@@ -9,7 +9,7 @@
 }
 .note-body {
     margin: 0;
-    color: #fafafa;
+    color: var(--n-white);
     font-family: 'Source Han Code JP', Meiryo;
     position: relative;
 }
@@ -20,40 +20,40 @@
 }
 .main-header {
     width: 100%;
-    background-color: #252525;
+    background-color: var(--n-black);
     position: fixed;
     z-index: 4;
 }
 .text {
-    color: #fafafa;
+    color: var(--n-white);
 }
 .link {
     transition: 0.25s;
-    color: #007cff;
+    color: var(--main-accent);
     text-decoration: none;
 }
 .link:hover {
     transition: 0.25s;
-    color: #cb4774;
+    color: var(--sub-accent);
     text-decoration: solid underline;
 }
 .main-containiers {
 }
 .main-right-container {
     margin-right: auto;
-    background-color: #252525;
+    background-color: var(--n-black);
     box-shadow: 0 0 10px #606060;
 }
 .main-main-container {
     margin-left: auto;
-    background-color: #252525;
+    background-color: var(--n-black);
     box-shadow: 0 0 10px #606060;
     min-height: 93vh;
 }
 .main-left-container {
     margin-left: auto;
     margin-right: auto;
-    background-color: #252525;
+    background-color: var(--n-black);
     box-shadow: 0 0 10px #606060;
 }
 .header-text {
@@ -61,41 +61,41 @@
 }
 /*=========================================================*/
 .main-title {
-    /**/color: #007cff;/*/
-    color: #fafafa;/**/
+    /**/color: var(--main-accent);/*/
+    color: var(--n-white);/**/
 }
 .main-title-line {
     width: 90%;
-    border: 1px solid #cb4774;
+    border: 1px solid var(--sub-accent);
 }
 .main-contents {
-    color: #fafafa;
-    background-color: #191919;
+    color: var(--n-white);
+    background-color: var(--dark-black);
     margin: 2vw;
     margin-top: 1vw;
     padding: 1vw;
 }
 .enum-link {
     transition: 0.25s;
-    color: #007cff;
+    color: var(--main-accent);
     text-decoration: none;
     cursor: pointer;
 }
 .enum-link:visited {
-    color: #007cff;
+    color: var(--main-accent);
 }
 .enum-link:hover {
     transition: 0.25s;
-    color: #cb4774;
+    color: var(--sub-accent);
     text-decoration: solid underline;
 }
 .end-line {
     width: 90%;
-    border: 1px solid #191919;
+    border: 1px solid var(--dark-black);
 }
 /*=========================================================*/
 .site-navigation {
-    background-color: #191919;
+    background-color: var(--dark-black);
     margin: 0.5vw;
     padding: 0.25vw;
 }
@@ -104,7 +104,7 @@
 }
 .navi-links {
     transition: 0.25s;
-    color: #fafafa;
+    color: var(--n-white);
 }
     .navi-links:hover {
         transition: 0.25s;
@@ -112,14 +112,14 @@
     }
 /*=========================================================*/
 .profile-box {
-    background-color: #191919;
+    background-color: var(--dark-black);
     padding: 5px;
 }
 .profile-name {
-    color: #007cff;
+    color: var(--main-accent);
 }
 .profile-text {
-    color: #fafafa;
+    color: var(--n-white);
 }
 .profile-icon {
     border-radius: 50%;
@@ -144,7 +144,7 @@
 }
 .nimono-link-text {
     transition: 0.25s;
-    color: #fafafa;
+    color: var(--n-white);
     vertical-align: middle;
 }
 .nimono-link-text:hover {
@@ -154,7 +154,7 @@
 .main-footer {
     width: 100%;
     margin: 0;
-    background-color: #252525;
+    background-color: var(--n-black);
     position: absolute;
     bottom: 0;
     z-index: 4;
@@ -162,12 +162,12 @@
 /*notes=================================================================*/
 .strong-line {
     width: 95%;
-    border-color: #cb4774;
+    border-color: var(--sub-accent);
     margin-left: 0;
 }
 .weak-line {
     width: 85%;
-    border-color: #fafafa;
+    border-color: var(--n-white);
     margin-left: 0;
 }
 .image-div {
@@ -175,4 +175,46 @@
 }
 .image-div img {
     height: 100%;
+}
+
+h1.note {
+    position: relative;
+    font-size: 36px;
+    padding-left: 12px;
+    background: linear-gradient(to right, var(--n-black) 75%, var(--dark-black));
+}
+
+    h1.note::before {
+        content: "";
+        position: absolute;
+        left: 0px;
+        top: 0;
+        width: 10px;
+        height: 100%;
+        background-color: var(--main-accent);
+    }
+
+h2.note {
+    position: relative;
+    font-size: 27px;
+    padding-left: 6px;
+    background: linear-gradient(to right, var(--n-black), var(--dark-black) 25%);
+}
+
+    h2.note::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 5px;
+        height: 50%;
+        background-color: var(--main-accent);
+    }
+
+h3.note {
+    font-size: 18px
+}
+
+.note-contents p {
+    font-size: 18px;
 }
