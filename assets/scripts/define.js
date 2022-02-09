@@ -102,13 +102,13 @@ const layout = () => {
 /*======================================================================*/
 const getQueryObject = () => window.location.search.split('?').pop().split('&').reduce((acc, val) => ({ ...acc, ...(v => ({ [v[0]]: v[1] }))((val + "=").split('=')) }), {});
 const xhr = {
-    get: (url, f) => {
+    get: (url, f, res) => {
         let req = new XMLHttpRequest();
         req.onreadystatechange = () => {
             if (req.readyState == 4) {
                 if (req.status) {
                     if (200 <= req.status && req.status < 300 || req.status == 304) {
-                        f("ok");
+                        f("ok", req[res]);
                     }
                 }
             }

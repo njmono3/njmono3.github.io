@@ -27,21 +27,19 @@ const gen_notes = function (note = "0", p = "0") {
     main_container.appendChild(main_contents = new El("div", "", {}, { class: "main-contents note-contents", align: "left" }).gen());
 
     if (1) {
-        const gen_page = (name) => xhr.get(`./note/${name}.txt`, stat => {
+        const gen_page = (name) => xhr.get(`./note/${name}.txt`, (stat, restext) => {
             if (stat === "ok") {
                 setPageTitle(name);
-                let restext = req.responseText;
                 El.appendChildren(main_contents, parser(restext));
             }
-        });
+        }, "responseText");
 
-        xhr.get(`./assets/datas/readable_note.txt`, stat => {
+        xhr.get(`./assets/datas/readable_note.txt`, (stat, restext) => {
             if (stat === "ok") {
-                let restext = req.responseText;
                 let note_data = restext.split("\n").map(line => (d => d[0] === note && d)(line.split(split_char))).filter(_ => _)[0];
                 gen_page(note_data[1]);
             }
-        });
+        }, "responseText");
     }
 }
 gen_notes((o => Object.keys(o).filter(k => !o[k]).shift())(getQueryObject()) || "0", getQueryObject().p || "0");
