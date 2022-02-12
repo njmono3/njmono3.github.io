@@ -1,0 +1,126 @@
+html {
+    --bg-color: #4362bf;
+    --light-black: #353535;
+    --n-black: #252525;
+    --dark-black: #191919;
+    --n-white: #fafafa;
+    --main-accent: #007cff;
+    --sub-accent: #cb4774;
+    --feeble-text: #484888;
+    --strong-text: #fa6060;
+    --is-sp: 1;
+    --font-large: 54px; /*3vw*/
+    --font-verybig: 36px; /*2vw*/
+    --font-big: 27px; /*1.5vw*/
+    --font-medium: 18px; /*1vw*/
+    --font-small: 13.5px; /*0.75vw*/
+}
+
+    html[view-mode="sp"] {
+        --is-sp: 2;
+    }
+
+/**/
+p {
+    margin: 0;
+}
+
+h1, h2, h3 {
+    margin: 0;
+}
+
+text {
+    font-weight: bolder;
+}
+
+a {
+    color: var(--main-accent);
+    font-weight: bolder;
+    text-decoration: none;
+}
+
+    a:visited {
+        color: var(--feeble-text);
+    }
+
+    a:hover {
+        transition: 0.25s;
+        color: var(--sub-accent);
+        text-decoration: solid underline;
+    }
+
+b {
+    color: var(--strong-text);
+}
+/**/
+.main-body {
+    margin: 0;
+    color: var(--n-white);
+    background-color: var(--bg-color);
+    font-family: 'Source Han Code JP', Meiryo;
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.main-body-container {
+    width: 100%;
+    margin: auto;
+    display: flex;
+}
+
+.main-header {
+    width: 100%;
+    height: calc(var(--font-verybig) * var(--is-sp));
+    background-color: var(--n-black);
+    position: fixed;
+    z-index: 4;
+}
+/**/
+.main-right-container {
+    margin-right: auto;
+    background-color: var(--n-black);
+    box-shadow: 0 0 10px #606060;
+}
+
+.main-main-container {
+    margin-left: auto;
+    background-color: var(--n-black);
+    box-shadow: 0 0 10px #606060;
+    min-height: 93vh;
+}
+/**/
+.header-text {
+    z-index: 5;
+}
+/**/
+.main-contents {
+    color: var(--n-white);
+    background-color: var(--dark-black);
+    margin: 2vw;
+    margin-top: 1vw;
+    padding: 1vw;
+}
+.enum-link {
+    transition: 0.25s;
+    color: var(--main-accent);
+    text-decoration: none;
+    cursor: pointer;
+    font-size: calc(var(--font-verybig) * var(--is-sp));
+    font-weight: normal;
+}
+
+    .enum-link:visited {
+        color: var(--main-accent);
+    }
+
+    .enum-link:hover {
+        transition: 0.25s;
+        color: var(--sub-accent);
+        text-decoration: solid underline;
+    }
+
+.enum.text {
+    font-size: calc(var(--font-big) * var(--is-sp));
+}
+/**/

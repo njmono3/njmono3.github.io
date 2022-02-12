@@ -13,10 +13,10 @@ const gen_home = function (contents_mode, open = -1) {
     /*ヘッダ==================================================================*/
     /*真ん中:メインコンテンツ=====================================================*/
     if (!["g", "t", "v", "s"].includes(contents_mode)) {
-        main_container.appendChild(new El("h1", "にものさんの部屋", { fontSize: view_mode ? "9vw" : "3vw" }, { class: "main-title" }).gen());
+        main_container.appendChild(new El("h1", "にものさんの部屋", {}, { class: "main-title" }).gen());
         El.appendChildren(main_container, liner.dif({ attr: { class: "main-title-line" } }).gen());
     }
-    El.appendChildren(main_container, new El("p", ({ "g": "GAME", "t": "TOOL", "v": "VIDEO", "s": "ひとりごと" })[contents_mode] || "HOME", { fontSize: sizes.big }, { class: "text" }));
+    El.appendChildren(main_container, new El("p", ({ "g": "GAME", "t": "TOOL", "v": "VIDEO", "s": "ひとりごと" })[contents_mode] || "HOME", { fontSize: "calc(var(--font-verybig) * var(--is-sp))" }, {}));
 
     let main_contents;
     main_container.appendChild(main_contents = new El("div", "", {}, { class: "main-contents", align: "left" }).gen());
@@ -25,7 +25,7 @@ const gen_home = function (contents_mode, open = -1) {
         "t": "これまでに作ったツール・ブラウザ拡張を公開しています",
         "v": "制作した動画を載せています",
         "s": "最近熱中してることやアニメ, " + "動画・ゲームの制作裏話を語っています"
-    })[contents_mode] || "ここはホームページです", { fontSize: sizes.medium }, { class: "text" }).gen(), main_contents);
+    })[contents_mode] || "ここはホームページです", { fontSize: "calc(var(--font-big) * var(--is-sp))" }, {}).gen(), main_contents);
     sizes.video.width = Math.floor(view_mode ? main_contents.clientWidth * (5 / 6) : main_contents.clientWidth / 2.1);
     sizes.video.height = sizes.video.width / 16 * 9;
     switch (contents_mode) {
@@ -34,7 +34,7 @@ const gen_home = function (contents_mode, open = -1) {
                 //{ text: "GAME", link: "?c=g", comment: "これまでに作ったゲームを公開しています", images: [] },
                 { text: "TOOL", link: "", comment: "これまでに作ったツール・ブラウザ拡張を公開しています", images: [{ image: images.nicoExp[0], link: links.nicoExp }], attrs: [{}, { onclick: `history.pushState({c:"t"},"","./index.html?c=t");gen_home("t");` }, {}] },
                 //{ "text": "VIDEO", "link": "?c=v", "comment": "制作した動画を載せています", "images": [] },
-                { text: "ひとりごと", link: "", comment: "最近してることやアニメ, " + (view_mode ? "" : "<br>") + "動画・ゲームの制作裏話を語っています", images: [], attrs: [{}, { onclick: `history.pushState({c:"s"},"","./index.html?c=s");gen_home("s");` }, {}] }
+                { text: "ひとりごと", link: "./note?0", comment: "最近してることやアニメ, " + (view_mode ? "" : "<br>") + "動画・ゲームの制作裏話を語っています", images: [] }
             ].map(l => genEnumElement(...Object.values(l))));
             break;
         case "g":
@@ -71,15 +71,15 @@ const gen_home = function (contents_mode, open = -1) {
             break;
         case "s":
             setPageTitle("ひとりごと");
-            main_contents.appendChild(new El("a", "note", { fontSize: sizes.medium }, { href: "./note.html" }).gen());
+            main_contents.appendChild(new El("a", "note", { fontSize: "var(--font-big)" }, { href: "./note?0" }).gen());
             break;
     }
     /*右:プロフィール===========================================================*/
     El.appendChildren(right_container, new El("div", "", { margin: view_mode ? "2vw" : "1vw" }, { class: "profile-box", align: "center" }, [
-        new El("b", "にものさん", { fontSize: view_mode ? "8vw" : "1.75vw" }, { class: "profile-name" }),
+        new El("b", "にものさん", {}, { class: "profile-name" }),
         breaker,
         new El("img", "", { width: view_mode ? "30vw" : "8vw" }, { class: "profile-icon", src: links.nimono, alt: "にものさんのアイコン" }),
-        new El("p", "動画/ツール/イラストなどを日々創作しています", { fontSize: view_mode ? "5vw" : "1.25vw" }, { class: "profile-text" }),
+        new El("p", "動画/ツール/イラストなどを日々創作しています", {}, { class: "profile-text" }),
         new El("div", "", { margin: view_mode ? "5vw" : "0.75vw" }, { class: "nimono-links" },
             [
                 { "text": "ニコニコ", "link": "?l=niconico", "color": "#606060", "img": images.nico },
@@ -95,9 +95,6 @@ const gen_home = function (contents_mode, open = -1) {
             )
         )
     ]));
-    /*フッタ==================================================================*/
-    if (footer) El.appendChildren(footer, new El("b", "", { fontSize: sizes.medium }, { class: "footer-text" }, ["<br><br>"]));
-    if (footer) body_container.style.paddingBottom = footer.clientHeight + "px";
     /*======================================================================*/
     let genRoll = (function* () { while (1) { for (let i = 0; i < 4; i++) { yield ["/", "-", "&#92;", "|"][i]; } } })();
     let rolled = [...document.getElementsByClassName("roll-text")].map(e => ({ element: e, interval: {} }));

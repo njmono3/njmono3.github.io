@@ -39,11 +39,11 @@ const breaker = new El("br");
 let liner = new El("hr");
 const genEnumElement = (gee_link_name, gee_link_url, gee_link_comment, gee_img_objs, gee_attrs = [{}, {}, {}]) =>
     new El("div", "", {}, gee_attrs[0], [
-        new El(gee_link_url ? "a" : "text", "", { fontSize: sizes.big }, { class: "enum-link", href: gee_link_url, ...gee_attrs[1] }, [
+        new El(gee_link_url ? "a" : "text", "", {}, { class: "enum-link", href: gee_link_url, ...gee_attrs[1] }, [
             new El("span", "|", {}, { class: "roll-text" }),
             gee_link_name
         ]),
-        new El("p", "", { fontSize: sizes.medium }, { class: "text", ...gee_attrs[2] }, [gee_link_comment].flat()),
+        new El("p", "", {}, { class: "text enum", ...gee_attrs[2] }, [gee_link_comment].flat()),
         ...gee_img_objs.map(l =>
             new El("a", "", {}, { href: l.link, target: "_blank", rel: "noopener" }, [
                 new El("img", "", { height: view_mode ? "40vw" : "15vw" }, { src: l.image })
@@ -56,6 +56,7 @@ let view_size = {
     height: document.documentElement.clientHeight
 };
 let view_mode = (view_size.width < view_size.height);//縦画面1, 横画面0でスタイルを変更
+if (view_mode) document.getElementsByTagName("html")[0].setAttribute("view-mode", "sp");
 let links = {
     "nimono": "./assets/images/nimono.png",
     "nicoExp": "https://github.com/nimono3/nicoExpansion"
@@ -82,7 +83,7 @@ let sizes = {
 const layout = () => {
     let page_body = document.body;
     page_body.className = "main-body";
-    El.appendChildren(page_body, new El("div", "", { height: view_mode ? "55px" : "36px" }, { class: "main-header", id: "header" }).gen());
+    El.appendChildren(page_body, new El("div", "", {}, { class: "main-header", id: "header" }).gen());
     let main_body_container;
     El.appendChildren(page_body, main_body_container = new El("div").attr({ class: "main-body-container", id: "body-container" }).gen());
     if (view_mode) page_body.style.display = "inline";
@@ -97,7 +98,6 @@ const layout = () => {
         marginTop: view_mode ? "60px" : "45px",
         marginRight: view_mode ? "auto" : "0.5vw"
     }, { class: "main-main-container", id: "main-container", align: "center" }).gen(), main_body_container.firstChild);
-    //if (!view_mode) page_body.appendChild(new El("div", "", {}, { align: "center", class: "main-footer", id: "footer" }).gen());
 }
 /*======================================================================*/
 const getQueryObject = () => window.location.search.split('?').pop().split('&').reduce((acc, val) => ({ ...acc, ...(v => ({ [v[0]]: v[1] }))((val + "=").split('=')) }), {});

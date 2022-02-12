@@ -1,0 +1,77 @@
+/*===============================================*/
+/*====================================================*/
+.text {
+    color: var(--n-white);
+}
+.link {
+    transition: 0.25s;
+    color: var(--main-accent);
+    text-decoration: none;
+}
+.link:hover {
+    transition: 0.25s;
+    color: var(--sub-accent);
+    text-decoration: solid underline;
+}
+/*=========================================================*/
+.main-title {
+    /**/ color: var(--main-accent); /*/
+    color: var(--n-white);/**/
+    font-size: calc(var(--font-large) * var(--is-sp));
+}
+.main-title-line {
+    width: 90%;
+    border: 1px solid var(--sub-accent);
+}
+.end-line {
+    width: 90%;
+    border: 1px solid var(--dark-black);
+}
+/*=========================================================*/
+.profile-box {
+    background-color: var(--dark-black);
+    padding: 5px;
+}
+.profile-name {
+    color: var(--main-accent);
+    font-size: calc(var(--font-big) * var(--is-sp));
+}
+.profile-text {
+    color: var(--n-white);
+    font-size: calc(var(--font-medium) * var(--is-sp));
+}
+.profile-icon {
+    border-radius: 50%;
+}
+.nimono-links {
+    /*text-align: left;*/
+}
+/*=======================*/
+.nimono-link-link {
+    text-decoration: none;
+    display: inline-block;
+}
+.nimono-link-icon {
+    transition: 0.25s;
+    background-size: cover;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+    display: inline-block;
+}
+.nimono-link-icon:hover {
+    transition: 0.25s;
+}
+.nimono-link-text {
+    transition: 0.25s;
+    color: var(--n-white);
+    vertical-align: middle;
+}
+.nimono-link-text:hover {
+    transition: 0.25s;
+}
+/*=========================================================*/
+#nimono-links {
+    background-color: #606060;
+    margin: 10px;
+    padding: 5px;
+}

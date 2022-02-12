@@ -1,0 +1,69 @@
+
+.note-body {
+    margin: 0;
+    color: var(--n-white);
+    font-family: 'Source Han Code JP', Meiryo;
+    position: relative;
+}
+
+.strong-line {
+    width: 95%;
+    border-color: var(--sub-accent);
+    margin-left: 0;
+}
+
+.weak-line {
+    width: 85%;
+    border-color: var(--n-white);
+    margin-left: 0;
+}
+
+.image-div {
+    margin-bottom: 10px;
+}
+
+    .image-div img {
+        height: 100%;
+    }
+
+h1.note {
+    position: relative;
+    font-size: calc(var(--font-verybig) * var(--is-sp));
+    padding-left: 12px;
+    background: linear-gradient(to right, var(--n-black) 75%, var(--dark-black));
+}
+
+    h1.note::before {
+        content: "";
+        position: absolute;
+        left: 0px;
+        top: 0;
+        width: 10px;
+        height: 100%;
+        background-color: var(--main-accent);
+    }
+
+h2.note {
+    position: relative;
+    font-size: calc(var(--font-big) * var(--is-sp));
+    padding-left: 6px;
+    background: linear-gradient(to right, var(--n-black), var(--dark-black) 25%);
+}
+
+    h2.note::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 5px;
+        height: 50%;
+        background-color: var(--main-accent);
+    }
+
+h3.note {
+    font-size: calc(var(--font-big) * var(--is-sp));
+}
+
+p {
+    font-size: calc(var(--font-medium) * var(--is-sp));
+}
