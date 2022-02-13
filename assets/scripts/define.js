@@ -44,9 +44,9 @@ const genEnumElement = (gee_link_name, gee_link_url, gee_link_comment, gee_img_o
             gee_link_name
         ]),
         new El("p", "", {}, { class: "text enum", ...gee_attrs[2] }, [gee_link_comment].flat()),
-        ...gee_img_objs.map(l =>
+        ...[gee_img_objs].flat().map(l =>
             new El("a", "", {}, { href: l.link, target: "_blank", rel: "noopener" }, [
-                new El("img", "", { height: view_mode ? "40vw" : "15vw" }, { src: l.image })
+                new El("img", "", { height: view_mode ? "40vw" : "15vw", marginRight: "10px" }, { src: l.image })
             ])
         ),
         breaker
@@ -58,16 +58,24 @@ let view_size = {
 let view_mode = (view_size.width < view_size.height);//縦画面1, 横画面0でスタイルを変更
 if (view_mode) document.getElementsByTagName("html")[0].setAttribute("view-mode", "sp");
 let links = {
-    "nimono": "./assets/images/nimono.png",
-    "nicoExp": "https://github.com/nimono3/nicoExpansion"
+    nimono: "./assets/images/nimono.png",
+    nicoExp_ch: "https://chrome.google.com/webstore/detail/llmdcigljaahgnofnphhpfdlmbjcjail",
+    nicoExp_fi: "https://addons.mozilla.org/ja/firefox/addon/nicoexpansion/",
+    nicoExp_gi: "https://github.com/nimono3/nicoExpansion",
+    Brainfuck: "./tool/Bf"
 };
+links = {
+    ...links,
+    nicoExp: ~window.navigator.userAgent.indexOf("Firefox") ? links.nicoExp_fi : links.nicoExp_ch,
+}
 let images = {
     "nimono": ["./assets/images/nimono.png"],
     "nico": ["./assets/images/nico-logo-256.png", "./assets/images/nico-logo-dark-256.png"],
     "YouTube": ["./assets/images/youtube-white.png", "./assets/images/youtube-red.png"],
     "Twitter": ["./assets/images/Twitter-social-icons-circle-white.png", "./assets/images/Twitter-social-icons-circle-blue.png"],
     "GitHub": ["./assets/images/GitHub-Mark-Light-120px-plus.png", "./assets/images/GitHub-Mark.png"],
-    "nicoExp": ["./assets/images/nicoExp01.png"]
+    "nicoExp": ["./assets/images/nicoExp01.png"],
+    "Brainfuck": ["./assets/images/Brainfuck01.png"]
 };
 let sizes = {
     "small": "",

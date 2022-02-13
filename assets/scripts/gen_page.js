@@ -32,7 +32,7 @@ const gen_home = function (contents_mode, open = -1) {
         default:
             El.appendChildren(main_contents, [
                 //{ text: "GAME", link: "?c=g", comment: "これまでに作ったゲームを公開しています", images: [] },
-                { text: "TOOL", link: "", comment: "これまでに作ったツール・ブラウザ拡張を公開しています", images: [{ image: images.nicoExp[0], link: links.nicoExp }], attrs: [{}, { onclick: `history.pushState({c:"t"},"","./index.html?c=t");gen_home("t");` }, {}] },
+                { text: "TOOL", link: "", comment: "これまでに作ったツール・ブラウザ拡張を公開しています", images: [{ image: images.nicoExp[0], link: links.nicoExp }, { image: images.Brainfuck[0], link: links.Brainfuck }], attrs: [{}, { onclick: `history.pushState({c:"t"},"","./index.html?c=t");gen_home("t");` }, {}] },
                 //{ "text": "VIDEO", "link": "?c=v", "comment": "制作した動画を載せています", "images": [] },
                 { text: "ひとりごと", link: "./note?0", comment: "最近してることやアニメ, " + (view_mode ? "" : "<br>") + "動画・ゲームの制作裏話を語っています", images: [] }
             ].map(l => genEnumElement(...Object.values(l))));
@@ -45,10 +45,11 @@ const gen_home = function (contents_mode, open = -1) {
             setPageTitle("TOOL");
             El.appendChildren(main_contents, genEnumElement("ニコニコ拡張", links.nicoExp, [
                 "ニコニコ動画がより快適に使えることを目指した、Chrome拡張機能です。", new El("br"),
-                new El("a", "Chrome", {}, { class: "link", href: "https://chrome.google.com/webstore/detail/llmdcigljaahgnofnphhpfdlmbjcjail" }), " / ",
-                new El("a", "FireFox", {}, { class: "link", href: "https://addons.mozilla.org/ja/firefox/addon/nicoexpansion/" }), " / ",
-                new El("a", "GitHub", {}, { class: "link", href: "https://github.com/nimono3/nicoExpansion" })
+                new El("a", "Chrome", {}, { class: "link", href: links.nicoExp_ch }), " / ",
+                new El("a", "FireFox", {}, { class: "link", href: links.nicoExp_fi }), " / ",
+                new El("a", "GitHub", {}, { class: "link", href: links.nicoExp_gi })
             ], [{ image: images.nicoExp[0], link: links.nicoExp }]));
+            El.appendChildren(main_contents, genEnumElement("Bfインタプリタ", links.Brainfuck, "Brainf*ckのインタプリタです", { image: images.Brainfuck[0], link: links.Brainfuck }));
             break;
         case "v":
             setPageTitle("VIDEO");
