@@ -1,12 +1,12 @@
 const st_reg = (reg, mode) => new RegExp(reg.toString().replace(/^\/\^?/, mode % 2 ? "^" : "").replace(/\/.?$/, mode > 1 ? "$" : ""), 'g');
-const eval_str = (str, eval) => {
+const eval_str = (str, eval, mode) => {
     if (typeof eval === "string" && eval === str.substr(0, eval.length)) return [eval];
-    if (eval instanceof RegExp) return str.match(st_reg(eval, 1));
+    if (eval instanceof RegExp) return str.match(st_reg(eval, mode));
     return null;
 };
 const multi_switch = value => {
     const gen_case = (cancel) => eval => func => {
-        if (!cancel && eval_str(value, eval)) {
+        if (!cancel && eval_str(value, eval, 3)) {
             if (typeof func === "function") func();
             return {
                 case: gen_case(1),
@@ -112,7 +112,7 @@ class Bf {
         const commands = ['>', '<', '+', /-(?!\d)/, ',', '.', '[', ']', /@\d+/, /@-\d+/, /\d+/, /-\d+/, '@', '%'];
         const lex = [];
         while (script) {
-            lex.push(commands.flat().flatMap(v => eval_str(script, v)).filter(_ => _).reduce((acc, v) => acc.length < v.length ? v : acc, ""));
+            lex.push(commands.flat().flatMap(v => eval_str(script, v, 1)).filter(_ => _).reduce((acc, v) => acc.length < v.length ? v : acc, ""));
             if (lex.slice(-1)[0]) {
                 script = script.substring(lex.slice(-1)[0].length);
             } else {
@@ -152,8 +152,8 @@ class Bf {
                         i = larr[lp - 1];
                     }
                 })
-                .case(commands[8])(() => this.mem.add(parseInt(lex[i]) || 0))
-                .case(commands[9])(() => this.mem.sub(Math.abs(parseInt(lex[i])) || 0))
+                .case(commands[8])(() => this.mem.add(parseInt(lex[i].slice(1)) || 0))
+                .case(commands[9])(() => this.mem.sub(Math.abs(parseInt(lex[i].slice(1))) || 0))
                 .case(commands[10])(() => this.mem.vadd(parseInt(lex[i]) || 0))
                 .case(commands[11])(() => this.mem.vsub(Math.abs(parseInt(lex[i])) || 0))
                 .case(commands[12])(() => this.mem.reset())
