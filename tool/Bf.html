@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -69,22 +69,12 @@
             counter-reset: lines;
         }
 
-            .writeArea::before {
-                content: "1";
-                text-align: right;
-                color: #6c5100;
-                position: absolute;
-                left: 0;
-                right: calc(100% - 38px);
-                padding-right: 2px;
-                border-right: 2px solid #6c5100;
-            }
-
-            .writeArea > div {
+            .writeArea > p {
+                margin: 0;
                 background-color: #252525;
             }
 
-            .writeArea > div::before {
+            .writeArea > p::before {
                 counter-increment: lines;
                 content: counter(lines);
                 text-align: right;
@@ -96,11 +86,11 @@
                 border-right: 2px solid #6c5100;
             }
 
-            .writeArea > div:nth-child(2n) {
+            .writeArea > p:nth-child(2n) {
                 background-color: #2a2a2a;
             }
 
-            .writeArea > div:nth-child(2n)::before {
+            .writeArea > p:nth-child(2n)::before {
                 background-color: #2a2a2a;
             }
 
@@ -148,7 +138,7 @@
         <div class="execBtn" align="center" title="Ctrl+Enter"><span>＞＞</span></div>
         <div class="inputArea" contenteditable></div>
     </div>
-    <div class="writeArea" contenteditable></div>
+    <div class="writeArea" contenteditable><p><br/></p></div>
     <div class="logArea"></div>
     <script type="text/javascript" src="./Bf/Bf.js" charset="utf-8"></script>
 </body>
