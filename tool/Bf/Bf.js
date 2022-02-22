@@ -6,7 +6,7 @@ const eval_str = (str, eval, mode) => {
 };
 const multi_switch = value => {
     const gen_case = (cancel) => eval => func => {
-        if (!cancel && eval_str(value, eval, 3)) {
+        if (!cancel && [eval].flat().flatMap(e => eval_str(value, e, 3)).filter(_ => _).length) {
             if (typeof func === "function") func();
             return {
                 case: gen_case(1),
@@ -23,16 +23,16 @@ const multi_switch = value => {
         default: gen_case(0)(value)
     };
 };
-const toInAte = d => parseInt((d).toString(2).slice(-8), 2);//•¶ŽšŽæ“¾Žž‚Éæ“ª‚©‚ç‚ÌƒoƒCƒg‚ÌŽæ“¾‚ª‚µ‚½‚¢
+const toInAte = d => parseInt((v => v.substr(0, v.length % 8 || 8))(d.toString(2)), 2);//æ–‡å­—å–å¾—æ™‚ã«å…ˆé ­ã‹ã‚‰ã®ãƒã‚¤ãƒˆã®å–å¾—ãŒã—ãŸã„
 class Byte {
     constructor() {
         this.val = 0;
     }
     inc() {
-        return (this.val = toInAte(this.val + 1));
+        return (this.val = ++this.val & 0xff);
     }
     dec() {
-        return (this.val = toInAte(this.val + 511));
+        return (this.val = --this.val & 0xff);
     }
     add(val) {
         return [...Array(val).keys()].map(_ => this.inc()).length;
@@ -90,7 +90,7 @@ class Mem {
     vsub(val) {
         return this.m[this.p].sub(val);
     }
-    reset() {
+    pset() {
         return (this.p = 0);
     }
     vset() {
@@ -102,17 +102,17 @@ class Bf {
         this.input = input;
         this.output = output;
         this.mem = new Mem();
+        this.com = ['>', '<', '+', '-', ',', '.', '[', ']'];
     }
     parser(code) {
-        let larr = [];
-        let lp = 0;
-        let lcnt = 0;
+        this.larr = [];
+        this.lp = 0;
+        this.lcnt = 0;
         this.mem = new Mem();
         let script = code;
-        const commands = ['>', '<', '+', /-(?!\d)/, ',', '.', '[', ']', /@\d+/, /@-\d+/, /\d+/, /-\d+/, '@', '%'];
         const lex = [];
         while (script) {
-            lex.push(commands.flat().flatMap(v => eval_str(script, v, 1)).filter(_ => _).reduce((acc, v) => acc.length < v.length ? v : acc, ""));
+            lex.push(this.com.flat().flatMap(v => eval_str(script, v, 1)).filter(_ => _).reduce((acc, v) => acc.length < v.length ? v : acc, ""));
             if (lex.slice(-1)[0]) {
                 script = script.substring(lex.slice(-1)[0].length);
             } else {
@@ -120,45 +120,44 @@ class Bf {
                 lex.pop();
             }
         }
-        for (let i = 0; i < lex.length; i++) {
-            multi_switch(lex[i])
-                .case(commands[0])(() => this.mem.inc())
-                .case(commands[1])(() => this.mem.dec())
-                .case(commands[2])(() => this.mem.vinc())
-                .case(commands[3])(() => this.mem.vdec())
-                .case(commands[4])(() => {
-                    if (!this.input) this.input = window.prompt("input", "");
-                    this.input = this.mem.get(this.input);
-                })
-                .case(commands[5])(() => this.output(this.mem.put()))
-                .case(commands[6])(() => {
-                    if (this.mem.val() === 0) {
-                        i++;
-                        lcnt++;
-                        for (; lcnt !== 0; i++) {
-                            if (lex[i] === '[') lcnt++;
-                            if (lex[i] === ']') lcnt--;
-                        }
-                        i--;
-                    } else {
-                        larr[lp] = i;
-                        lp++;
-                    }
-                })
-                .case(commands[7])(() => {
-                    if (this.mem.val() === 0) {
-                        lp--;
-                    } else {
-                        i = larr[lp - 1];
-                    }
-                })
-                .case(commands[8])(() => this.mem.add(parseInt(lex[i].slice(1)) || 0))
-                .case(commands[9])(() => this.mem.sub(Math.abs(parseInt(lex[i].slice(1))) || 0))
-                .case(commands[10])(() => this.mem.vadd(parseInt(lex[i]) || 0))
-                .case(commands[11])(() => this.mem.vsub(Math.abs(parseInt(lex[i])) || 0))
-                .case(commands[12])(() => this.mem.reset())
-                .case(commands[13])(() => this.mem.vset());
+        for (let i = 0; i < lex.length;) {
+            i = this.evalLex(lex[i], i);
         }
+    }
+    evalLex(lex, cursor) {
+        let i = cursor;
+        multi_switch(lex)
+            .case(this.com[0])(() => this.mem.inc())
+            .case(this.com[1])(() => this.mem.dec())
+            .case(this.com[2])(() => this.mem.vinc())
+            .case(this.com[3])(() => this.mem.vdec())
+            .case(this.com[4])(() => {
+                if (!this.input) this.input = window.prompt("input", "");
+                this.input = this.mem.get(this.input);
+            })
+            .case(this.com[5])(() => this.output(this.mem.put()))
+            .case(this.com[6])(() => {
+                if (!this.mem.val()) {
+                    i++;
+                    this.lcnt++;
+                    for (; this.lcnt !== 0; i++) {
+                        if (lex === '[') this.lcnt++;
+                        if (lex === ']') this.lcnt--;
+                    }
+                    i--;
+                } else {
+                    this.larr[this.lp] = i;
+                    this.lp++;
+                }
+            })
+            .case(this.com[7])(() => {
+                if (!this.mem.val()) {
+                    this.lp--;
+                } else {
+                    i = this.larr[this.lp - 1];
+                }
+            });
+        return ++i;
     }
 
 }
@@ -167,13 +166,38 @@ class Bf {
     const input_area = document.getElementsByClassName("inputArea")[0];
     const log_area = document.getElementsByClassName("logArea")[0];
     const exec_btn = document.getElementsByClassName("execBtn")[0];
+    if (document.cookie) {
+        const cookie = document.cookie.split(/; ?/).reduce((acc, v) => ({ ...acc, [v.split('=')[0]]: v.split('=')[1] }), {});
+        cookie.code && (write_area.innerHTML = decodeURIComponent(cookie.code));
+    }
     write_area.addEventListener("keydown", e => {
         if (e.keyCode === 9) {
             e.preventDefault();
         }
+        if (e.keyCode < 37 || 40 < e.keyCode) {
+            const obs_child = new MutationObserver(() => {
+                obs_child.disconnect();
+                const focus_node = (e => e.tagName ? e : e.parentNode)(window.getSelection().focusNode);
+                console.log(focus_node);
+                [...write_area.childNodes]
+                    .map(e => {
+                        if (e.tagName !== "P") {
+                            write_area.appendChild((p => { p.innerText = e.tagName ? e.innerText : e.data; return p })(document.createElement("p")));
+                            e.remove();
+                        }
+                    });
+                if (focus_node) {
+                    focus_node.focus();
+                }
+                if (!write_area.childNodes.length) write_area.appendChild((e => e.appendChild(document.createElement("br")) && e)(document.createElement("p")));
+            });
+            obs_child.observe(write_area, { childList: true });
+            setTimeout(() => obs_child.disconnect(), 1000);
+        }
         return;
     }, false);
     const exec_bf = () => {
+        document.cookie = "code=" + encodeURIComponent(write_area.innerHTML);
         const bf = new Bf(input_area.innerText, str => (log_area.innerText += str));
         log_area.innerText = "";
         bf.parser(write_area.innerText);
