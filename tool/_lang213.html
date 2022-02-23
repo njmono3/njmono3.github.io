@@ -1,0 +1,252 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>lang213</title>
+    <style>
+        body {
+            background-color: #252525;
+            color: #fafafa;
+            margin: 0;
+        }
+
+        .head {
+            background-color: #191919;
+            display: flex;
+            margin: 0;
+            width: 100%;
+            height: 30px;
+            border: 0;
+            border-bottom: 2px solid #808080;
+        }
+
+        .execBtn {
+            display: inline-block;
+            background-color: #007cff;
+            width: 80px;
+            height: 100%;
+            user-select: none;
+            color: #fafafa;
+            font-size: 25px;
+            line-height: 30px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .inputArea {
+            transition: 0.2s;
+            display: inline-block;
+            flex: 1;
+            height: 100%;
+            line-height: 30px;
+            outline: none;
+            padding-left: 10px;
+            overflow-y: auto;
+        }
+
+        .inputArea:focus {
+            transition: 0.2s;
+            border-bottom: 2px solid #007cff;
+        }
+
+        .inputArea:empty::before {
+            content: "input";
+            color: #808080;
+            pointer-events: none;
+        }
+
+        .config-btn {
+            margin: 0;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            background-color: #252525;
+        }
+
+        .config-btn::before {
+            content: "🔧";
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            font-size: 20px;
+            line-height: 30px;
+        }
+
+        .writeArea {
+            position: absolute;
+            top: 32px;
+            left: 0;
+            right: 0;
+            bottom: 304px;
+            padding-left: 40px;
+            background-color: #252525;
+            tab-size: 4;
+            outline: none;
+            overflow-y: scroll;
+            counter-reset: lines;
+        }
+
+            .writeArea > p {
+                margin: 0;
+                background-color: #252525;
+            }
+
+            .writeArea > p::before {
+                counter-increment: lines;
+                content: counter(lines);
+                text-align: right;
+                color: #6c5100;
+                position: absolute;
+                left: 0;
+                right: calc(100% - 38px);
+                padding-right: 2px;
+                border-right: 2px solid #6c5100;
+            }
+
+            .writeArea > p:nth-child(2n) {
+                background-color: #2a2a2a;
+            }
+
+            .writeArea > p:nth-child(2n)::before {
+                background-color: #2a2a2a;
+            }
+
+        .mem-stack {
+            position: absolute;
+            bottom: 240px;
+            background-color: #191919;
+            width: 100%;
+            height: 60px;
+            line-height: 26px;
+            font-size: 20px;
+            border: 0;
+            border-top: 2px solid #808080;
+            padding: 2px 0;
+            overflow: hidden;
+        }
+
+        .point-memory {
+            color: #007cff;
+            background-color: #000;
+        }
+
+        .logArea {
+            position: absolute;
+            bottom: 0;
+            background-color: #191919;
+            width: 100%;
+            height: 240px;
+            border: 0;
+            border-top: 2px solid #808080;
+            padding: 0 0 0 0;
+            overflow-y: scroll;
+        }
+
+        .logArea::before {
+            content: "Log";
+            background-color: #252525;
+            display: block;
+            position: relative;
+            top: 0px;
+            left: 0px;
+            right: 0px;
+            height: 25px;
+            padding-left: 10px;
+            margin: 0;
+            line-height: 25px;
+        }
+
+        .config-back {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-color: #000;
+            opacity: 0.5;
+        }
+
+        .config {
+            position: absolute;
+            top: 60px;
+            right: 60px;
+            bottom: 60px;
+            left: 60px;
+            padding: 0 20px;
+            background-color: #252525;
+            border-radius: 20px;
+            border: 2px solid #fafafa;
+        }
+
+        .command-list {
+            display: block;
+            width: 100%;
+            max-height: 80%;
+            padding: 0;
+        }
+
+        input {
+            color: #fafafa;
+            width: 200px;
+            font-size: 20px;
+            margin: 0 40px 10px 0;
+            outline: none;
+            border: none;
+            border-bottom: 1px solid #fafafa;
+            background: none;
+        }
+
+        ul {
+            display: inline-flex;
+        }
+
+        li {
+            display: inline;
+            list-style-type: none;
+        }
+
+        .confirm {
+            display: inline-block;
+            border: 2px solid #808080;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #fafafa;
+            background-color: #191919;
+            padding: 5px;
+        }
+
+        .inputArea::-webkit-scrollbar, .writeArea::-webkit-scrollbar, .logArea::-webkit-scrollbar {
+            width: 15px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #606060;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background-color: #191919;
+            border-left: 1px solid #252525;
+        }
+    </style>
+</head>
+<body>
+    <div class="head">
+        <div class="execBtn" align="center" title="Ctrl+Enter"><span>＞＞</span></div>
+        <div class="inputArea" contenteditable></div>
+        <div class="config-btn"></div>
+    </div>
+    <div class="writeArea" contenteditable><p><br/></p></div>
+    <div class="mem-stack">[0]<br />[]</div>
+    <div class="logArea"></div>
+    <div class="config-back" style="display: none;"></div>
+    <div class="config" style="display: none;">
+        <h1>設定</h1>
+        <input type="text" id="lang-name" value="lang213"/><br />
+        <ul class="command-list"></ul>
+        <a href="./_lang213.html" class="confirm">設定を変更</a>
+    </div>
+    <script type="text/javascript" src="./_lang213/_lang213.js" charset="utf-8"></script>
+</body>
+</html>
