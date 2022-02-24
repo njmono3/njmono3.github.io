@@ -119,23 +119,18 @@ class Bf {
         this.stack = new Stack();
         this.com = default_command.concat();
     }
-    init() {
-        this.mem = new Mem();
-        this.stack = new Stack();
-        this.process = [];
-    }
     parser(code) {
         this.mem = new Mem();
         this.stack = new Stack();
+        this.lex = [];
         let script = code;
-        const lex = [];
         while (script) {
-            lex.push(this.com.flat().flatMap(v => eval_str(script, v, 1)).filter(_ => _).reduce((acc, v) => acc.length < v.length ? v : acc, ""));
-            if (lex.slice(-1)[0]) {
-                script = script.substring(lex.slice(-1)[0].length);
+            this.lex.push(this.com.flat().flatMap(v => eval_str(script, v, 1)).filter(_ => _).reduce((acc, v) => acc.length < v.length ? v : acc, ""));
+            if (this.lex.slice(-1)[0]) {
+                script = script.substring(this.lex.slice(-1)[0].length);
             } else {
                 script = script.substring(1);
-                lex.pop();
+                this.lex.pop();
             }
         }
         this.process = [];
@@ -143,8 +138,8 @@ class Bf {
         this.lpstack = [];
         this.begiline = [];
         this.loopid = 0;
-        for (let i = 0; i < lex.length; i++) {
-            multi_switch(lex[i])
+        for (let i = 0; i < this.lex.length; i++) {
+            multi_switch(this.lex[i])
                 .case(this.com[0])(() => this.process.push(() => this.mem.inc()))
                 .case(this.com[1])(() => this.process.push(() => this.mem.dec()))
                 .case(this.com[2])(() => this.process.push(() => this.mem.vinc()))
@@ -156,7 +151,7 @@ class Bf {
                 .case(this.com[8])(() => this.process.push(() => this.output(this.stack.vpop())))
                 .case(this.com[9])(() => this.process.push(() => this.stack.vpush(this.mem.val())))
                 .case(this.com[10])(() => this.process.push(() => { this.mem.vset(); this.mem.add(this.stack.vpop()); }))
-                .case(this.com[11])(() => this.process.push(() => this.stack.vpush(parseInt(lex[i], 10) || 0)))
+                .case(this.com[11])(() => this.process.push(() => this.stack.vpush(parseInt(this.lex[i], 10) || 0)))
                 .case(this.com[12])(() => this.process.push(() => this.stack.vpush((v => (this.stack.vpop() + v) & 0xff)(this.stack.vpop()))))
                 .case(this.com[13])(() => this.process.push(() => this.stack.vpush((v => (this.stack.vpop() - v) & 0xff)(this.stack.vpop()))))
                 .case(this.com[14])(() => this.process.push(() => this.stack.vpush((v => (this.stack.vpop() * v) & 0xff)(this.stack.vpop()))))
@@ -236,15 +231,16 @@ document.title = decodeURIComponent(getQueryObject("name") || "lang213");
         if (!in_proc) {
             document.cookie = "totcode=" + encodeURIComponent(write_area.innerHTML);
             log_area.innerText = "";
-            bf.init();
             bf.com = new_command;
             bf.parser(write_area.innerText);
         }
         if (mode) {
             in_proc = bf.processOne();
+            step_btn.title = in_proc ? "next:" + bf.lex[bf.proc_cnt] : "The process is finished.";
             mem_stack_view.innerHTML = bf.mem.m.map((m, i) => i == bf.mem.p ? "<span class=\"point-memory\">[" + m.val + "]</span>" : "[" + m.val + "]").join('') + "<br />" + '[' + bf.stack.s.map(s => s.val).join('][') + ']';
         } else {
             bf.processAll();
+            step_btn.title = "The process is finished.";
             mem_stack_view.innerHTML = bf.mem.m.map((m, i) => i == bf.mem.p ? "<span class=\"point-memory\">[" + m.val + "]</span>" : "[" + m.val + "]").join('') + "<br />" + '[' + bf.stack.s.map(s => s.val).join('][') + ']';
             in_proc = 0;
         }
