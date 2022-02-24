@@ -24,7 +24,7 @@ const multi_switch = value => {
         default: gen_case(0)(value)
     };
 };
-const toInAte = d => parseInt((v => v.substr(0, v.length % 8 || 8))(d.toString(2)), 2);//•¶ŽšŽæ“¾Žž‚Éæ“ª‚©‚ç‚ÌƒoƒCƒg‚ÌŽæ“¾‚ª‚µ‚½‚¢
+const toInAte = d => parseInt((v => v.substr(0, v.length % 8 || 8))(d.toString(2)), 2);//æ–‡å­—å–å¾—æ™‚ã«å…ˆé ­ã‹ã‚‰ã®ãƒã‚¤ãƒˆã®å–å¾—ãŒã—ãŸã„
 class Byte {
     constructor(val = 0) {
         this.val = val;
@@ -181,7 +181,7 @@ class Bf {
         }
     }
 }
-/*v“®ìv*/
+/*vå‹•ä½œv*/
 const getQueryObject = (key) => (o => key ? o[key] : o)(window.location.search.split('?').pop().split('&').reduce((acc, val) => ({ ...acc, ...(v => ({ [v[0]]: v[1] }))((val + "=").split('=')) }), {}));
 document.title = decodeURIComponent(getQueryObject("name") || "lang213");
 (() => {
@@ -236,7 +236,7 @@ document.title = decodeURIComponent(getQueryObject("name") || "lang213");
         }
         if (mode) {
             in_proc = bf.processOne();
-            step_btn.title = in_proc ? "next:" + bf.lex[bf.proc_cnt] : "The process is finished.";
+            step_btn.title = in_proc ? "Processing" : "The process is finished.";
             mem_stack_view.innerHTML = bf.mem.m.map((m, i) => i == bf.mem.p ? "<span class=\"point-memory\">[" + m.val + "]</span>" : "[" + m.val + "]").join('') + "<br />" + '[' + bf.stack.s.map(s => s.val).join('][') + ']';
         } else {
             bf.processAll();
