@@ -20,17 +20,25 @@
             border-bottom: 2px solid #808080;
         }
 
-        .execBtn {
+        .headBtn {
             display: inline-block;
             background-color: #007cff;
-            width: 80px;
+            width: 60px;
             height: 100%;
             user-select: none;
             color: #fafafa;
             font-size: 25px;
             line-height: 30px;
-            border-radius: 5px;
             cursor: pointer;
+        }
+
+        .execBtn {
+            border-radius: 5px 0 0 5px;
+            border-right: 2px solid #191919;
+        }
+
+        .stepBtn {
+            border-radius: 0 5px 5px 0;
         }
 
         .inputArea {
@@ -233,12 +241,13 @@
 </head>
 <body>
     <div class="head">
-        <div class="execBtn" align="center" title="Ctrl+Enter"><span>＞＞</span></div>
+        <div class="execBtn headBtn" align="center" title="Ctrl+Enter"><span>＞＞</span></div>
+        <div class="stepBtn headBtn" align="center" title="Click"><span>＞|</span></div>
         <div class="inputArea" contenteditable></div>
         <div class="config-btn"></div>
     </div>
     <div class="writeArea" contenteditable><p><br/></p></div>
-    <div class="mem-stack">[0]<br />[]</div>
+    <div class="mem-stack"><span class="point-memory">[0]</span><br />[]</div>
     <div class="logArea"></div>
     <div class="config-back" style="display: none;"></div>
     <div class="config" style="display: none;">

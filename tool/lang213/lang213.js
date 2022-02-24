@@ -1,4 +1,4 @@
-const default_command = ['>', '<', '+', '-', '#', '.', '[', ']', ',', '_', '~', /\d/, '&', 'm', '*', '/', '@', '^', 'v', 'A', 'V', ';', '!', /\n+/];
+const default_command = ['>', '<', '+', '-', '#', '.', '[', ']', ',', '_', '~', /\d/, '&', 'm', '*', '/', '@', '^', 'v', 'A', 'V', ';', '!', /\n+/, /`[^`]*`/];
 const st_reg = (reg, mode) => new RegExp(reg.toString().replace(/^\/\^?/, mode % 2 ? "^" : "").replace(/\/.?$/, mode > 1 ? "$" : ""), 'g');
 const eval_str = (str, eval, mode) => {
     if (typeof eval === "string" && eval === str.substr(0, eval.length)) return [eval];
@@ -119,6 +119,11 @@ class Bf {
         this.stack = new Stack();
         this.com = default_command.concat();
     }
+    init() {
+        this.mem = new Mem();
+        this.stack = new Stack();
+        this.process = [];
+    }
     parser(code) {
         this.mem = new Mem();
         this.stack = new Stack();
@@ -138,7 +143,6 @@ class Bf {
         this.lpstack = [];
         this.begiline = [];
         this.loopid = 0;
-        let counter = 0;
         for (let i = 0; i < lex.length; i++) {
             multi_switch(lex[i])
                 .case(this.com[0])(() => this.process.push(() => this.mem.inc()))
@@ -147,9 +151,9 @@ class Bf {
                 .case(this.com[3])(() => this.process.push(() => this.mem.vdec()))
                 .case(this.com[4])(() => this.process.push(() => { !this.input && (this.input = window.prompt("input", "")); this.input = this.mem.get(this.input); }))
                 .case(this.com[5])(() => this.process.push(() => this.output(this.mem.put())))
-                .case(this.com[6])(() => { this.loops.push({ start: this.process.length - 1, end: 0 }); this.process.push((id => () => !this.mem.val() && (counter = this.loops[id].end))(this.loopid)); this.lpstack.push(this.loopid++); })
-                .case(this.com[7])(() => (id => { this.loops[id].end = this.process.length; this.process.push(() => counter = this.loops[id].start); })(this.lpstack.pop()))
-                .case(this.com[8])(() => this.process.push(() => this.output(this.stack.vpop()) ))
+                .case(this.com[6])(() => { this.loops.push({ start: this.process.length - 1, end: 0 }); this.process.push((id => () => !this.mem.val() && (this.proc_cnt = this.loops[id].end))(this.loopid)); this.lpstack.push(this.loopid++); })
+                .case(this.com[7])(() => (id => { this.loops[id].end = this.process.length; this.process.push(() => this.proc_cnt = this.loops[id].start); })(this.lpstack.pop()))
+                .case(this.com[8])(() => this.process.push(() => this.output(this.stack.vpop())))
                 .case(this.com[9])(() => this.process.push(() => this.stack.vpush(this.mem.val())))
                 .case(this.com[10])(() => this.process.push(() => { this.mem.vset(); this.mem.add(this.stack.vpop()); }))
                 .case(this.com[11])(() => this.process.push(() => this.stack.vpush(parseInt(lex[i], 10) || 0)))
@@ -158,19 +162,31 @@ class Bf {
                 .case(this.com[14])(() => this.process.push(() => this.stack.vpush((v => (this.stack.vpop() * v) & 0xff)(this.stack.vpop()))))
                 .case(this.com[15])(() => this.process.push(() => this.stack.vpush((v => (this.stack.vpop() / v) & 0xff)(this.stack.vpop()))))
                 .case(this.com[16])(() => this.process.push(() => this.mem.pset()))
-                .case(this.com[17])(() => this.process.push(() => counter = this.begiline.reduce((acc, v, i, arr) => v - counter <= 0 ? arr[i - 1] || 0 : acc, this.process.length - 1 || 0) ))
-                .case(this.com[18])(() => this.process.push(() => counter = this.begiline.reduce((acc, v, i, arr) => [0, ...arr][i] - counter <= 0 && counter - v < 0 ? v : acc, 0) ))
-                .case(this.com[19])(() => this.process.push(() => !this.mem.val() && (counter = this.begiline.reduce((acc, v, i, arr) => v - counter <= 0 ? arr[i - 1] || 0 : acc, this.process.length - 1 || 0))))
-                .case(this.com[20])(() => this.process.push(() => !this.mem.val() && (counter = this.begiline.reduce((acc, v, i, arr) => [0, ...arr][i] - counter <= 0 && counter - v < 0 ? v : acc, 0))))
-                .case(this.com[21])(() => this.process.push(() => counter = this.begiline.reduce((acc, v) => v - counter <= 0 ? v : acc, 0)))
+                .case(this.com[17])(() => this.process.push(() => this.proc_cnt = this.begiline.reduce((acc, v, i, arr) => v - this.proc_cnt <= 0 ? arr[i - 1] || 0 : acc, this.process.length - 1 || 0)))
+                .case(this.com[18])(() => this.process.push(() => this.proc_cnt = this.begiline.reduce((acc, v, i, arr) => [0, ...arr][i] - this.proc_cnt <= 0 && this.proc_cnt - v < 0 ? v : acc, 0)))
+                .case(this.com[19])(() => this.process.push(() => !this.mem.val() && (this.proc_cnt = this.begiline.reduce((acc, v, i, arr) => v - this.proc_cnt <= 0 ? arr[i - 1] || 0 : acc, this.process.length - 1 || 0))))
+                .case(this.com[20])(() => this.process.push(() => !this.mem.val() && (this.proc_cnt = this.begiline.reduce((acc, v, i, arr) => [0, ...arr][i] - this.proc_cnt <= 0 && this.proc_cnt - v < 0 ? v : acc, 0))))
+                .case(this.com[21])(() => this.process.push(() => this.proc_cnt = this.begiline.reduce((acc, v) => v - this.proc_cnt <= 0 ? v : acc, 0) - 1))
                 .case(this.com[22])(() => this.process.push(() => (this.mem.m[this.mem.p].val = !this.mem.val() * 1)))
-                .case(this.com[23])(() => (this.begiline.push(i), this.process.push(() => { }), "break"));
+                .case(this.com[23])(() => (this.begiline.push(i), this.process.push(() => 1), "break"))
+                .case(this.com[24])(() => 1);
         }
-        for (counter = 0; counter < this.process.length; counter++) {
-            this.process[counter]();
+        this.proc_cnt = 0;
+    }
+    processAll() {
+        for (; this.proc_cnt < this.process.length; this.proc_cnt++) {
+            this.process[this.proc_cnt]();
+        }
+    }
+    processOne() {
+        if (this.proc_cnt < this.process.length) {
+            this.process[this.proc_cnt]();
+            this.proc_cnt++;
+            return (this.proc_cnt < this.process.length) * 1;
         }
     }
 }
+/*v“®ìv*/
 const getQueryObject = (key) => (o => key ? o[key] : o)(window.location.search.split('?').pop().split('&').reduce((acc, val) => ({ ...acc, ...(v => ({ [v[0]]: v[1] }))((val + "=").split('=')) }), {}));
 document.title = decodeURIComponent(getQueryObject("name") || "lang213");
 (() => {
@@ -178,14 +194,15 @@ document.title = decodeURIComponent(getQueryObject("name") || "lang213");
     const input_area = document.getElementsByClassName("inputArea")[0];
     const log_area = document.getElementsByClassName("logArea")[0];
     const exec_btn = document.getElementsByClassName("execBtn")[0];
+    const step_btn = document.getElementsByClassName("stepBtn")[0];
     const mem_stack_view = document.getElementsByClassName("mem-stack")[0];
     if (document.cookie) {
         const cookie = document.cookie.split(/; ?/).reduce((acc, v) => ({ ...acc, [v.split('=')[0]]: v.split('=')[1] }), {});
-        cookie.code && (write_area.innerHTML = decodeURIComponent(cookie.code));
+        cookie.totcode && (write_area.innerHTML = decodeURIComponent(cookie.totcode));
     }
     const new_command = default_command.map((com, i) => getQueryObject(i.toString()) ? decodeURIComponent(getQueryObject(i.toString())).split("``").map(c => c.slice(0, 2) === "`/" ? new RegExp(c.slice(2, -1)) : c) : com);
     write_area.addEventListener("keydown", e => {
-        if (e.keyCode === 9) {
+        if (e.keyCode === 9) {/*Tab cancel*/
             e.preventDefault();
         }
         if (e.keyCode < 37 || 40 < e.keyCode) {
@@ -197,6 +214,10 @@ document.title = decodeURIComponent(getQueryObject("name") || "lang213");
                         if (e.tagName !== "P") {
                             write_area.appendChild((p => { p.innerText = e.tagName ? e.innerText : e.data; return p })(document.createElement("p")));
                             e.remove();
+                        } else {
+                            !e.innerText && e.remove();
+                            [...e.getElementsByTagName("br")].map((el, i, arr) => i !== arr.length - 1 && (el.insertAdjacentHTML("afterend", "</p><p>"), el.remove()));
+                            [...e.getElementsByTagName("span"), ...e.getElementsByTagName("b"), ...e.getElementsByTagName("p")].map(el => (el.insertAdjacentText("afterend", el.innerText), el.remove()));
                         }
                     });
                 if (focus_node) {
@@ -209,25 +230,44 @@ document.title = decodeURIComponent(getQueryObject("name") || "lang213");
         }
         return;
     }, false);
-    const exec_bf = () => {
-        document.cookie = "code=" + encodeURIComponent(write_area.innerHTML);
-        const bf = new Bf(input_area.innerText, str => (log_area.textContent += str));
-        log_area.innerText = "";
-        bf.com = new_command;
-        bf.parser(write_area.innerText);
-        mem_stack_view.innerHTML = bf.mem.m.map((m, i) => i == bf.mem.p ? "<span class=\"point-memory\">[" + m.val + "]</span>" : "[" + m.val + "]").join('') + "<br />" + '[' + bf.stack.s.map(s => s.val).join('][') + ']';
+    let in_proc = 0;
+    const bf = new Bf(input_area.innerText, str => (log_area.textContent += str));
+    const exec_bf = (mode = 0) => {
+        if (!in_proc) {
+            document.cookie = "totcode=" + encodeURIComponent(write_area.innerHTML);
+            log_area.innerText = "";
+            bf.init();
+            bf.com = new_command;
+            bf.parser(write_area.innerText);
+        }
+        if (mode) {
+            in_proc = bf.processOne();
+            mem_stack_view.innerHTML = bf.mem.m.map((m, i) => i == bf.mem.p ? "<span class=\"point-memory\">[" + m.val + "]</span>" : "[" + m.val + "]").join('') + "<br />" + '[' + bf.stack.s.map(s => s.val).join('][') + ']';
+        } else {
+            bf.processAll();
+            mem_stack_view.innerHTML = bf.mem.m.map((m, i) => i == bf.mem.p ? "<span class=\"point-memory\">[" + m.val + "]</span>" : "[" + m.val + "]").join('') + "<br />" + '[' + bf.stack.s.map(s => s.val).join('][') + ']';
+            in_proc = 0;
+        }
     };
-    exec_btn.addEventListener("click", exec_bf, false);
-    const ctrl_enter = [false, false];
+    exec_btn.addEventListener("click", () => exec_bf(), false);
+    step_btn.addEventListener("click", () => exec_bf(1), false);
+    const keys = { enter: false, ctrl: false, shift: false };
     document.body.addEventListener("keydown", e => {
-        e.keyCode == 13 ? ctrl_enter[0] = true : e.keyCode == 17 ? ctrl_enter[1] = true : -1;
-        if (ctrl_enter[0] && ctrl_enter[1]) {
+        keys.enter |= e.keyCode == 13;
+        keys.ctrl |= e.keyCode == 17;
+        keys.shift |= e.keyCode == 16;
+        if (keys.enter && keys.ctrl) {
             exec_bf();
-            ctrl_enter[0] = ctrl_enter[1] = false;
+            keys.enter = keys.ctrl = false;
+        }
+        if (keys.enter && keys.shift) {
+            e.preventDefault();
         }
     }, false);
     document.body.addEventListener("keyup", e => {
-        e.keyCode == 13 ? ctrl_enter[0] = false : e.keyCode == 17 ? ctrl_enter[1] = false : -1;
+        keys.enter &= e.keyCode != 13;
+        keys.ctrl &= e.keyCode != 17;
+        keys.shift &= e.keyCode != 16;
     }, false);
 
     (config => (
@@ -243,6 +283,6 @@ document.title = decodeURIComponent(getQueryObject("name") || "lang213");
         confirm.onclick = () =>
             confirm.href += "?"
             + "name=" + encodeURIComponent(document.getElementById("lang-name").value)
-            + ["", ...[...document.getElementsByClassName("command-list")[0].childNodes].map((li, i) => li.firstChild.value && i + "=" + encodeURIComponent(li.firstChild.value)).filter(_=>_)].join('&')
+            + ["", ...[...document.getElementsByClassName("command-list")[0].childNodes].map((li, i) => li.firstChild.value && i + "=" + encodeURIComponent(li.firstChild.value)).filter(_ => _)].join('&')
     )(document.getElementsByClassName("confirm")[0]);
 })();
