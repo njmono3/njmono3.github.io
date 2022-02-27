@@ -24,7 +24,7 @@ const multi_switch = value => {
         default: gen_case(0)(value)
     };
 };
-const toInAte = d => parseInt((v => v.substr(0, v.length % 8 || 8))(d.toString(2)), 2);//æ–‡å­—å–å¾—æ™‚ã«å…ˆé ­ã‹ã‚‰ã®ãƒã‚¤ãƒˆã®å–å¾—ãŒã—ãŸã„
+const toInAte = d => parseInt((v => v.substr(0, v.length % 8 || 8))(d.toString(2)), 2);//•¶ŽšŽæ“¾Žž‚Éæ“ª‚©‚ç‚ÌƒoƒCƒg‚ÌŽæ“¾‚ª‚µ‚½‚¢
 class Byte {
     constructor(val = 0) {
         this.val = val;
@@ -144,7 +144,7 @@ class Bf {
                 .case(this.com[1])(() => this.process.push(() => this.mem.dec()))
                 .case(this.com[2])(() => this.process.push(() => this.mem.vinc()))
                 .case(this.com[3])(() => this.process.push(() => this.mem.vdec()))
-                .case(this.com[4])(() => this.process.push(() => { !this.input && (this.input = window.prompt("input", "")); this.input = this.mem.get(this.input); }))
+                .case(this.com[4])(() => this.process.push(() => { !this.input && (this.input = window.prompt("input", "") || String.fromCharCode(0)); this.input = (this.stack.vpush(toInAte(this.input ? this.input.slice(0, 1).charCodeAt() : 0)), this.input.slice(1)); }))
                 .case(this.com[5])(() => this.process.push(() => this.output(this.mem.put())))
                 .case(this.com[6])(() => { this.loops.push({ start: this.process.length - 1, end: 0 }); this.process.push((id => () => !this.mem.val() && (this.proc_cnt = this.loops[id].end))(this.loopid)); this.lpstack.push(this.loopid++); })
                 .case(this.com[7])(() => (id => { this.loops[id].end = this.process.length; this.process.push(() => this.proc_cnt = this.loops[id].start); })(this.lpstack.pop()))
@@ -181,7 +181,7 @@ class Bf {
         }
     }
 }
-/*vå‹•ä½œv*/
+/*v“®ìv*/
 const getQueryObject = (key) => (o => key ? o[key] : o)(window.location.search.split('?').pop().split('&').reduce((acc, val) => ({ ...acc, ...(v => ({ [v[0]]: v[1] }))((val + "=").split('=')) }), {}));
 document.title = decodeURIComponent(getQueryObject("name") || "lang213");
 (() => {
@@ -232,6 +232,7 @@ document.title = decodeURIComponent(getQueryObject("name") || "lang213");
             document.cookie = "totcode=" + encodeURIComponent(write_area.innerHTML);
             log_area.innerText = "";
             bf.com = new_command;
+            bf.input = input_area.innerText;
             bf.parser(write_area.innerText);
         }
         if (mode) {
