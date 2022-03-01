@@ -1,4 +1,24 @@
-const default_command = ['>', '<', '+', '-', '#', '.', '[', ']', ',', '_', '~', /\d/, '&', 'm', '*', '/', '@', '^', 'v', 'A', 'V', ';', '!', /\n+/, /`[^`]*`/];
+const default_command = [
+    { key: "come", pattern: /`[^`]*`/, mean: "コメント" },
+    { key: "pinc", pattern: '>', mean: "ポインタをインクリメント" }, { key: "pdec", pattern: '<', mean: "ポインタをデクリメント" },
+    { key: "vinc", pattern: '+', mean: "ポインタが指す値をインクリメント" }, { key: "vdec", pattern: '-', mean: "ポインタが指す値をデクリメント" },
+    { key: "mout", pattern: '.', mean: "ポインタが指す値を文字コードとして文字を出力" },
+    { key: "sout", pattern: ',', mean: "スタックからポップして10進法の数字として出力" },
+    { key: "jze", pattern: '[', mean: "ポインタが指す値が0なら対応する命令へジャンプ" }, { key: "jump", pattern: ']', mean: "対応する命令へジャンプ" },
+    { key: "ipt", pattern: '#', mean: "入力から1バイト読み込んでスタックにポップ" },
+    { key: "mpush", pattern: '_', mean: "ポインタが指す値をスタックにプッシュ" }, { key: "mpop", pattern: '~', mean: "スタックからポップしてポインタが指す先に代入" },
+    { key: "ipush", pattern: /\d/, mean: "スタックに0-9をプッシュ" },
+    { key: "sadd", pattern: '&', mean: "スタックからy,xの順にポップしてx+yをプッシュ" }, { key: "ssub", pattern: 'm', mean: "スタックからy,xの順にポップしてx-yをプッシュ" },
+    { key: "smul", pattern: '*', mean: "スタックからy,xの順にポップしてx*yをプッシュ" }, { key: "sdiv", pattern: '/', mean: "スタックからy,xの順にポップしてx/y(切り捨て)をプッシュ" },
+    { key: "pset", pattern: '@', mean: "ポインタを0にセット" },
+    { key: "jup", pattern: '^', mean: "上の行へ" }, { key: "jdw", pattern: 'v', mean: "下の行へ" },
+    { key: "jzup", pattern: 'A', mean: "スタックからポップして0なら上の行へ" }, { key: "jzdw", pattern: 'V', mean: "スタックからポップして0なら下の行へ" },
+    { key: "jbeg", pattern: ';', mean: "行頭へ" },
+    { key: "wpush", pattern: ':', mean: "スタックからポップした値を2回プッシュする" },
+    { key: "xpop", pattern: 'X', mean: "スタックからa,bの順にポップし、a,bの順にプッシュ" },
+    { key: "not", pattern: '!', mean: "スタックからポップして0なら1, それ以外なら0をプッシュする" },
+    { key: "br", pattern: /\n+/, mean: "改行" }
+];
 const st_reg = (reg, mode) => new RegExp(reg.toString().replace(/^\/\^?/, mode % 2 ? "^" : "").replace(/\/.?$/, mode > 1 ? "$" : ""), 'g');
 const eval_str = (str, eval, mode) => {
     if (typeof eval === "string" && eval === str.substr(0, eval.length)) return [eval];
@@ -24,7 +44,7 @@ const multi_switch = value => {
         default: gen_case(0)(value)
     };
 };
-const toInAte = d => parseInt((v => v.substr(0, v.length % 8 || 8))(d.toString(2)), 2);//�����擾���ɐ擪����̃o�C�g�̎擾��������
+const toInAte = d => parseInt((v => v.substr(0, v.length % 8 || 8))(d.toString(2)), 2);//文字取得時に先頭からのバイトの取得がしたい
 class Byte {
     constructor(val = 0) {
         this.val = val;
@@ -107,7 +127,7 @@ class Stack {
         return val;
     }
     vpop() {
-        if (!this.s.length) return console.error("Can't pop value from stack.") || 0;
+        if (!this.s.length) return console.error("lang213 ERROR: Can't pop value from stack.") || 0;
         return this.s.pop().val;
     }
 }
@@ -117,7 +137,7 @@ class Bf {
         this.output = output;
         this.mem = new Mem();
         this.stack = new Stack();
-        this.com = default_command.concat();
+        this.com = default_command.reduce((acc, dc) => ({...acc, [dc.key]: dc.pattern }), {});
     }
     parser(code) {
         this.mem = new Mem();
@@ -125,7 +145,7 @@ class Bf {
         this.lex = [];
         let script = code;
         while (script) {
-            this.lex.push(this.com.flat().flatMap(v => eval_str(script, v, 1)).filter(_ => _).reduce((acc, v) => acc.length < v.length ? v : acc, ""));
+            this.lex.push(Object.values(this.com).flat().flatMap(v => eval_str(script, v, 1)).filter(_ => _).reduce((acc, v) => acc.length < v.length ? v : acc, ""));
             if (this.lex.slice(-1)[0]) {
                 script = script.substring(this.lex.slice(-1)[0].length);
             } else {
@@ -140,31 +160,33 @@ class Bf {
         this.loopid = 0;
         for (let i = 0; i < this.lex.length; i++) {
             multi_switch(this.lex[i])
-                .case(this.com[0])(() => this.process.push(() => this.mem.inc()))
-                .case(this.com[1])(() => this.process.push(() => this.mem.dec()))
-                .case(this.com[2])(() => this.process.push(() => this.mem.vinc()))
-                .case(this.com[3])(() => this.process.push(() => this.mem.vdec()))
-                .case(this.com[4])(() => this.process.push(() => { !this.input && (this.input = window.prompt("input", "") || String.fromCharCode(0)); this.input = (this.stack.vpush(toInAte(this.input ? this.input.slice(0, 1).charCodeAt() : 0)), this.input.slice(1)); }))
-                .case(this.com[5])(() => this.process.push(() => this.output(this.mem.put())))
-                .case(this.com[6])(() => { this.loops.push({ start: this.process.length - 1, end: 0 }); this.process.push((id => () => !this.mem.val() && (this.proc_cnt = this.loops[id].end))(this.loopid)); this.lpstack.push(this.loopid++); })
-                .case(this.com[7])(() => (id => { this.loops[id].end = this.process.length; this.process.push(() => this.proc_cnt = this.loops[id].start); })(this.lpstack.pop()))
-                .case(this.com[8])(() => this.process.push(() => this.output(this.stack.vpop())))
-                .case(this.com[9])(() => this.process.push(() => this.stack.vpush(this.mem.val())))
-                .case(this.com[10])(() => this.process.push(() => { this.mem.vset(); this.mem.add(this.stack.vpop()); }))
-                .case(this.com[11])(() => this.process.push(() => this.stack.vpush(parseInt(this.lex[i], 10) || 0)))
-                .case(this.com[12])(() => this.process.push(() => this.stack.vpush((v => (this.stack.vpop() + v) & 0xff)(this.stack.vpop()))))
-                .case(this.com[13])(() => this.process.push(() => this.stack.vpush((v => (this.stack.vpop() - v) & 0xff)(this.stack.vpop()))))
-                .case(this.com[14])(() => this.process.push(() => this.stack.vpush((v => (this.stack.vpop() * v) & 0xff)(this.stack.vpop()))))
-                .case(this.com[15])(() => this.process.push(() => this.stack.vpush((v => (this.stack.vpop() / v) & 0xff)(this.stack.vpop()))))
-                .case(this.com[16])(() => this.process.push(() => this.mem.pset()))
-                .case(this.com[17])(() => this.process.push(() => this.proc_cnt = this.begiline.reduce((acc, v, i, arr) => v - this.proc_cnt <= 0 ? arr[i - 1] || 0 : acc, this.process.length - 1 || 0)))
-                .case(this.com[18])(() => this.process.push(() => this.proc_cnt = this.begiline.reduce((acc, v, i, arr) => [0, ...arr][i] - this.proc_cnt <= 0 && this.proc_cnt - v < 0 ? v : acc, 0)))
-                .case(this.com[19])(() => this.process.push(() => !this.mem.val() && (this.proc_cnt = this.begiline.reduce((acc, v, i, arr) => v - this.proc_cnt <= 0 ? arr[i - 1] || 0 : acc, this.process.length - 1 || 0))))
-                .case(this.com[20])(() => this.process.push(() => !this.mem.val() && (this.proc_cnt = this.begiline.reduce((acc, v, i, arr) => [0, ...arr][i] - this.proc_cnt <= 0 && this.proc_cnt - v < 0 ? v : acc, 0))))
-                .case(this.com[21])(() => this.process.push(() => this.proc_cnt = this.begiline.reduce((acc, v) => v - this.proc_cnt <= 0 ? v : acc, 0) - 1))
-                .case(this.com[22])(() => this.process.push(() => (this.mem.m[this.mem.p].val = !this.mem.val() * 1)))
-                .case(this.com[23])(() => (this.begiline.push(i), this.process.push(() => 1), "break"))
-                .case(this.com[24])(() => 1);
+                .case(this.com.come )(() => 1)
+                .case(this.com.pinc )(() => this.process.push(() => this.mem.inc()))
+                .case(this.com.pdec )(() => this.process.push(() => this.mem.dec()))
+                .case(this.com.vinc )(() => this.process.push(() => this.mem.vinc()))
+                .case(this.com.vdec )(() => this.process.push(() => this.mem.vdec()))
+                .case(this.com.ipt  )(() => this.process.push(() => { !this.input && (this.input = window.prompt("input", "") || String.fromCharCode(0)); this.input = (this.stack.vpush(toInAte(this.input ? this.input.slice(0, 1).charCodeAt() : 0)), this.input.slice(1)); }))
+                .case(this.com.mout )(() => this.process.push(() => this.output(this.mem.put())))
+                .case(this.com.jze  )(() => { this.loops.push({ start: this.process.length - 1, end: 0 }); this.process.push((id => () => !this.mem.val() && (this.proc_cnt = this.loops[id].end))(this.loopid)); this.lpstack.push(this.loopid++); })
+                .case(this.com.jump )(() => (id => { this.loops[id].end = this.process.length; this.process.push(() => this.proc_cnt = this.loops[id].start); })(this.lpstack.pop()))
+                .case(this.com.sout )(() => this.process.push(() => this.output(this.stack.vpop())))
+                .case(this.com.mpush)(() => this.process.push(() => this.stack.vpush(this.mem.val())))
+                .case(this.com.mpop )(() => this.process.push(() => { this.mem.vset(); this.mem.add(this.stack.vpop()); }))
+                .case(this.com.ipush)(() => this.process.push(() => this.stack.vpush(parseInt(this.lex[i], 10) || 0)))
+                .case(this.com.sadd )(() => this.process.push(() => this.stack.vpush((v => (this.stack.vpop() + v) & 0xff)(this.stack.vpop()))))
+                .case(this.com.ssub )(() => this.process.push(() => this.stack.vpush((v => (this.stack.vpop() - v) & 0xff)(this.stack.vpop()))))
+                .case(this.com.smul )(() => this.process.push(() => this.stack.vpush((v => (this.stack.vpop() * v) & 0xff)(this.stack.vpop()))))
+                .case(this.com.sdiv )(() => this.process.push(() => this.stack.vpush((v => (this.stack.vpop() / v) & 0xff)(this.stack.vpop()))))
+                .case(this.com.pset )(() => this.process.push(() => this.mem.pset()))
+                .case(this.com.jup  )(() => this.process.push(() => this.proc_cnt = this.begiline.reduce((acc, v, i, arr) => v - this.proc_cnt <= 0 ? arr[i - 1] || 0 : acc, this.process.length - 1 || 0)))
+                .case(this.com.jdw  )(() => this.process.push(() => this.proc_cnt = this.begiline.reduce((acc, v, i, arr) => [0, ...arr][i] - this.proc_cnt <= 0 && this.proc_cnt - v < 0 ? v : acc, 0)))
+                .case(this.com.jzup )(() => this.process.push(() => !this.stack.vpop() && (this.proc_cnt = this.begiline.reduce((acc, v, i, arr) => v - this.proc_cnt <= 0 ? arr[i - 1] || 0 : acc, this.process.length - 1 || 0))))
+                .case(this.com.jzdw )(() => this.process.push(() => !this.stack.vpop() && (this.proc_cnt = this.begiline.reduce((acc, v, i, arr) => [0, ...arr][i] - this.proc_cnt <= 0 && this.proc_cnt - v < 0 ? v : acc, 0))))
+                .case(this.com.jbeg )(() => this.process.push(() => this.proc_cnt = this.begiline.reduce((acc, v) => v - this.proc_cnt <= 0 ? v : acc, 0) - 1))
+                .case(this.com.wpush)(() => this.process.push(() => this.stack.vpush(this.stack.vpush(this.stack.vpop()))))
+                .case(this.com.xpop )(() => this.process.push(() => ((y, x) => (this.stack.vpush(y), this.stack.vpush(x)))(this.stack.vpop(), this.stack.vpop())))
+                .case(this.com.not  )(() => this.process.push(() => this.stack.vpush(!this.stack.vpop() * 1)))
+                .case(this.com.br   )(() => (this.begiline.push(i), this.process.push(() => 1), "break"));
         }
         this.proc_cnt = 0;
     }
@@ -181,7 +203,7 @@ class Bf {
         }
     }
 }
-/*v����v*/
+/*v動作v*/
 const getQueryObject = (key) => (o => key ? o[key] : o)(window.location.search.split('?').pop().split('&').reduce((acc, val) => ({ ...acc, ...(v => ({ [v[0]]: v[1] }))((val + "=").split('=')) }), {}));
 document.title = decodeURIComponent(getQueryObject("name") || "lang213");
 (() => {
@@ -193,9 +215,9 @@ document.title = decodeURIComponent(getQueryObject("name") || "lang213");
     const mem_stack_view = document.getElementsByClassName("mem-stack")[0];
     if (document.cookie) {
         const cookie = document.cookie.split(/; ?/).reduce((acc, v) => ({ ...acc, [v.split('=')[0]]: v.split('=')[1] }), {});
-        cookie.totcode && (write_area.innerHTML = decodeURIComponent(cookie.totcode));
+        cookie[encodeURIComponent(document.title) + "code"] && (write_area.innerHTML = decodeURIComponent(cookie[encodeURIComponent(document.title) + "code"]));
     }
-    const new_command = default_command.map((com, i) => getQueryObject(i.toString()) ? decodeURIComponent(getQueryObject(i.toString())).split("``").map(c => c.slice(0, 2) === "`/" ? new RegExp(c.slice(2, -1)) : c) : com);
+    const new_command = default_command.reduce((acc, com) => ({ ...acc, [com.key]: getQueryObject(com.key) ? decodeURIComponent(getQueryObject(com.key)).split("``").map(c => c.slice(0, 2) === "`/" ? new RegExp(c.slice(2, -1)) : c) : com.pattern }), {});
     write_area.addEventListener("keydown", e => {
         if (e.keyCode === 9) {/*Tab cancel*/
             e.preventDefault();
@@ -229,7 +251,7 @@ document.title = decodeURIComponent(getQueryObject("name") || "lang213");
     const bf = new Bf(input_area.innerText, str => (log_area.textContent += str));
     const exec_bf = (mode = 0) => {
         if (!in_proc) {
-            document.cookie = "totcode=" + encodeURIComponent(write_area.innerHTML);
+            document.cookie = encodeURIComponent(document.title) + "code=" + encodeURIComponent(write_area.innerHTML);
             log_area.innerText = "";
             bf.com = new_command;
             bf.input = input_area.innerText;
@@ -275,11 +297,11 @@ document.title = decodeURIComponent(getQueryObject("name") || "lang213");
         back: document.getElementsByClassName("config-back")[0],
         btn: document.getElementsByClassName("config-btn")[0]
     });
-    new_command.map((com, i) => document.getElementsByClassName("command-list")[0].insertAdjacentHTML("beforeend", "<li><input value=\"" + (com !== default_command[i] ? [com].flat().map(c => c instanceof RegExp ? (c + '').replace(/\/(.+)\/.?/, '`/$1/') : c).join("``") : '') + "\" placeholder=\"" + [default_command[i]].flat().map(c => c instanceof RegExp ? (c + '').replace(/\/(.+)\/.?/, '`/$1/') : c).join("``") + "\"/></li>"));
+    Object.keys(new_command).map(key => document.getElementsByClassName("command-list")[0].insertAdjacentHTML("beforeend", `<li key="${key}"><input value="${(new_command[key] !== default_command.filter(e => e.key == key)[0].pattern ? [new_command[key]].flat().map(c => c instanceof RegExp ? (c + '').replace(/\/(.+)\/.?/, '`/$1/') : c).join("``") : '')}" placeholder="${[default_command.filter(e => e.key == key)[0].pattern].flat().map(c => c instanceof RegExp ? (c + '').replace(/\/(.+)\/.?/, '`/$1/') : c).join("``")}" title="${default_command.filter(e => e.key == key)[0].mean}"/></li>`));
     (confirm =>
         confirm.onclick = () =>
             confirm.href += "?"
             + "name=" + encodeURIComponent(document.getElementById("lang-name").value)
-            + ["", ...[...document.getElementsByClassName("command-list")[0].childNodes].map((li, i) => li.firstChild.value && i + "=" + encodeURIComponent(li.firstChild.value)).filter(_ => _)].join('&')
+            + ["", ...[...document.getElementsByClassName("command-list")[0].childNodes].map(li => li.firstChild.value && li.getAttribute("key") + "=" + encodeURIComponent(li.firstChild.value)).filter(_ => _)].join('&')
     )(document.getElementsByClassName("confirm")[0]);
 })();
