@@ -1,4 +1,4 @@
 #――ページ一覧
 ***
-##[info](./note?1 "info")
+[##info](./note?1 "info")
 ***
