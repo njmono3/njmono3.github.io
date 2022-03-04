@@ -21,6 +21,7 @@
 
 以下がオリジナルと加工後です
 ![オリジナル, 300](./assets/images/nimono_.png "ものちゃん")
+
 ![加工後, 300](./assets/images/nimono_straight.png "まっすぐちゃん")
 
 こうするだけで、ものちゃんの見え方も随分変わりますね
