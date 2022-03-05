@@ -20,7 +20,7 @@
 顧客に見える範囲では大きくその3か所のみです
 
 以下がオリジナルと加工後です
-![オリジナル, 300](./assets/images/nimono_.png "ものちゃん")
+![オリジナル, 300](./assets/images/nimono_latest.png "ものちゃん")
 
 ![加工後, 300](./assets/images/nimono_straight.png "まっすぐちゃん")
 
