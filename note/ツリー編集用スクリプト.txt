@@ -1,7 +1,6 @@
 #ツリー編集に使うやつ(メモ)
 ***
-##本体
-- - -
+<script>
 document.querySelector("#candidate").addEventListener("mousedown", e => {
     console.log(e.target);
     if (!e.target.closest("li")) { return; }
@@ -18,5 +17,8 @@ document.querySelector("#candidate").addEventListener("mousedown", e => {
     };
     e.target.addEventListener("mouseup", upFunc, false);
 }, false);
-- - -
-プログラムのコードを見やすく表示できるようにしていないのでこうなっているorz
+</script>
+***
+F12で見られるようにしている
+つまりコンソールにエラーが出る
+***
