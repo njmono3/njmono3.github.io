@@ -1,0 +1,22 @@
+#ツリー編集に使うやつ(メモ)
+***
+##本体
+- - -
+document.querySelector("#candidate").addEventListener("mousedown", e => {
+    console.log(e.target);
+    if (!e.target.closest("li")) { return; }
+    const spacer = document.createElement("div");
+    spacer.style.width = `calc(100% + ${document.querySelector("#ParentBox").getBoundingClientRect().left - document.querySelector("#candidate").getBoundingClientRect().left}px)`;
+    spacer.style.height = "1px";
+    spacer.style.left = "0";
+    document.body.appendChild(spacer);
+    scrollBy(document.body.scrollWidth, 0);
+    const upFunc = e => {
+        e.target.removeEventListener("mouseup", upFunc, false);
+        spacer.remove();
+        scrollBy(-document.body.scrollWidth, 0);
+    };
+    e.target.addEventListener("mouseup", upFunc, false);
+}, false);
+- - -
+プログラムのコードを見やすく表示できるようにしていないのでこうなっているorz
