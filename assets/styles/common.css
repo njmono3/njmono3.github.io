@@ -51,6 +51,8 @@ a {
 
 em, b {
     color: var(--strong-text);
+    font-style: normal;
+    font-weight: bold;
 }
 /**/
 .main-body {
