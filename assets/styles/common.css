@@ -49,7 +49,7 @@ a {
         text-decoration: solid underline;
     }
 
-b {
+em b {
     color: var(--strong-text);
 }
 /**/
