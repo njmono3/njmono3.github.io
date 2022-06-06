@@ -8,10 +8,4 @@ const gen_notes = function () {
     main_container.appendChild(new El("div", "", {}, { class: "main-contents note-contents", align: "left" }, [document.querySelector("#content-element")]).gen());
 }
 gen_notes();
-[...document.querySelectorAll("img")].map(
-    img => 
-    (
-        ((img.previousElementSibling || {tagName: ""}).tagName !== "IMG" && img.insertAdjacentHTML("beforebegin", "<br>")),
-        img.height = (img.alt.split("~").slice(-1)[0].match(/\d+/g) || [])[0]
-    )
-)
+[...document.querySelectorAll("img")].map(img => img.height = (img.alt.split("~").slice(-1)[0].match(/\d+/g) || [])[0])
