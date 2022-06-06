@@ -88,7 +88,7 @@ let sizes = {
     }
 };
 /*大枠===================================================================*/
-const layout = content => {
+const layout = () => {
     let page_body = document.body;
     page_body.className = "main-body";
     El.appendChildren(page_body, new El("div", "", {}, { class: "main-header", id: "header" }).gen());
@@ -105,7 +105,7 @@ const layout = content => {
         width: view_mode ? "80vw" : "65vw",
         marginTop: view_mode ? "60px" : "45px",
         marginRight: view_mode ? "auto" : "0.5vw"
-    }, { class: "main-main-container", id: "main-container", align: "center" }, [content && "{{ content }}"]).gen(), main_body_container.firstChild);
+    }, { class: "main-main-container", id: "main-container", align: "center" }, [document.querySelector("content-element")]).gen(), main_body_container.firstChild);
 }
 /*======================================================================*/
 const getQueryObject = () => window.location.search.split('?').pop().split('&').reduce((acc, val) => ({ ...acc, ...(v => ({ [v[0]]: v[1] }))((val + "=").split('=')) }), {});
