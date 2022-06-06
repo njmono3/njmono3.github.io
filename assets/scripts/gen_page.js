@@ -32,14 +32,14 @@ const gen_home = function (contents_mode, open = -1) {
         default:
             El.appendChildren(main_contents, [
                 //{ text: "GAME", link: "?c=g", comment: "これまでに作ったゲームを公開しています", images: [] },
-                { text: "TOOL", link: "", comment: "これまでに作ったツール・ブラウザ拡張を公開しています", images: [{ image: images.nicoExp[0], link: links.nicoExp }, { image: images.Brainfuck[0], link: links.Brainfuck }], attrs: [{}, { onclick: `history.pushState({c:"t"},"","./index.html?c=t");gen_home("t");` }, {}] },
+                { text: "TOOL", link: "", comment: "これまでに作ったツール・ブラウザ拡張を公開しています", images: [{ image: images.nicoExp[0], link: links.nicoExp }, { image: images.Brainfuck[0], link: links.Brainfuck }], attrs: [{}, { onclick: `history.pushState({c:"t"},"","?c=t");gen_home("t");` }, {}] },
                 //{ "text": "VIDEO", "link": "?c=v", "comment": "制作した動画を載せています", "images": [] },
-                { text: "ひとりごと", link: "./note?0", comment: "最近してることやアニメ, " + (view_mode ? "" : "<br>") + "動画・ゲームの制作裏話を語っています", images: [] }
+                { text: "ひとりごと", link: "./note/nil", comment: "最近してることやアニメ, " + (view_mode ? "" : "<br>") + "動画・ゲームの制作裏話を語っています", images: [] }
             ].map(l => genEnumElement(...Object.values(l))));
             break;
         case "g":
             setPageTitle("GAME");
-            El.appendChildren(main_contents, genEnumElement("だんまく", "./games/dmSTG.html", "弾を避けて敵を攻撃するゲームです", []));
+            El.appendChildren(main_contents, genEnumElement("だんまく", "./games/dmSTG", "弾を避けて敵を攻撃するゲームです", []));
             break;
         case "t":
             setPageTitle("TOOL");
@@ -72,7 +72,7 @@ const gen_home = function (contents_mode, open = -1) {
             break;
         case "s":
             setPageTitle("ひとりごと");
-            main_contents.appendChild(new El("a", "note", { fontSize: "var(--font-big)" }, { href: "./note?0" }).gen());
+            main_contents.appendChild(new El("a", "note", { fontSize: "var(--font-big)" }, { href: "./note/nil" }).gen());
             break;
     }
     /*右:プロフィール===========================================================*/
