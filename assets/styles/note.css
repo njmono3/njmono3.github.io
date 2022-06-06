@@ -26,14 +26,14 @@
         height: 100%;
     }
 
-h1.note {
+.note-contents h1 {
     position: relative;
     font-size: calc(var(--font-verybig) * var(--is-sp));
     padding-left: 12px;
     background: linear-gradient(to right, var(--n-black) 75%, var(--dark-black));
 }
 
-    h1.note::before {
+    .note-contents h1::before {
         content: "";
         position: absolute;
         left: 0px;
@@ -43,14 +43,14 @@ h1.note {
         background-color: var(--main-accent);
     }
 
-h2.note {
+.note-contents h2 {
     position: relative;
     font-size: calc(var(--font-big) * var(--is-sp));
     padding-left: 6px;
     background: linear-gradient(to right, var(--n-black), var(--dark-black) 25%);
 }
 
-    h2.note::before {
+    .note-contents h2::before {
         content: "";
         position: absolute;
         left: 0;
@@ -60,7 +60,7 @@ h2.note {
         background-color: var(--main-accent);
     }
 
-h3.note {
+.note-contents h3 {
     font-size: calc(var(--font-big) * var(--is-sp));
 }
 
