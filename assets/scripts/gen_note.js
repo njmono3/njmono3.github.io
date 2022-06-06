@@ -1,4 +1,4 @@
-layout();
+layout("note");
 [...document.querySelectorAll("img")].map(
     img => 
     (
