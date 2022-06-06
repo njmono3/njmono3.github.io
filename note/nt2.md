@@ -24,9 +24,7 @@ datetime: 2022/03/05-00:30
 表面に見える範囲では大きくその3か所のみです
 
 以下がオリジナルと加工後です
-![オリジナル~300](../assets/images/nimono_latest.png "ものちゃん")
-
-![加工後~300](../assets/images/nimono_straight.png "まっすぐちゃん")
+![オリジナル~300](../assets/images/nimono_latest.png "ものちゃん")![加工後~300](../assets/images/nimono_straight.png "まっすぐちゃん")
 
 こうするだけで、ものちゃんの見え方も随分変わりますね
 パーツ分けも済んだので、後はLive2Dに読み込んで動きを付ける*だけ*です
