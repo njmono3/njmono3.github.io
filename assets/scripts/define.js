@@ -105,7 +105,7 @@ const layout = () => {
         width: view_mode ? "80vw" : "65vw",
         marginTop: view_mode ? "60px" : "45px",
         marginRight: view_mode ? "auto" : "0.5vw"
-    }, { class: "main-main-container", id: "main-container", align: "center" }, [document.querySelector("#content-element")]).gen(), main_body_container.firstChild);
+    }, { class: "main-main-container", id: "main-container", align: "center" }).gen(), main_body_container.firstChild);
 }
 /*======================================================================*/
 const getQueryObject = () => window.location.search.split('?').pop().split('&').reduce((acc, val) => ({ ...acc, ...(v => ({ [v[0]]: v[1] }))((val + "=").split('=')) }), {});
