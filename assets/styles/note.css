@@ -6,7 +6,7 @@
     position: relative;
 }
 
-.strong-line hr {
+.strong-line, hr {
     width: 95%;
     border-color: var(--sub-accent);
     margin-left: 0;
