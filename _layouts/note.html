@@ -2,6 +2,23 @@
 <html>
 <head>
     <meta charset="utf-8"/>
+    
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="{{ page.title }}" />
+    <meta property="og:description" content="{{ page.description }}" />
+    <meta property="og:site_name" content="にものさんの部屋" />
+    <script id="genogp">
+        const ogpurl = document.createElement("meta");
+        ogpurl.property = "og:url";
+        ogpurl.content = document.URL;
+        document.querySelector("#genogp").insertAdjacentElement("afterend", ogpurl);
+    </script>
+    <meta property="og:image" content="../assets/images/note_default.png" />
+    <meta property="og:image" content="../assets/images/{{ page.headimg }}" />
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@2mon00" />
+    
     <link rel="icon" type="image/png" href="../assets/images/nimono-logo-64.png" />
     <link type="text/css" rel="stylesheet" href="../assets/styles/common.css"/>
     <link type="text/css" rel="stylesheet" href="../assets/styles/note.css"/>
