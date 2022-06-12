@@ -12,7 +12,7 @@
         const ogpurl = ogpimg = document.createElement("meta");
         ogpurl.property = "og:url";
         ogpurl.content = document.URL;
-        ogpimg.property = "og:url";
+        ogpimg.property = "og:image";
         ogpimg.content = "../assets/images/" + (document.querySelector("[note-head-img]").getAttribute("note-head-img") || "note_default.png");
         document.querySelector("#genogp").insertAdjacentElement("afterend", ogpurl);
         document.querySelector("#genogp").insertAdjacentElement("afterend", ogpimg);
