@@ -10,12 +10,12 @@
     <meta property="og:site_name" content="にものさんの部屋" />
     <script id="genogp">
         const ogpurl = document.createElement("meta");
-        ogpurl.property = "og:url";
-        ogpurl.content = document.URL;
+        ogpurl.setAttribute("property", "og:url");
+        ogpurl.setAttribute("content", document.URL);
         document.querySelector("#genogp").insertAdjacentElement("afterend", ogpurl);
         const ogpimg = document.createElement("meta");
-        ogpimg.property = "og:image";
-        ogpimg.content = "../assets/images/" + (document.querySelector("[note-head-img]").getAttribute("note-head-img") || "note_default.png");
+        ogpimg.setAttribute("property", "og:image");
+        ogpimg.setAttribute("content", "../assets/images/" + (document.querySelector("[note-head-img]").getAttribute("note-head-img") || "note_default.png"));
         document.querySelector("#genogp").insertAdjacentElement("afterend", ogpimg);
     </script>
     
