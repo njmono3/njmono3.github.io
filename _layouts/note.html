@@ -12,12 +12,13 @@
         const ogpurl = document.createElement("meta");
         ogpurl.setAttribute("property", "og:url");
         ogpurl.setAttribute("content", document.URL);
-        document.querySelector("#genogp").insertAdjacentElement("afterend", ogpurl);
+        document.querySelector("#genogp").insertAdjacentElement("afterend", ogpurl);/*
         const ogpimg = document.createElement("meta");
         ogpimg.setAttribute("property", "og:image");
         ogpimg.setAttribute("content", "../assets/images/" + (document.querySelector("[note-head-img]").getAttribute("note-head-img") || "note_default.png"));
-        document.querySelector("#genogp").insertAdjacentElement("afterend", ogpimg);
+        document.querySelector("#genogp").insertAdjacentElement("afterend", ogpimg);*/
     </script>
+    <meta property="og:image" content="../assets/images/{{ page.headimg }}">
     
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@2mon00" />
