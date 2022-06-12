@@ -1,6 +1,7 @@
 ---
 layout: note
 title: Info
+headimg: AIusuwaProject.png
 ---
 
 # H1
