@@ -28,7 +28,7 @@
 
 .note-contents h1 {
     position: relative;
-    font-size: calc(var(--font-verybig) * var(--is-sp));
+    /*font-size: calc(var(--font-verybig) * var(--is-sp));*/
     padding-left: 12px;
     background: linear-gradient(to right, var(--n-black) 75%, var(--dark-black));
 }
@@ -45,7 +45,7 @@
 
 .note-contents h2 {
     position: relative;
-    font-size: calc(var(--font-big) * var(--is-sp));
+    /*font-size: calc(var(--font-big) * var(--is-sp));*/
     padding-left: 6px;
     background: linear-gradient(to right, var(--n-black), var(--dark-black) 25%);
     margin: 15px 0 5px;
@@ -66,7 +66,7 @@
 }
 
 p {
-    font-size: calc(var(--font-medium) * var(--is-sp));
+    /*font-size: calc(var(--font-medium) * var(--is-sp));*/
 }
 
 
