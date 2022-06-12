@@ -3,18 +3,20 @@
 <head>
     <meta charset="utf-8"/>
     
+    <meta note-head-img="{{ page.headimg }}">
     <meta property="og:type" content="article" />
     <meta property="og:title" content="{{ page.title }}" />
     <meta property="og:description" content="{{ page.description }}" />
     <meta property="og:site_name" content="にものさんの部屋" />
     <script id="genogp">
-        const ogpurl = document.createElement("meta");
+        const ogpurl = ogpimg = document.createElement("meta");
         ogpurl.property = "og:url";
         ogpurl.content = document.URL;
+        ogpimg.property = "og:url";
+        ogpimg.content = document.querySelector("[note-head-img]").getAttribute("note-head-img") || "note_default.png";
         document.querySelector("#genogp").insertAdjacentElement("afterend", ogpurl);
+        document.querySelector("#genogp").insertAdjacentElement("afterend", ogpimg);
     </script>
-    <meta property="og:image" content="../assets/images/note_default.png" />
-    <meta property="og:image" content="../assets/images/{{ page.headimg }}" />
     
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@2mon00" />
@@ -25,7 +27,7 @@
     <title>{{ page.title }} - にものさんの部屋</title>
 </head>
 <body>
-    <div id="content-element" head-img="{{ page.headimg }}">{{ content }}</div>
+    <div id="content-element">{{ content }}</div>
     <script type="text/javascript" src="../assets/scripts/define.js" charset="utf-8"></script>
     <script type="text/javascript" src="../assets/scripts/gen_note.js" charset="utf-8"></script>
 </body>
