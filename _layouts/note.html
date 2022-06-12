@@ -8,16 +8,7 @@
     <meta property="og:title" content="{{ page.title }}" />
     <meta property="og:description" content="{{ page.description }}" />
     <meta property="og:site_name" content="にものさんの部屋" />
-    <script id="genogp">
-        const ogpurl = document.createElement("meta");
-        ogpurl.setAttribute("property", "og:url");
-        ogpurl.setAttribute("content", document.URL);
-        document.querySelector("#genogp").insertAdjacentElement("afterend", ogpurl);
-        const ogpimg = document.createElement("meta");
-        ogpimg.setAttribute("property", "og:image");
-        ogpimg.setAttribute("content", "https://nimono3.github.io/assets/images/" + (document.querySelector("[note-head-img]").getAttribute("note-head-img") || "note_default.png"));
-        document.querySelector("#genogp").insertAdjacentElement("afterend", ogpimg);
-    </script>
+    <meta property="og:image" content="https://nimono3.github.io/assets/images/{{ page.headimg }}" />
     
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@2mon00" />
