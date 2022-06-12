@@ -13,7 +13,7 @@
         ogpurl.property = "og:url";
         ogpurl.content = document.URL;
         ogpimg.property = "og:url";
-        ogpimg.content = document.querySelector("[note-head-img]").getAttribute("note-head-img") || "note_default.png";
+        ogpimg.content = "../assets/images/" + (document.querySelector("[note-head-img]").getAttribute("note-head-img") || "note_default.png");
         document.querySelector("#genogp").insertAdjacentElement("afterend", ogpurl);
         document.querySelector("#genogp").insertAdjacentElement("afterend", ogpimg);
     </script>
