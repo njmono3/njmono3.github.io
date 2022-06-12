@@ -9,7 +9,7 @@ const gen_notes = function () {
     const headimg = document.createElement("div");
     headimg.style.width = "100%";
     headimg.style.height = "300px";
-    headimg.style.background = `url("../assets/images/${content.getAttribute("head-img") || "note_default.png"}") center center / cover no-repeat`;
+    headimg.style.background = `url("../assets/images/${document.querySelector("[note-head-img]").getAttribute("note-head-img") || "note_default.png"}") center center / cover no-repeat`;
     main_container.appendChild(new El("div", "", {}, { class: "main-contents note-contents", align: "left" }, [
         headimg,
         content
