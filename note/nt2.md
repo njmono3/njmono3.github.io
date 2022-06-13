@@ -2,6 +2,7 @@
 layout: note
 title: アイコンの娘をLive2D化しよう01
 datetime: 2022/03/05-00:30
+headimg: note_default.png
 ---
 # アイコンの娘をLive2D化しよう01
 * * *
