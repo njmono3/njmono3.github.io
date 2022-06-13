@@ -1,6 +1,7 @@
 ---
 layout: note
 title: Info
+headimg: note_default.png
 ---
 
 # このコンテンツについて
