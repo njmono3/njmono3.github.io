@@ -1,7 +1,8 @@
 ---
 layout: note
 title: AI稀羽制作日記#01
-date: 2022-06-12
+firstedit: 2022/06/12
+finaledit: 2022/06/14
 headimg: AIusuwaProject.png
 ---
 
@@ -19,7 +20,7 @@ headimg: AIusuwaProject.png
 
 
 　それでもこうして世にこれを公開するというのは、  
-機械学習に関する *備忘録* であったり、自らを *戒め* の意味があるのだ  
+機械学習に関する*備忘録*であったり、自らを*戒め*の意味があるのだ  
 ずんだもんなのだ  
 
 
@@ -46,15 +47,15 @@ headimg: AIusuwaProject.png
 
 #### 学習データについて
 これはこのプロジェクトを始めたきっかけにも繋がる話で、  
-以前やっていた *アカペラ配信* これが学習データとして使えるのではないかと考えた  
+以前やっていた*アカペラ配信*これが学習データとして使えるのではないかと考えた  
 <blockquote class="twitter-tweet"><p lang="ja" dir="ltr"><a href="https://twitter.com/hashtag/%E3%81%9F%E3%81%A0%E3%81%84%E3%81%BE%E3%81%86%E3%81%99%E3%82%8F?src=hash&amp;ref_src=twsrc%5Etfw">#ただいまうすわ</a><br>歌声の後ろに音が入ってないから<br>このデータ　AIとかに学習させやすそう<br>『シングAI稀羽』←欲しい</p>&mdash; にものさん@三点倒立四天王,ハッカ油 (@2mon00) <a href="https://twitter.com/2mon00/status/1525807036885532672?ref_src=twsrc%5Etfw">May 15, 2022</a></blockquote>
 ↑すべての元凶  
-
 
 
 　しかし-もしも-最近の技術で、普段の歌枠からもキレイにボーカル抽出ができるなら  
 学習データには困らないだろう  
 てかできそう...科学の力って(ry  
+
 
 でも結局あの娘、歌ってる途中にコールとか要求してきて  
 VTuberとして最高だけど歌唱データに向かないんだよねかわいい  
@@ -85,9 +86,7 @@ VTuberとして最高だけど歌唱データに向かないんだよねかわ�
 　これを *"無声両唇破裂音"* みたいな 他と繋がってる要素として扱ってみたいなぁ」  
  
  
- 
-とか適当なこと考えてます
-
+とか適当なこと考えてます  
 
 
 つまり、音素ごとに\[p, s, t, ...]=\[0, 1, 2, ...] と IDを振るような形でなく  
@@ -100,7 +99,7 @@ VTuberとして最高だけど歌唱データに向かないんだよねかわ�
 まあ頑張っていきたい  
 
 
-今取り掛かってるもの①は、この「音素ベクトル」の設計である  
+今取り掛かるできもの①は、この「音素ベクトル」の設計ってことで。  
 進展があれば次回にでも報告したい　　
 
 
@@ -108,22 +107,24 @@ VTuberとして最高だけど歌唱データに向かないんだよねかわ�
 *まるっきりわかんない*  
 とりあえずNEUTRINOさんがこんなこと言ってるのを見つけた  
 <blockquote class="twitter-tweet"><p lang="ja" dir="ltr">使用しているフレームワークはこちらになります。<br>Sinsy（<a href="https://t.co/IuD9qckaLH">https://t.co/IuD9qckaLH</a>）<br>WORLD（<a href="https://t.co/dTuF9I5LpQ">https://t.co/dTuF9I5LpQ</a>）<br>chainer（<a href="https://t.co/fTzAzimgja">https://t.co/fTzAzimgja</a>）<br>NSF（<a href="https://t.co/N4nataVL5l">https://t.co/N4nataVL5l</a>）</p>&mdash; NEUTRINO（歌声シンセサイザー）公式 (@SHACHI_NEUTRINO) <a href="https://twitter.com/SHACHI_NEUTRINO/status/1201856414844641280?ref_src=twsrc%5Etfw">December 3, 2019</a></blockquote>  
-これをキッカケにChainer, WORLDのことを少し調べる。  
+Chainer, WORLDのことを少し調べる。  
 (WORLDのことを調べるうちに、Pythonでのwavファイル操作の経験がないことに気づき齧る)  
 
 
-
-さてさて、成功例から道具を学んだので、あとは学習手法か何かの勉強に入りたいところ  
-多分ニューラルネットワーク(NN)をごちゃごちゃやればいい  
-
+さてさて、成功例から*道具を学んだ*ので、あとは学習手法か何かの勉強に入りたいところ  
+多分ニューラルネットワーク(NN)を*ごちゃごちゃやればいい*  
 
 
 個人的に分からないのが、今のように入出力が可変長の場合の処理  
 ググってすぐに引っかかるのはLSTM？とか  
-ちょうどいいQiitaの記事が見つかったので読んでみる  
 
 
+[ここ](https://www.youtube.com/c/NeuralNetworkConsole "Neural Network Console - YouTube")が参考になりそうなので  
+ちゃんと履修しておこう  
 
-(～編集中～)
+
+* * *
+今回はここら辺にして、また次回に回したい  
+さっさと*きりたんを使ったサンプル*を作れるところまでは行きたい所存  
 
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
