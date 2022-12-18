@@ -202,11 +202,29 @@
 
                     card_ctx.fillStyle = "rgb(194, 150, 115)";
                     card_ctx.font = "bold 35px 'M PLUS Rounded 1c'";
-                    card_ctx.fillText("ごく稀に聞ける兎々錦サキの濁った声が", 20, card_canvas.height - 65);
-                    card_ctx.fillText("とても良いと思う協会　日本支部", 20, card_canvas.height - 20);
+                    card_ctx.fillText("ごく稀に聞ける兎々錦サキの濁った声が", 20, card_canvas.height - 70);
+                    card_ctx.fillText("とても良いと思う協会　日本支部", 20, card_canvas.height - 25);
+
+                    card_ctx.fillStyle = "#0008";
+                    card_ctx.font = "bold 30px 'M PLUS Rounded 1c'";
+                    card_ctx.fillText("@" + (query_obj["twitter"] || "SakiTotoki"), 705, 620);
+                    card_ctx.fillStyle = "#fffa";
+                    card_ctx.fillText("@" + (query_obj["twitter"] || "SakiTotoki"), 702, 620);
                 }
             });
+            /*
+            const tw_xhr = new XMLHttpRequest();
+            tw_xhr.setRequestHeader({ authorization: "Bearer AAAAAAAAAAAAAAAAAAAAAM0pkgEAAAAALuYgB6JEnVWL4Rya3plxUnUiL%2FI%3DwxiHAcbMRuDkW45qGCr9XoXwzDLFg14r87SrRlabXWEGCm94T0"});
+            const tw_url = "https://api.twitter.com/1.1/users/show.json?screen_name=" + (query_obj["twitter"] || "SakiTotoki");
+            tw_xhr.open("GET", tw_url);
+            tw_xhr.onreadystatechange = function () {
+                if (tw_xhr.readyState === 4 && tw_xhr.status === 200) {
+                    console.log(tw_xhr.responseText);
+                }
+                console.log(tw_xhr.response)
+            };*/
         }
+
         function fillRadRect(ctx, x, y, w, h, r = 0, ap = [1, 1, 1, 1]) {
             ctx.fillRect(x + r, y, w - r * 2, h);
             ctx.fillRect(x, y + r, w, h - r * 2);
