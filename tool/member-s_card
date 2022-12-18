@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+    <div>
+        <img></img>
+    </div>
+    <script>
+        document.querySelecter("img").src = document.URL.split("?").slice(-1)[0];
+    </script>
+</body>
+</html>
