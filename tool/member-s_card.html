@@ -102,6 +102,7 @@
                     cursor: pointer;
                 }
     </style>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js"></script>
 </head>
 <body>
     <div id="system">
@@ -119,7 +120,6 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js"></script>
     <script>
         const getQueryObject = () => window.location.search.split('?').pop().split('&').reduce((acc, val) => ({ ...acc, ...(v => ({ [v[0]]: v[1] }))((val + "=").split('=')) }), {});
         {
