@@ -126,9 +126,6 @@
             const query_obj = getQueryObject();
 
 
-            const face_img = document.querySelector("#face-img");
-            //face_img.src = decodeURIComponent(query_obj["img"]) || "";
-
             document.body.style.backgroundColor = { totoki: "rgb(60, 83, 67)" }[query_obj["target"]] || "#fafafa";
             document.querySelector("#main").style.backgroundColor = { totoki: "#ffe5b8" }[query_obj["target"]] || "#fff";
             document.title = { totoki: "ごく稀に聞ける兎々錦サキの濁った声がとても良いと思う協会-会員証" }[query_obj["target"]] || "会員証メーカー(仮)";
@@ -157,28 +154,34 @@
             card_ctx.beginPath();
             fillRadRect(card_ctx, 0, 0, card_canvas.width, card_canvas.height / 5, 50, [1, 1, 0, 0]);
 
+            const face_img = document.querySelector("#face-img");
+            face_img.src = decodeURIComponent(query_obj["img"]) || "";
+            face_img.onload = () => {
+                card_ctx.drawImage(face_img, face_img.clientWidth/2 - 150, 0, 300, 400, 700, 190, 300, 400);
+            };
+
             WebFont.load({
                 google: {
                     families: ["RocknRoll One", "Potta One", "M PLUS Rounded 1c"]
                 },
                 active: () => {
                     card_ctx.fillStyle = "rgb(96, 130, 114)";
-                    card_ctx.font = "bold 120px 'M PLUS Rounded 1c'";
-                    card_ctx.fillText("会員証", 20, 120);
+                    card_ctx.font = "bold 110px 'M PLUS Rounded 1c'";
+                    card_ctx.fillText("会員証", 20, 110);
 
                     card_ctx.fillStyle = "rgb(96, 130, 114)";
                     card_ctx.font = "40px 'M PLUS Rounded 1c'";
                     card_ctx.fillText("会員番号", 40, 210);
                     card_ctx.font = "100px 'RocknRoll One'";
                     card_ctx.fillText(idnum_el.value, 20, 320);
-                    card_ctx.font = "40px 'M PLUS Rounded 1c'";
+                    card_ctx.font = "40px 'Potta One'";
                     card_ctx.fillText("氏名", 40, 390);
                     card_ctx.font = "100px 'RocknRoll One'";
                     card_ctx.fillText(name_el.value, 20, 500);
 
                     card_ctx.fillStyle = "rgb(194, 150, 115)";
-                    card_ctx.font = "40px 'Potta One'";
-                    card_ctx.fillText("ごく稀に聞ける兎々錦サキの濁った声が", 20, card_canvas.height - 70);
+                    card_ctx.font = "bold 35px 'M PLUS Rounded 1c'";
+                    card_ctx.fillText("ごく稀に聞ける兎々錦サキの濁った声が", 20, card_canvas.height - 65);
                     card_ctx.fillText("とても良いと思う協会　日本支部", 20, card_canvas.height - 20);
                 }
             });
