@@ -102,7 +102,7 @@
                     cursor: pointer;
                 }
     </style>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js"></script>
 </head>
 <body>
     <div id="system">
@@ -159,10 +159,9 @@
 
             WebFont.load({
                 google: {
-                    families: ["RocknRoll One", "Potta One", "M PLUS Rounded 1c"],
-                    urls: ["https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700&family=Potta+One&family=RocknRoll+One&display=swap"]
+                    families: ["RocknRoll One", "Potta One", "M PLUS Rounded 1c"]
                 },
-                active: () => setTimeout(() => {
+                active: () => {
                     card_ctx.fillStyle = "rgb(96, 130, 114)";
                     card_ctx.font = "bold 120px 'M PLUS Rounded 1c'";
                     card_ctx.fillText("会員証", 20, 120);
@@ -181,7 +180,7 @@
                     card_ctx.font = "40px 'Potta One'";
                     card_ctx.fillText("ごく稀に聞ける兎々錦サキの濁った声が", 20, card_canvas.height - 70);
                     card_ctx.fillText("とても良いと思う協会　日本支部", 20, card_canvas.height - 20);
-                }, 500)
+                }
             });
         }
         function fillRadRect(ctx, x, y, w, h, r = 0, ap = [1, 1, 1, 1]) {
