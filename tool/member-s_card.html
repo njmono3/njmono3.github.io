@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700&family=Potta+One&family=RocknRoll+One&display=swap" rel="stylesheet">
     <style>
         html {
-            --main-w: 67vw;
-            --cv-size: 66.67vw;
+            --main-w: 60vw;
+            --cv-size: 40vw;
         }
 
         body {
@@ -24,14 +27,14 @@
         }
 
             #main canvas {
+                display: inline-block;
                 width: var(--cv-size);
                 background: none;
-                margin: auto;
+                margin: 50px;
             }
 
         #cvbg {
-            padding: calc((var(--main-w) - var(--cv-size))/2);
-            width: calc(100% - (var(--main-w) - var(--cv-size)));
+            width: var(--main-w);
             height: calc(var(--main-w) / 16 * 9);
             border-radius: 1vw 1vw 0 0;
             background: linear-gradient(45deg, #aaa 25%, transparent 25%, transparent 75%, #aaa 75%), linear-gradient(45deg, #aaa 25%, transparent 25%, transparent 75%, #aaa 75%), #eee;
@@ -47,21 +50,29 @@
 
         #controle {
             padding: 10px;
+            margin: auto;
+            font-family: "RocknRoll One";
         }
 
             #controle input[type=text], #controle input[type=number] {
                 color: #222;
+                font-size: 1.5vw;
+                font-family: "RocknRoll One";
                 padding: 0;
                 border: none;
                 border-bottom: 2px solid #222;
                 background-color: #fff0;
                 outline: none;
+                height: 50%;
+            }
+
+            #controle label {
+                color: #222;
                 font-size: 1.5vw;
-                height: 2vw;
             }
 
             #controle #idnum {
-                width: 10%;
+                width: 8.5vw;
             }
 
             #controle .footer {
@@ -77,8 +88,10 @@
                 background-color: #fff0;
                 border-radius: 0.5vw;
                 outline: none;
-                font-size: 1.5vw;
-                line-height: 2vw;
+                font-size: 2vw;
+                font-family: "RocknRoll One";
+                line-height: 2.5vw;
+                cursor: default;
             }
 
                 #controle #create:hover {
@@ -86,6 +99,7 @@
                     color: #fff;
                     background-color: #222;
                     border-color: #222;
+                    cursor: pointer;
                 }
     </style>
 </head>
@@ -95,16 +109,17 @@
     </div>
     <div id="main">
         <div id="cvbg">
-            <canvas width="1280" height="720"></canvas>
+            <canvas width="1070" height="675"></canvas>
         </div>
         <div id="controle">
             <label>名前：<input type="text" id="name" /></label>
-            <label>（会員番号：<input type="number" id="idnum" />&nbsp;）</label>
+            <label>（会員番号：<input type="number" id="idnum" min="0" max="9999999" />&nbsp;）</label>
             <div class="footer">
                 <button id="create">カードを作る</button>
             </div>
         </div>
     </div>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js"></script>
     <script>
         const getQueryObject = () => window.location.search.split('?').pop().split('&').reduce((acc, val) => ({ ...acc, ...(v => ({ [v[0]]: v[1] }))((val + "=").split('=')) }), {});
         {
@@ -116,32 +131,92 @@
 
             document.body.style.backgroundColor = { totoki: "rgb(60, 83, 67)" }[query_obj["target"]] || "#fafafa";
             document.querySelector("#main").style.backgroundColor = { totoki: "#ffe5b8" }[query_obj["target"]] || "#fff";
+            document.title = { totoki: "ごく稀に聞ける兎々錦サキの濁った声がとても良いと思う協会-会員証" }[query_obj["target"]] || "会員証メーカー(仮)";
 
             const name_el = document.querySelector("#controle #name");
-            name_el.value = { totoki: "サキ友" }[query_obj["target"]] || "";
+            name_el.value = decodeURIComponent(query_obj["name"] || "") || { totoki: "サキ友" }[query_obj["target"]] || "";
 
             const idnum_el = document.querySelector("#controle #idnum");
-            idnum_el.value = { totoki: "1010121" }[query_obj["target"]] || "000000";
+            idnum_el.value = decodeURIComponent(query_obj["number"] || "") || { totoki: "1010121" }[query_obj["target"]] || "000000";
             idnum_el.onchange = () => idnum_el.value = idnum_el.value.padStart(6, "0");
+
+
+            document.querySelector("#controle #create").onclick = e => {
+                location.href = "./?target=" + (query_obj["target"] || "null") + "&" + "name=" + encodeURIComponent(name_el.value) + "&number=" + idnum_el.value;
+            };
 
 
             const card_canvas = document.querySelector("#main canvas");
             const card_ctx = card_canvas.getContext("2d");
 
-            card_ctx.fillStyle = "#fafafa";
+            card_ctx.fillStyle = "rgb(248, 243, 237)";
+            card_ctx.beginPath();
             fillRadRect(card_ctx, 0, 0, card_canvas.width, card_canvas.height, 50);
+
+            card_ctx.fillStyle = "rgb(224, 217, 201)";
+            card_ctx.beginPath();
+            fillRadRect(card_ctx, 0, 0, card_canvas.width, card_canvas.height / 5, 50, [1, 1, 0, 0]);
+
+            WebFont.load({
+                google: {
+                    families: ["RocknRoll One", "Potta One", "M PLUS Rounded 1c"],
+                    urls: ["https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700&family=Potta+One&family=RocknRoll+One&display=swap"]
+                },
+                active: () => setTimeout(() => {
+                    card_ctx.fillStyle = "rgb(96, 130, 114)";
+                    card_ctx.font = "bold 120px 'M PLUS Rounded 1c'";
+                    card_ctx.fillText("会員証", 20, 120);
+
+                    card_ctx.fillStyle = "rgb(96, 130, 114)";
+                    card_ctx.font = "40px 'M PLUS Rounded 1c'";
+                    card_ctx.fillText("会員番号", 40, 210);
+                    card_ctx.font = "100px 'RocknRoll One'";
+                    card_ctx.fillText(idnum_el.value, 20, 320);
+                    card_ctx.font = "40px 'M PLUS Rounded 1c'";
+                    card_ctx.fillText("氏名", 40, 390);
+                    card_ctx.font = "100px 'RocknRoll One'";
+                    card_ctx.fillText(name_el.value, 20, 500);
+
+                    card_ctx.fillStyle = "rgb(194, 150, 115)";
+                    card_ctx.font = "40px 'Potta One'";
+                    card_ctx.fillText("ごく稀に聞ける兎々錦サキの濁った声が", 20, card_canvas.height - 70);
+                    card_ctx.fillText("とても良いと思う協会　日本支部", 20, card_canvas.height - 20);
+                }, 500)
+            });
         }
-        function fillRadRect(ctx, x, y, w, h, r=0) {
-            ctx.fillRect(x + r, y, w - r*2, h);
+        function fillRadRect(ctx, x, y, w, h, r = 0, ap = [1, 1, 1, 1]) {
+            ctx.fillRect(x + r, y, w - r * 2, h);
             ctx.fillRect(x, y + r, w, h - r * 2);
-            ctx.moveTo(x + r, y + r);
-            ctx.arc(x + r, y + r, r, Math.PI, -0.5*Math.PI);
-            ctx.moveTo(w - r, y + r);
-            ctx.arc(w - r, y + r, r, -0.5*Math.PI, 0);
-            ctx.moveTo(w - r, h - r);
-            ctx.arc(w - r, h - r, r, 0, 0.5*Math.PI);
-            ctx.moveTo(x + r, h - r);
-            ctx.arc(x + r, h - r, r, 0.5*Math.PI, Math.PI);
+            [
+                [
+                    () => ctx.fillRect(x, y, r, r),
+                    () => {
+                        ctx.moveTo(x + r, y + r);
+                        ctx.arc(x + r, y + r, r, Math.PI, -0.5 * Math.PI);
+                    }
+                ],
+                [
+                    () => ctx.fillRect(x + w - r, y, r, r),
+                    () => {
+                        ctx.moveTo(x + w - r, y + r);
+                        ctx.arc(w - r, y + r, r, -0.5 * Math.PI, 0);
+                    }
+                ],
+                [
+                    () => ctx.fillRect(x + w - r, h - r, r, r),
+                    () => {
+                        ctx.moveTo(x + w - r, y + h - r);
+                        ctx.arc(w - r, h - r, r, 0, 0.5 * Math.PI);
+                    }
+                ],
+                [
+                    () => ctx.fillRect(x, h - r, r, r),
+                    () => {
+                        ctx.moveTo(x + r, y + h - r);
+                        ctx.arc(x + r, h - r, r, 0.5 * Math.PI, Math.PI);
+                    }
+                ]
+            ].map((f, i) => f[ap[i]]());
             ctx.fill();
         }
     </script>
