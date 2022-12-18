@@ -3,7 +3,7 @@
 <head>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700&family=Potta+One&family=RocknRoll+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700&family=RocknRoll+One&display=swap" rel="stylesheet">
     <style>
         html {
             --main-w: 60vw;
@@ -71,8 +71,22 @@
                 font-size: 1.5vw;
             }
 
+            #controle .tw {
+                color: #80b0d0;
+            }
+
+            #controle #t-id {
+                width: 15vw;
+                color: #80b0d0;
+                border-color: #80b0d0;
+            }
+
             #controle #idnum {
-                width: 8.5vw;
+                width: 8.25vw;
+            }
+
+            #controle #name {
+                width: 10vw;
             }
 
             #controle .footer {
@@ -101,6 +115,10 @@
                     border-color: #222;
                     cursor: pointer;
                 }
+
+        .footer {
+            padding-top: 10px;
+        }
     </style>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js"></script>
 </head>
@@ -115,6 +133,7 @@
         <div id="controle">
             <label>名前：<input type="text" id="name" /></label>
             <label>（会員番号：<input type="number" id="idnum" min="0" max="9999999" />&nbsp;）</label>
+            <label class="tw">@<input type="text" id="t-id" /></label>
             <div class="footer">
                 <button id="create">カードを作る</button>
             </div>
@@ -137,9 +156,11 @@
             idnum_el.value = decodeURIComponent(query_obj["number"] || "") || { totoki: "1010121" }[query_obj["target"]] || "000000";
             idnum_el.onchange = () => idnum_el.value = idnum_el.value.padStart(6, "0");
 
+            const tid_el = document.querySelector("#controle #t-id");
+            tid_el.value = query_obj["twitter"] || "SakiTotoki";
 
             document.querySelector("#controle #create").onclick = e => {
-                location.href = "./?target=" + (query_obj["target"] || "null") + "&" + "name=" + encodeURIComponent(name_el.value) + "&number=" + idnum_el.value;
+                location.href = "./?target=" + (query_obj["target"] || "null") + "&" + "name=" + encodeURIComponent(name_el.value) + "&number=" + idnum_el.value + "&twitter=" + query_obj["twitter"];
             };
 
 
@@ -162,7 +183,7 @@
 
             WebFont.load({
                 google: {
-                    families: ["RocknRoll One", "Potta One", "M PLUS Rounded 1c"]
+                    families: ["RocknRoll One", "M PLUS Rounded 1c"]
                 },
                 active: () => {
                     card_ctx.fillStyle = "rgb(96, 130, 114)";
@@ -174,10 +195,10 @@
                     card_ctx.fillText("会員番号", 40, 210);
                     card_ctx.font = "100px 'RocknRoll One'";
                     card_ctx.fillText(idnum_el.value, 20, 320);
-                    card_ctx.font = "40px 'Potta One'";
-                    card_ctx.fillText("氏名", 40, 390);
+                    card_ctx.font = "40px 'M PLUS Rounded 1c'";
+                    card_ctx.fillText("氏名", 40, 400);
                     card_ctx.font = "100px 'RocknRoll One'";
-                    card_ctx.fillText(name_el.value, 20, 500);
+                    card_ctx.fillText(name_el.value, 20, 510);
 
                     card_ctx.fillStyle = "rgb(194, 150, 115)";
                     card_ctx.font = "bold 35px 'M PLUS Rounded 1c'";
