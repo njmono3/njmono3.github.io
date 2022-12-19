@@ -192,7 +192,7 @@
                 let rs = document.querySelector("#rufous-sandbox");
                 if (twz && rs) {
                     if (!rs.contentDocument) return;
-                    !twz.src || (twz.src = "");
+                    //!twz.src || (twz.src = "");
                     if (!twz.contentDocument) return;
                     face_img.src = [...twz.contentDocument.querySelectorAll(`.TweetAuthor-avatar .Avatar`)]
                         .map(el => el.parentNode.href.replace(/^.+\/([^/]+)$/, "$1") == tid_el.value ? (observer.disconnect(), console.log("アイコン読み込み成功"), el.src.replace("normal", "400x400")) : "").filter(_ => _)[0] || "";
