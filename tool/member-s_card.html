@@ -189,14 +189,12 @@
             const system_el = document.querySelector("#system");
             const observer = new MutationObserver(e => {
                 let twz = document.querySelector("#twitter-widget-0");
-                if (twz) {
-                    observer.disconnect();
-                    twz.onload = () => 
+                if (twz && twz.contentDocument) {
                     face_img.src = [...twz.contentDocument.querySelectorAll(`.TweetAuthor-avatar .Avatar`)]
-                        .map(el => el.parentNode.href.replace(/^.+\/([^/]+)$/, "$1") == tid_el.value ? el.src.replace("normal", "400x400") : "").filter(_=>_)[0] || "";
+                        .map(el => el.parentNode.href.replace(/^.+\/([^/]+)$/, "$1") == tid_el.value ? (observer.disconnect(), el.src.replace("normal", "400x400")) : "").filter(_ => _)[0] || "";
                 }
             });
-            observer.observe(system_el, { childList: true });
+            observer.observe(system_el, { childList: true, subtree: true });
             document.querySelector("#system").insertAdjacentHTML("beforeend", `<a class="twitter-timeline" data-width="220" data-height="200" data-dnt="true" href="https://twitter.com/${tid_el.value}?ref_src=twsrc%5Etfw"></a>`);
 
             document.querySelector("#controle #create").onclick = e => {
