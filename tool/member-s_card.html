@@ -188,8 +188,11 @@
             const face_img = document.querySelector("#face-img");
             const system_el = document.querySelector("#system");
             const observer = new MutationObserver(e => {
-                if (document.querySelector("#twitter-widget-0")) {
-                    face_img.src = [...document.querySelector("#twitter-widget-0").contentDocument.querySelectorAll(`.TweetAuthor-avatar .Avatar`)]
+                let twz = document.querySelector("#twitter-widget-0");
+                if (twz) {
+                    observer.disconnect();
+                    twz.onload = () => 
+                    face_img.src = [...twz.contentDocument.querySelectorAll(`.TweetAuthor-avatar .Avatar`)]
                         .map(el => el.parentNode.href.replace(/^.+\/([^/]+)$/, "$1") == tid_el.value ? el.src.replace("normal", "400x400") : "").filter(_=>_)[0] || "";
                 }
             });
