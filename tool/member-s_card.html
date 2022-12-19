@@ -190,8 +190,9 @@
             const observer = new MutationObserver(e => {
                 let twz = document.querySelector("#twitter-widget-0");
                 if (twz) {
-                    !twz.src || (twz.src = "");
+                    //!twz.src || (twz.src = "");
                     if(!twz.contentDocument) return;
+                    if(!twz.contentDocument.body.innerText) return;
                     face_img.src = [...twz.contentDocument.querySelectorAll(`.TweetAuthor-avatar .Avatar`)]
                         .map(el => el.parentNode.href.replace(/^.+\/([^/]+)$/, "$1") == tid_el.value ? (observer.disconnect(), el.src.replace("normal", "400x400")) : "").filter(_ => _)[0] || "";
                 }
