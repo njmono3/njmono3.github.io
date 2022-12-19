@@ -1,9 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8" />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="ごく稀協会" />
+    <meta property="og:description" content="教会の会員証を作成できます" />
+    <meta property="og:site_name" content="にものさんの部屋" />
+    <meta property="og:image" content="https://nimono3.github.io/assets/images/totoki-card.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@2mon00" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700&family=RocknRoll+One&display=swap" rel="stylesheet">
+
+    <title>X</title>
+    <link rel="icon" type="image/png" href="../assets/images/nimono-logo-64.png"/>
+
     <style>
         html {
             --main-w: 60vw;
@@ -48,6 +63,13 @@
             opacity: 0;
         }
 
+        #face-img, #converter, #img-saver {
+            position: absolute;
+            top: 0;
+            left: 0;
+            user-select: none;
+        }
+
         #controle {
             padding: 10px;
             margin: auto;
@@ -89,13 +111,17 @@
                 width: 10vw;
             }
 
-            #controle .footer {
-                width: 100%;
-                margin: auto auto 0;
-                text-align: right;
+            #controle #create {
             }
 
-            #controle #create {
+        .footer {
+            width: 100%;
+            margin: auto auto 0;
+            text-align: right;
+            padding-top: 10px;
+        }
+
+            .footer button {
                 transition-duration: 0.3s;
                 padding: 5px;
                 border: 2px solid #222;
@@ -106,25 +132,24 @@
                 font-family: "RocknRoll One";
                 line-height: 2.5vw;
                 cursor: default;
+                user-select: none;
             }
 
-                #controle #create:hover {
+                .footer button:hover {
                     transition-duration: 0.2s;
                     color: #fff;
                     background-color: #222;
                     border-color: #222;
                     cursor: pointer;
                 }
-
-        .footer {
-            padding-top: 10px;
-        }
     </style>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js"></script>
 </head>
 <body>
     <div id="system">
         <img id="face-img" />
+        <img id="converter" width="1070" height="675" />
+        <a id="img-saver"></a>
     </div>
     <div id="main">
         <div id="cvbg">
@@ -136,6 +161,7 @@
             <label class="tw">@<input type="text" id="t-id" /></label>
             <div class="footer">
                 <button id="create">カードを作る</button>
+                <button id="save">保存</button>
             </div>
         </div>
     </div>
@@ -156,11 +182,22 @@
             idnum_el.value = decodeURIComponent(query_obj["number"] || "") || { totoki: "1010121" }[query_obj["target"]] || "000000";
             idnum_el.onchange = () => idnum_el.value = idnum_el.value.padStart(6, "0");
 
+
             const tid_el = document.querySelector("#controle #t-id");
             tid_el.value = query_obj["twitter"] || "SakiTotoki";
+            const face_img = document.querySelector("#face-img");
+            const system_el = document.querySelector("#system");
+            const observer = new MutationObserver(e => {
+                if (document.querySelector("#twitter-widget-0")) {
+                    face_img.src = [...document.querySelector("#twitter-widget-0").contentDocument.querySelectorAll(`.TweetAuthor-avatar .Avatar`)]
+                        .map(el => el.parentNode.href.replace(/^.+\/([^/]+)$/, "$1") == tid_el.value ? el.src.replace("normal", "400x400") : "").filter(_=>_)[0] || "";
+                }
+            });
+            observer.observe(system_el, { childList: true });
+            document.querySelector("#system").insertAdjacentHTML("beforeend", `<a class="twitter-timeline" data-width="220" data-height="200" data-dnt="true" href="https://twitter.com/${tid_el.value}?ref_src=twsrc%5Etfw"></a>`);
 
             document.querySelector("#controle #create").onclick = e => {
-                location.href = "./?target=" + (query_obj["target"] || "null") + "&" + "name=" + encodeURIComponent(name_el.value) + "&number=" + idnum_el.value + "&twitter=" + query_obj["twitter"];
+                location.href = "member-s_card?target=" + (query_obj["target"] || "null") + "&" + "name=" + encodeURIComponent(name_el.value) + "&number=" + idnum_el.value + "&twitter=" + tid_el.value;
             };
 
 
@@ -175,10 +212,9 @@
             card_ctx.beginPath();
             fillRadRect(card_ctx, 0, 0, card_canvas.width, card_canvas.height / 5, 50, [1, 1, 0, 0]);
 
-            const face_img = document.querySelector("#face-img");
-            face_img.src = decodeURIComponent(query_obj["img"]) || "";
             face_img.onload = () => {
-                card_ctx.drawImage(face_img, face_img.clientWidth/2 - 150, 0, 300, 400, 700, 190, 300, 400);
+                face_img.crossOrigin = "anonymous";
+                card_ctx.drawImage(face_img, face_img.clientWidth / 2 - 150, 0, 300, 400, 700, 190, 300, 400);
             };
 
             WebFont.load({
@@ -207,22 +243,31 @@
 
                     card_ctx.fillStyle = "#0008";
                     card_ctx.font = "bold 30px 'M PLUS Rounded 1c'";
-                    card_ctx.fillText("@" + (query_obj["twitter"] || "SakiTotoki"), 705, 620);
+                    card_ctx.fillText("@" + tid_el.value, 705, 620);
                     card_ctx.fillStyle = "#fffa";
-                    card_ctx.fillText("@" + (query_obj["twitter"] || "SakiTotoki"), 702, 620);
+                    card_ctx.fillText("@" + tid_el.value, 702, 620);
                 }
             });
+
+            document.querySelector("#controle #save").onclick = () => {
+                const saver = document.querySelector("#img-saver");
+                saver.href = card_canvas.toDataURL();
+                saver.download = tid_el.value + "-" + (query_obj["target"] || "X") + "-Card";
+                saver.click();
+            }
             /*
-            const tw_xhr = new XMLHttpRequest();
-            tw_xhr.setRequestHeader({ authorization: "Bearer AAAAAAAAAAAAAAAAAAAAAM0pkgEAAAAALuYgB6JEnVWL4Rya3plxUnUiL%2FI%3DwxiHAcbMRuDkW45qGCr9XoXwzDLFg14r87SrRlabXWEGCm94T0"});
-            const tw_url = "https://api.twitter.com/1.1/users/show.json?screen_name=" + (query_obj["twitter"] || "SakiTotoki");
-            tw_xhr.open("GET", tw_url);
-            tw_xhr.onreadystatechange = function () {
-                if (tw_xhr.readyState === 4 && tw_xhr.status === 200) {
-                    console.log(tw_xhr.responseText);
-                }
-                console.log(tw_xhr.response)
-            };*/
+
+                const tw_xhr = new XMLHttpRequest();
+                //tw_xhr.setRequestHeader({ authorization: "Bearer AAAAAAAAAAAAAAAAAAAAAM0pkgEAAAAALuYgB6JEnVWL4Rya3plxUnUiL%2FI%3DwxiHAcbMRuDkW45qGCr9XoXwzDLFg14r87SrRlabXWEGCm94T0"});
+                const tw_url = "https://api.twitter.com/1/users/profile_image?screen_name=" + (query_obj["twitter"] || "SakiTotoki");
+                tw_xhr.open("GET", tw_url);
+                tw_xhr.onreadystatechange = function () {
+                    if (tw_xhr.readyState === 4 && tw_xhr.status === 200) {
+                        console.log(tw_xhr.responseText);
+                    }
+                    console.log(tw_xhr.response);
+                };
+                tw_xhr.send();*/
         }
 
         function fillRadRect(ctx, x, y, w, h, r = 0, ap = [1, 1, 1, 1]) {
@@ -261,5 +306,6 @@
             ctx.fill();
         }
     </script>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </body>
 </html>
