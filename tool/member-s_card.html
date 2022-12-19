@@ -7,7 +7,7 @@
     <meta property="og:title" content="ごく稀協会" />
     <meta property="og:description" content="教会の会員証を作成できます" />
     <meta property="og:site_name" content="にものさんの部屋" />
-    <meta property="og:image" content="https://nimono3.github.io/assets/images/totoki-large-card.png" />
+    <meta property="og:image" content="https://nimono3.github.io/assets/images/totoki-card.png" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@2mon00" />
@@ -189,7 +189,9 @@
             const system_el = document.querySelector("#system");
             const observer = new MutationObserver(e => {
                 let twz = document.querySelector("#twitter-widget-0");
-                if (twz && (twz.src = "", twz.contentDocument)) {
+                if (twz) {
+                    !twz.src || (twz.src = "");
+                    if(!twz.contentDocument) return;
                     face_img.src = [...twz.contentDocument.querySelectorAll(`.TweetAuthor-avatar .Avatar`)]
                         .map(el => el.parentNode.href.replace(/^.+\/([^/]+)$/, "$1") == tid_el.value ? (observer.disconnect(), el.src.replace("normal", "400x400")) : "").filter(_ => _)[0] || "";
                 }
