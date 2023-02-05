@@ -4,7 +4,7 @@ const apnd_ipt = document.querySelector(".AppendText");
 const apnd_btn = document.querySelector(".AppendButton");
 const ts_list_el = document.querySelector(".TimeStamp-list");
 
-const cookies = document.cookie.split(";").reduce((acc, item) => ({ ...acc, [item.split("=")[0]]: item.split("=").slice(1) }), {});
+const cookies = document.cookie.split(";").reduce((acc, item) => ({ ...acc, [item.split("=")[0].trim()]: item.split("=").slice(1) }), {});
 
 const timestamp = JSON.parse(decodeURIComponent(cookies["ts"] || "[]"));
 timestamp.map(item => {
