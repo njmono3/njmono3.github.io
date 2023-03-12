@@ -11,7 +11,7 @@ body * {
 body {
   background: none;
 }
-.niconico-darkmode-setting-true body {
+body.niconico-darkmode-setting-true {
   background-color: #252525;
 }
 
