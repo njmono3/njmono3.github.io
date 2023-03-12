@@ -8,6 +8,9 @@ body {
   -webkit-font-smoothing: subpixel-antialiased;
   background: none;
 }
+.niconico-darkmode-setting-true body {
+  background-color: #252525;
+}
 
 .oshirase-container {
   position: relative;
