@@ -1,7 +1,28 @@
 body {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  text-align: initial;
+  vertical-align: baseline;
+  text-rendering: optimizelegibility;
+  -webkit-font-smoothing: subpixel-antialiased;
   background: none;
+}
+
+.oshirase-container {
+  position: relative;
+  border-bottom: 1px solid #8888;
+  word-break: break-all;
+  min-height: 52px;
+  padding: 16px;
+}
+
+.oshirase-container-link {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
 }
 
 .oshirase-title {
