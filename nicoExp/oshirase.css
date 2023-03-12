@@ -13,6 +13,16 @@ body {
 }
 
 .oshirase-container {
+  flex: 1 1 0%;
+  overflow: auto;
+}
+
+.oshirase-list {
+  position: relative;
+  height: 100%;
+}
+
+.oshirase-item {
   position: relative;
   border-bottom: 1px solid #8888;
   word-break: break-all;
@@ -20,7 +30,7 @@ body {
   padding: 16px;
 }
 
-.oshirase-container-link {
+.oshirase-item-link {
   position: relative;
   display: block;
   width: 100%;
