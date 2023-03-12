@@ -1,0 +1,52 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: none;
+}
+
+.oshirase-title {
+  font-size: 14px;
+  line-height: 1.4;
+  margin: 0 32px 0 50px;
+}
+
+.oshirase-icon {
+  float: left;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.oshirase-icon-image {
+  display: block;
+  margin: auto;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  position: relative;
+}
+
+.oshirase-d {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  min-height: 52px;
+  margin: 8px 32px 0 50px;
+  padding: 8px;
+}
+
+.oshirase-d-title {
+  font-size: 12px;
+  line-height: 16px;
+  max-height: 36px;
+  display: flex;
+  overflow: hidden;
+}
+
+.oshirase-time {
+  font-size: 12px;
+  line-height: 14px;
+  margin: 8px 0 0 50px;
+}
