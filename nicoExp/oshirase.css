@@ -1,4 +1,4 @@
-body {
+body * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -6,6 +6,9 @@ body {
   vertical-align: baseline;
   text-rendering: optimizelegibility;
   -webkit-font-smoothing: subpixel-antialiased;
+}
+
+body {
   background: none;
 }
 .niconico-darkmode-setting-true body {
