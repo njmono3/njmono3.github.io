@@ -1,6 +1,29 @@
-window.addEventListener("message", e => {
-  if (new URI(e.origin).host.split(".").slice(1).join(".") !== "nicovideo.jp") return;
-  if (e.data.type === "set-dark") {
-    if (e.data.mode === "add") document.body.classList.add("niconico-darkmode-setting-true");
+const icon = {
+  nicoexp: "../../assets/images/nicoExp128.png"
+}
+const oshirases = [
+  {
+    link: "https://docs.google.com/forms/d/e/1FAIpQLSfjzYp4X5xqq5PVAQ_P3zcbdZycKvFXuqJZO0k31bBvfVaZNg/viewform?usp=sf_link",
+    icon: icon.nicoexp,
+    title: "あなたの回答、お待ちしています",
+    d: {
+      title: "第一回ユーザーアンケート (~03/31)",
+    },
+    time: "2023.03"
   }
-});
+];
+
+El.appendChildren(document.querySelector(".oshirase-list"), oshirase.map(item => {
+  return El(".oshirase-item", [
+    El("a.oshirase-item-link", { target: "_blank" }, [
+      El(".oshirase-icon", [
+        El("img.oshirase-icon-image").attr({ src: item.icon })
+      ]),
+      El(".oshirase-title", [item.title]),
+      El(".oshirase-d", [
+        El(".oshirase-d-title", [item.d.title])
+      ]),
+      El(".oshirase-time", [item.time])
+    ])
+  ]);
+}));
