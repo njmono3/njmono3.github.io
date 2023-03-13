@@ -41,8 +41,8 @@ const oshirase_list = [
 ];
 
 El.appendChildren(document.querySelector(".oshirase-list"), oshirase_list.map(item => {
-  return El(".oshirase-item", { ...(item.link ? ({}) : ({title: "リンクなし"})) }, [
-    El("a.oshirase-item-link", { href: item.link, target: "_blank" }, [
+  return El(".oshirase-item", [
+    El("a.oshirase-item-link", { ...(item.link ? ({ href: item.link }) : ({ title: "リンクなし" })), target: "_blank" }, [
       El(".oshirase-icon", [
         El("img.oshirase-icon-image").attr({ src: item.icon })
       ]),
