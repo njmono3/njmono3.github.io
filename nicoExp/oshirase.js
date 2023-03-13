@@ -60,7 +60,7 @@ El.appendChildren(document.querySelector(".oshirase-list"), oshirase_list.map(it
       El(".oshirase-d", [
         El(".oshirase-d-title", [item.d.title])
       ]),
-      El(".oshirase-time", [(time => `${(time[0]===new Date().getFullYear() ? "" : time[0] + "年")} ${time[1]}月${time[2] ? time[2] + "日" : ""}`)(item.time.split("-"))])
+      El(".oshirase-time", [(time => `${(time[0] == new Date().getFullYear() ? "" : time[0] + "年")}${time[1]}月${time[2] ? time[2] + "日" : ""}`)(item.time.split("-"))])
     ])
   ]);
 }));
