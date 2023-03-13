@@ -8,36 +8,45 @@ const oshirase_list = [
     icon: icon.nicoexp,
     title: "あなたの回答、お待ちしています",
     d: {
-      title: "第一回ユーザーアンケート (~03/31)",
+      title: "第一回ユーザーアンケート (~04/05)",
     },
-    time: "2023.03.13"
+    time: "2023-3-"
+  },
+  {
+    link: "https://twitter.com/00nom2/status/1635143474772332545",
+    icon: "",
+    title: "v3.10.0 追加機能",
+    d: {
+      title: "お知らせの発信を始めました - @00nom2",
+    },
+    time: "2023-3-13"
   },
   {
     link: "https://twitter.com/00nom2/status/1635128879181606915",
     icon: "",
     title: "検索機能をアップデート",
     d: {
-      title: "Google検索引用だけだと使いづらいので...",
+      title: "Google検索引用だけだと使いづらいので... - @00nom2",
     },
-    time: "2023.01.22"
+    time: "2023-1-"
   },
   {
     link: "https://twitter.com/00nom2/status/1617095813892820992",
     icon: "",
-    title: "v3.9.9 新機能",
+    title: "v3.9.9 追加機能",
     d: {
-      title: "niconico Darkmodeの崩れを補填 (@00nom2)",
+      title: "niconico Darkmodeの崩れを補填 - @00nom2",
     },
-    time: "2023.01.22"
+    time: "2023-1-22"
   },
   {
     link: "",
     icon: icon.nicoru,
-    title: "v3.9.0 新機能",
+    title: "v3.9.0 追加機能",
     d: {
       title: "ニコるを99+まで表示できます",
     },
-    time: "2022.12.30"
+    time: "2022-12-30"
   }
 ];
 
@@ -51,7 +60,7 @@ El.appendChildren(document.querySelector(".oshirase-list"), oshirase_list.map(it
       El(".oshirase-d", [
         El(".oshirase-d-title", [item.d.title])
       ]),
-      El(".oshirase-time", [item.time])
+      El(".oshirase-time", [(time => `${(time[0]===new Date().getFullYear() ? "" : time[0] + "年")} ${time[1]}月${time[2] ? time[2] + "日" : ""}`)(item.time.split("-"))])
     ])
   ]);
 }));
