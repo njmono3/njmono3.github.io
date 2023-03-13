@@ -1,7 +1,7 @@
 const icon = {
   nicoexp: "../../assets/images/nicoExp128.png"
 }
-const oshirases = [
+const oshirase_list = [
   {
     link: "https://docs.google.com/forms/d/e/1FAIpQLSfjzYp4X5xqq5PVAQ_P3zcbdZycKvFXuqJZO0k31bBvfVaZNg/viewform?usp=sf_link",
     icon: icon.nicoexp,
@@ -13,7 +13,7 @@ const oshirases = [
   }
 ];
 
-El.appendChildren(document.querySelector(".oshirase-list"), oshirase.map(item => {
+El.appendChildren(document.querySelector(".oshirase-list"), oshirase_list.map(item => {
   return El(".oshirase-item", [
     El("a.oshirase-item-link", { target: "_blank" }, [
       El(".oshirase-icon", [
