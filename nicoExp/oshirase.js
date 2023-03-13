@@ -1,5 +1,6 @@
 const icon = {
   nicoexp: "../../assets/images/nicoExp128.png",
+  nicoru: "https://secure-dcdn.cdn.nimg.jp/nfront/inform/168d439de9621eeeeddec11dd760b2ef.png"
 }
 const oshirase_list = [
   {
@@ -31,7 +32,7 @@ const oshirase_list = [
   },
   {
     link: "",
-    icon: icon.nicoexp,
+    icon: icon.nicoru,
     title: "v3.9.0 新機能",
     d: {
       title: "ニコるを99+まで表示できます",
