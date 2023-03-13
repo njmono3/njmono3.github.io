@@ -9,13 +9,40 @@ const oshirase_list = [
     d: {
       title: "第一回ユーザーアンケート (~03/31)",
     },
-    time: "2023.03"
+    time: "2023.03.13"
+  },
+  {
+    link: "https://twitter.com/00nom2/status/1635128879181606915",
+    icon: icon.nicoexp,
+    title: "検索機能をアップデート",
+    d: {
+      title: "Google検索引用だけだと使いづらいので...",
+    },
+    time: "2023.01.22"
+  },
+  {
+    link: "https://twitter.com/00nom2/status/1617095813892820992",
+    icon: icon.nicoexp,
+    title: "v3.9.9 新機能",
+    d: {
+      title: "niconico Darkmodeの崩れを補填 (@00nom2)",
+    },
+    time: "2023.01.22"
+  },
+  {
+    link: "",
+    icon: icon.nicoexp,
+    title: "v3.9.0 新機能",
+    d: {
+      title: "ニコるを99+まで表示できます",
+    },
+    time: "2022.12.30"
   }
 ];
 
 El.appendChildren(document.querySelector(".oshirase-list"), oshirase_list.map(item => {
-  return El(".oshirase-item", [
-    El("a.oshirase-item-link", { target: "_blank" }, [
+  return El(".oshirase-item", { ...(item.link ? ({}) : ({title: "リンクなし"})) }, [
+    El("a.oshirase-item-link", { href: item.link, target: "_blank" }, [
       El(".oshirase-icon", [
         El("img.oshirase-icon-image").attr({ src: item.icon })
       ]),
