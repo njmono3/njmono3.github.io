@@ -1,5 +1,5 @@
 const icon = {
-  nicoexp: "../../assets/images/nicoExp128.png"
+  nicoexp: "../../assets/images/nicoExp128.png",
 }
 const oshirase_list = [
   {
@@ -13,7 +13,7 @@ const oshirase_list = [
   },
   {
     link: "https://twitter.com/00nom2/status/1635128879181606915",
-    icon: icon.nicoexp,
+    icon: "",
     title: "検索機能をアップデート",
     d: {
       title: "Google検索引用だけだと使いづらいので...",
@@ -22,7 +22,7 @@ const oshirase_list = [
   },
   {
     link: "https://twitter.com/00nom2/status/1617095813892820992",
-    icon: icon.nicoexp,
+    icon: "",
     title: "v3.9.9 新機能",
     d: {
       title: "niconico Darkmodeの崩れを補填 (@00nom2)",
