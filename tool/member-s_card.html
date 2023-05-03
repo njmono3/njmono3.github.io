@@ -177,8 +177,8 @@
             const def_number = { totoki: "1010121" }[query_obj["target"]] || "000000";
             const def_twitter = { totoki: "SakiTotoki", leona: "LeonaShishigami" }[query_obj["target"]] || "";
             
-            document.body.style.backgroundColor = { totoki: "rgb(60, 83, 67)" }[query_obj["target"]] || "#fafafa";
-            document.querySelector("#main").style.backgroundColor = { totoki: "#ffe5b8" }[query_obj["target"]] || "#fff";
+            document.body.style.backgroundColor = { totoki: "rgb(60, 83, 67)", leona: "#df8139" }[query_obj["target"]] || "#fafafa";
+            document.querySelector("#main").style.backgroundColor = { totoki: "#ffe5b8", leona: "#ffe5b8" }[query_obj["target"]] || "#fff";
             document.title = main_title[0] ? main_title[0]+main_title[1]+"-会員証" : "会員証メーカー(仮)";
 
             const name_el = document.querySelector("#controle #name");
@@ -218,7 +218,7 @@
             const card_canvas = document.querySelector("#main canvas");
             const card_ctx = card_canvas.getContext("2d");
 
-            card_ctx.fillStyle = { totoki: "rgb(248, 243, 237)", leona: "#e0a0a0" }[query_obj["target"]] || "rgb(248, 243, 237)";
+            card_ctx.fillStyle = { totoki: "rgb(248, 243, 237)", leona: "#f0e0a0" }[query_obj["target"]] || "rgb(248, 243, 237)";
             card_ctx.beginPath();
             fillRadRect(card_ctx, 0, 0, card_canvas.width, card_canvas.height, 50);
 
@@ -236,7 +236,7 @@
                     families: ["RocknRoll One", "M PLUS Rounded 1c"]
                 },
                 active: () => {
-                    card_ctx.fillStyle = { totoki: "rgb(96, 130, 114)", leona }[query_obj["target"]] || "rgb(96, 130, 114)";
+                    card_ctx.fillStyle = { totoki: "rgb(96, 130, 114)", leona: "#ad8961" }[query_obj["target"]] || "rgb(96, 130, 114)";
                     card_ctx.font = "bold 110px 'M PLUS Rounded 1c'";
                     card_ctx.fillText("会員証", 20, 110);
 
@@ -250,7 +250,7 @@
                     card_ctx.font = "100px 'RocknRoll One'";
                     card_ctx.fillText(name_el.value, 20, 510);
 
-                    card_ctx.fillStyle = "rgb(194, 150, 115)";
+                    card_ctx.fillStyle = { totoki: "rgb(194, 150, 115)" }[query_obj["target"]] || "rgb(194, 150, 115)";
                     card_ctx.font = "bold 35px 'M PLUS Rounded 1c'";
                     card_ctx.fillText(main_title[0], 20, card_canvas.height - 70);
                     card_ctx.fillText(main_title.slice(1).join('　'), 20, card_canvas.height - 25);
