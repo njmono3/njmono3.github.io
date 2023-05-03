@@ -4,10 +4,9 @@
     <meta charset="utf-8" />
 
     <meta property="og:type" content="article" />
-    <meta property="og:title" content="ごく稀に聞ける兎々錦サキの濁った声がとても良いと思う協会" />
-    <meta property="og:description" content="教会の会員証を作成できます" />
+    <meta property="og:title" content="会員証-作成" />
+    <meta property="og:description" content="会員証を作成できます" />
     <meta property="og:site_name" content="にものさんの部屋" />
-    <meta property="og:image" content="https://nimono3.github.io/assets/images/totoki-large-card.png" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@2mon00" />
@@ -173,24 +172,28 @@
         {
             const query_obj = getQueryObject();
 
-
+            const main_title = { totoki: ["ごく稀に聞ける兎々錦サキの濁った声が", "とても良いと思う協会", "日本支部"], leona: ["レオナさんのこの顔がかわいい委員会", "", "日本支部"] }[query_obj["target"]] || ["", "", ""];
+            const member_name = { totoki: "サキ友" }[query_obj["target"]];
+            const def_number = { totoki: "1010121" }[query_obj["target"]] || "000000";
+            const def_twitter = { totoki: "SakiTotoki", leona: "LeonaShishigami" }[query_obj["target"]] || "";
+            
             document.body.style.backgroundColor = { totoki: "rgb(60, 83, 67)" }[query_obj["target"]] || "#fafafa";
             document.querySelector("#main").style.backgroundColor = { totoki: "#ffe5b8" }[query_obj["target"]] || "#fff";
-            document.title = { totoki: "ごく稀に聞ける兎々錦サキの濁った声がとても良いと思う協会-会員証" }[query_obj["target"]] || "会員証メーカー(仮)";
+            document.title = main_title[0] ? main_title[0]+main_title[1]+"-会員証" : "会員証メーカー(仮)";
 
             const name_el = document.querySelector("#controle #name");
-            name_el.value = decodeURIComponent(query_obj["name"] || "") || { totoki: "サキ友" }[query_obj["target"]] || "";
+            name_el.value = decodeURIComponent(query_obj["name"] || "") || member_name || "";
 
             const imgurl_el = document.querySelector("#controle #imgurl");
             imgurl_el.value = decodeURIComponent(query_obj["img"] || "");
 
             const idnum_el = document.querySelector("#controle #idnum");
-            idnum_el.value = decodeURIComponent(query_obj["number"] || "") || { totoki: "1010121" }[query_obj["target"]] || "000000";
+            idnum_el.value = decodeURIComponent(query_obj["number"] || "") || def_number;
             idnum_el.onchange = () => idnum_el.value = idnum_el.value.padStart(6, "0");
 
 
             const tid_el = document.querySelector("#controle #t-id");
-            tid_el.value = query_obj["twitter"] || "SakiTotoki";
+            tid_el.value = query_obj["twitter"] || def_twitter;
             const face_img = document.querySelector("#face-img");
             const system_el = document.querySelector("#system");
             const observer = new MutationObserver(e => {
@@ -215,11 +218,11 @@
             const card_canvas = document.querySelector("#main canvas");
             const card_ctx = card_canvas.getContext("2d");
 
-            card_ctx.fillStyle = "rgb(248, 243, 237)";
+            card_ctx.fillStyle = { totoki: "rgb(248, 243, 237)", leona: "#e0a0a0" }[query_obj["target"]] || "rgb(248, 243, 237)";
             card_ctx.beginPath();
             fillRadRect(card_ctx, 0, 0, card_canvas.width, card_canvas.height, 50);
 
-            card_ctx.fillStyle = "rgb(224, 217, 201)";
+            card_ctx.fillStyle = { totoki: "rgb(224, 217, 201)", leona: "#d0e0c9" }[query_obj["target"]] || "rgb(224, 217, 201)";
             card_ctx.beginPath();
             fillRadRect(card_ctx, 0, 0, card_canvas.width, card_canvas.height / 5, 50, [1, 1, 0, 0]);
 
@@ -233,11 +236,11 @@
                     families: ["RocknRoll One", "M PLUS Rounded 1c"]
                 },
                 active: () => {
-                    card_ctx.fillStyle = "rgb(96, 130, 114)";
+                    card_ctx.fillStyle = { totoki: "rgb(96, 130, 114)", leona }[query_obj["target"]] || "rgb(96, 130, 114)";
                     card_ctx.font = "bold 110px 'M PLUS Rounded 1c'";
                     card_ctx.fillText("会員証", 20, 110);
 
-                    card_ctx.fillStyle = "rgb(96, 130, 114)";
+                    //card_ctx.fillStyle = "rgb(96, 130, 114)";
                     card_ctx.font = "40px 'M PLUS Rounded 1c'";
                     card_ctx.fillText("会員番号", 40, 210);
                     card_ctx.font = "100px 'RocknRoll One'";
@@ -249,8 +252,8 @@
 
                     card_ctx.fillStyle = "rgb(194, 150, 115)";
                     card_ctx.font = "bold 35px 'M PLUS Rounded 1c'";
-                    card_ctx.fillText("ごく稀に聞ける兎々錦サキの濁った声が", 20, card_canvas.height - 70);
-                    card_ctx.fillText("とても良いと思う協会　日本支部", 20, card_canvas.height - 25);
+                    card_ctx.fillText(main_title[0], 20, card_canvas.height - 70);
+                    card_ctx.fillText(main_title.slice(1).join('　'), 20, card_canvas.height - 25);
 
                     card_ctx.fillStyle = "#0008";
                     card_ctx.font = "bold 30px 'M PLUS Rounded 1c'";
