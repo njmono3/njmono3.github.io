@@ -222,7 +222,7 @@
             card_ctx.beginPath();
             fillRadRect(card_ctx, 0, 0, card_canvas.width, card_canvas.height, 50);
 
-            card_ctx.fillStyle = { totoki: "rgb(224, 217, 201)", leona: "#e6a442" }[query_obj["target"]] || "rgb(224, 217, 201)";
+            card_ctx.fillStyle = { totoki: "rgb(224, 217, 201)", leona: "#191919" }[query_obj["target"]] || "rgb(224, 217, 201)";
             card_ctx.beginPath();
             fillRadRect(card_ctx, 0, 0, card_canvas.width, card_canvas.height / 5, 50, [1, 1, 0, 0]);
 
@@ -236,11 +236,11 @@
                     families: ["RocknRoll One", "M PLUS Rounded 1c"]
                 },
                 active: () => {
-                    card_ctx.fillStyle = { totoki: "rgb(96, 130, 114)", leona: "#ad8961" }[query_obj["target"]] || "rgb(96, 130, 114)";
+                    card_ctx.fillStyle = { totoki: "rgb(96, 130, 114)", leona: "#e6a442" }[query_obj["target"]] || "rgb(96, 130, 114)";
                     card_ctx.font = "bold 110px 'M PLUS Rounded 1c'";
                     card_ctx.fillText("会員証", 20, 110);
 
-                    //card_ctx.fillStyle = "rgb(96, 130, 114)";
+                    card_ctx.fillStyle = { totoki: "rgb(96, 130, 114)", leona: "#ad8961" }[query_obj["target"]] || "rgb(96, 130, 114)";
                     card_ctx.font = "40px 'M PLUS Rounded 1c'";
                     card_ctx.fillText("会員番号", 40, 210);
                     card_ctx.font = "100px 'RocknRoll One'";
