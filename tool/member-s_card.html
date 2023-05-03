@@ -253,7 +253,7 @@
                     card_ctx.fillStyle = { totoki: "rgb(194, 150, 115)" }[query_obj["target"]] || "rgb(194, 150, 115)";
                     card_ctx.font = "bold 35px 'M PLUS Rounded 1c'";
                     card_ctx.fillText(main_title[0], 20, card_canvas.height - 70);
-                    card_ctx.fillText(main_title.slice(1).join('　'), 20, card_canvas.height - 25);
+                    card_ctx.fillText(main_title.slice(1).filter(_=>_).join('　'), 20, card_canvas.height - 25);
 
                     card_ctx.fillStyle = "#0008";
                     card_ctx.font = "bold 30px 'M PLUS Rounded 1c'";
