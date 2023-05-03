@@ -218,11 +218,11 @@
             const card_canvas = document.querySelector("#main canvas");
             const card_ctx = card_canvas.getContext("2d");
 
-            card_ctx.fillStyle = { totoki: "rgb(248, 243, 237)", leona: "#f0e0a0" }[query_obj["target"]] || "rgb(248, 243, 237)";
+            card_ctx.fillStyle = { totoki: "rgb(248, 243, 237)", leona: "#f2e5c2" }[query_obj["target"]] || "rgb(248, 243, 237)";
             card_ctx.beginPath();
             fillRadRect(card_ctx, 0, 0, card_canvas.width, card_canvas.height, 50);
 
-            card_ctx.fillStyle = { totoki: "rgb(224, 217, 201)", leona: "#d0e0c9" }[query_obj["target"]] || "rgb(224, 217, 201)";
+            card_ctx.fillStyle = { totoki: "rgb(224, 217, 201)", leona: "#e6a442" }[query_obj["target"]] || "rgb(224, 217, 201)";
             card_ctx.beginPath();
             fillRadRect(card_ctx, 0, 0, card_canvas.width, card_canvas.height / 5, 50, [1, 1, 0, 0]);
 
