@@ -3,7 +3,7 @@ const icon = {
   nicoru: "https://secure-dcdn.cdn.nimg.jp/nfront/inform/168d439de9621eeeeddec11dd760b2ef.png"
 }
 const oshirase_list = [
-  {
+  /*{
     link: "https://docs.google.com/forms/d/e/1FAIpQLSfjzYp4X5xqq5PVAQ_P3zcbdZycKvFXuqJZO0k31bBvfVaZNg/viewform?usp=sf_link",
     icon: icon.nicoexp,
     title: "あなたの回答、お待ちしています",
@@ -11,7 +11,7 @@ const oshirase_list = [
       title: "第一回ユーザーアンケート (~04/05)",
     },
     time: "2023-3-"
-  },
+  },*/
   {
     link: "https://twitter.com/00nom2/status/1635143474772332545",
     icon: "",
