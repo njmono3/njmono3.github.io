@@ -16,6 +16,15 @@ const oshirase_list = [
   {
     link: "https://twitter.com/00nom2/status/1635143474772332545",
     icon: "",
+    title: "更新停止",
+    d: {
+      title: "目途が立っていません",
+    },
+    time: "2025-4-26"
+  },
+  {
+    link: "https://twitter.com/00nom2/status/1635143474772332545",
+    icon: "",
     title: "v3.10.0 追加機能",
     d: {
       title: "お知らせの発信を始めました - @00nom2",
