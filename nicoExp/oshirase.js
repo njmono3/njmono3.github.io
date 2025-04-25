@@ -1,6 +1,7 @@
 const icon = {
   nicoexp: "../../assets/images/nicoExp128.png",
-  nicoru: "https://secure-dcdn.cdn.nimg.jp/nfront/inform/168d439de9621eeeeddec11dd760b2ef.png"
+  //nicoru: "https://secure-dcdn.cdn.nimg.jp/nfront/inform/168d439de9621eeeeddec11dd760b2ef.png"
+  nicoru: "https://inform.nicovideo.jp/168d439de9621eeeeddec11dd760b2ef.png"
 }
 const oshirase_list = [
   /*{
