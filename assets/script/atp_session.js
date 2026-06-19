@@ -224,7 +224,7 @@ function postBsky(post_text, post_opt=({})) {
         },
         repo: sess.did
     };
-    if (post_embed_reserve.length && 0) {
+    if (post_embed_reserve.length) {
         fetch(post_embed_reserve[0])
             .then(res => res.text())
             .then(text => {
@@ -311,9 +311,9 @@ function postRecord(post_record, record_option) {
     }
     const sess = {
         did: readCookieVal("sess_did"),
-        serviceEndpoint: readCookieVal("serviceEndpoint"),
+        serviceEndpoint: readCookieVal("sess_serviceEndpoint"),
         accessJwt: readCookieVal("sess_accessjwt"),
-        refreshJwt: readCookieVal("bsky_sess_refreshjwt")
+        refreshJwt: readCookieVal("sess_refreshjwt")
     };
     const post_body = {
         collection: post_record["$type"],
@@ -340,6 +340,7 @@ function postRecord(post_record, record_option) {
         })
         .then(resjson => {
             console.log(resjson);
+            return;
             if (post_record["$type"].match(/^com\.vwousu\.report\./)) {
                 console.log("start process [vwousu report]");
                 fetch(`https://api.vwousu.com/xrpc/com.vwousu.report.postReport`, {
