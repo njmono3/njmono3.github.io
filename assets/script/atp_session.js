@@ -82,8 +82,8 @@ function fetchBskySession(service_address, trying_identifier, trying_password) {
             writeCookie("sess_did", sess.did);
             console.log(sess.didDoc);
             writeCookie("sess_serviceEndpoint", sess.didDoc.service[0].serviceEndpoint.replace(/^https?:\/\//, ""));
-            writeCookie("sess_accessJwt", sess.accessJwt);
-            writeCookie("sess_refreshJwt", sess.accessJwt);
+            writeCookie("sess_accessjwt", sess.accessJwt);
+            writeCookie("sess_refreshjwt", sess.accessJwt);
             getoutGuest(service_address, sess);
         });
     return;
@@ -116,8 +116,8 @@ function checkSessionBsky(stored_connection) {
                         writeCookie("sess_latest_status", "OK");
                         writeCookie("sess_did", sess.did);
                         writeCookie("sess_serviceEndpoint", sess.didDoc.service[0].serviceEndpoint.replace(/^https?:\/\//, ""));
-                        writeCookie("sess_accessJwt", sess.accessJwt);
-                        writeCookie("sess_refreshJwt", sess.accessJwt);
+                        writeCookie("sess_accessjwt", sess.accessJwt);
+                        writeCookie("sess_refreshjwt", sess.accessJwt);
                         getoutGuest(stored_connection.service, sess);
                     });
                 throw new Error("login reject");
@@ -306,13 +306,10 @@ function postRecord(post_record, record_option) {
         return;
     }
     const sess = {
-        service: readCookieVal("service_address"),
-        sess: {
-            did: readCookieVal("sess_did"),
-            serviceEndpoint: readCookieVal("serviceEndpoint"),
-            accessJwt: readCookieVal("sess_accessjwt"),
-            refreshJwt: readCookieVal("bsky_sess_refreshjwt")
-        }
+        did: readCookieVal("sess_did"),
+        serviceEndpoint: readCookieVal("serviceEndpoint"),
+        accessJwt: readCookieVal("sess_accessjwt"),
+        refreshJwt: readCookieVal("bsky_sess_refreshjwt")
     };
     const post_body = {
         collection: post_record["$type"],
