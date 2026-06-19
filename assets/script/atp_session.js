@@ -112,6 +112,10 @@ function checkSessionBsky(stored_connection) {
                         return res.json();
                     })
                     .then(sess => {
+                        if (sess.error) {
+                            writeCookie("sess_latest_status", "logout");
+                            return;
+                        }
                         writeCookie("service_address", stored_connection.service);
                         writeCookie("sess_latest_status", "OK");
                         writeCookie("sess_did", sess.did);
