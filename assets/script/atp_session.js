@@ -80,7 +80,6 @@ function fetchBskySession(service_address, trying_identifier, trying_password) {
             writeCookie("service_address", service_address);
             writeCookie("sess_latest_status", "OK");
             writeCookie("sess_did", sess.did);
-            console.log(sess.didDoc);
             writeCookie("sess_serviceEndpoint", sess.didDoc.service[0].serviceEndpoint.replace(/^https?:\/\//, ""));
             writeCookie("sess_accessjwt", sess.accessJwt);
             writeCookie("sess_refreshjwt", sess.accessJwt);
@@ -119,7 +118,6 @@ function checkSessionBsky(stored_connection) {
                         writeCookie("service_address", stored_connection.service);
                         writeCookie("sess_latest_status", "OK");
                         writeCookie("sess_did", sess.did);
-                        console.log(sess);
                         writeCookie("sess_serviceEndpoint", sess.didDoc.service[0].serviceEndpoint.replace(/^https?:\/\//, ""));
                         writeCookie("sess_accessjwt", sess.accessJwt);
                         writeCookie("sess_refreshjwt", sess.accessJwt);
