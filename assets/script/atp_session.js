@@ -39,6 +39,7 @@ function setGuest() {
     document.body.classList.add(sess_class.guest);
     document.querySelector("#login-user-input").focus();
     document.querySelector("#login-button").addEventListener("click", tryLoginBsky, false);
+    writeCookie("sess_latest_status", "logout");
     return;
 }
 
@@ -112,7 +113,7 @@ function checkSessionBsky(stored_connection) {
                     })
                     .then(sess => {
                         if (sess.error) {
-                            writeCookie("sess_latest_status", "logout");
+                            setGuest();
                             return;
                         }
                         writeCookie("service_address", stored_connection.service);
