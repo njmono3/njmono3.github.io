@@ -1,0 +1,14 @@
+{
+    "client_id": "https://njmono3.github.io/oauth-client-metadata.json",
+    "application_type": "web",
+    "client_name": "Demono3",
+    "client_uri": "https://njmono3.github.io",
+    "tos_uri": "https://njmo.net",
+    "policy_uri": "https://njmo.net",
+    "redirect_uris": ["https://njmono3.github.io/demo"],
+    "scope": "atproto rpc:app.bsky.actor.getProfile?aud=did:web:api.bsky.app%23bsky_appview repo:app.bsky.feed.post?action=create&action=delete repo:app.bsky.feed.generator?action=create&action=update&action=delete repo:app.bsky.feed.threadgate?action=create&action=update&action=delete repo:app.bsky.feed.postgate?action=create&action=update&action=delete rpc:app.bsky.graph.getLists?aud=* rpc:app.bsky.graph.getList?aud=* rpc:app.bsky.feed.getFeedGenerator?aud=* rpc:app.bsky.feed.searchPosts?aud=* blob:*/*",
+    "grant_types": ["authorization_code","refresh_token"],
+    "response_types": ["code"],
+    "token_endpoint_auth_method": "none",
+    "dpop_bound_access_tokens": true
+}
