@@ -5,8 +5,16 @@
     <title>demo page</title>
 </head>
 <body>
+    <input type="text" id="login-service-input" value="bsky.social" readonly/>
+    <input type="text" id="login-user-input"/>
+    <input type="text" id="login-password-input"/>
     <button id="login-button">login</button>
     <button id="post-button">post</button>
-    <script type="text/javascript" src="./assets/script/bsky_session.js" charset="utf-8"></script>
+    <button id="logout-submit-btn">logout</button>
+    <textarea id="post-record-input"></textarea>
+    <button id="record-submit-btn">submit</button>
+    <span id="login-error-message"></span>
+    <span id="post-record-result"></span>
+    <script type="text/javascript" src="./assets/script/atp_session.js" charset="utf-8"></script>
 </body>
 </html>
