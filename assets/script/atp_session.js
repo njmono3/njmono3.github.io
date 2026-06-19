@@ -115,7 +115,7 @@ function checkSessionBsky(stored_connection) {
                         writeCookie("service_address", stored_connection.service);
                         writeCookie("sess_latest_status", "OK");
                         writeCookie("sess_did", sess.did);
-                        console.log(sess.didDoc);
+                        console.log(sess);
                         writeCookie("sess_serviceEndpoint", sess.didDoc.service[0].serviceEndpoint.replace(/^https?:\/\//, ""));
                         writeCookie("sess_accessjwt", sess.accessJwt);
                         writeCookie("sess_refreshjwt", sess.accessJwt);
